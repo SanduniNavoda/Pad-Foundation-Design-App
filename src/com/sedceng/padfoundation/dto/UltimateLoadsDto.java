@@ -9,15 +9,15 @@ package com.sedceng.padfoundation.dto;
  * @author Sanduni Navoda
  */
 public class UltimateLoadsDto {
-    private Double compressiveForce;
-    private Double tensileForce;
-    private Double horizontalTransverseForce;
-    private Double horizontalLongitudinalForce;
+    private double compressiveForce;
+    private double tensileForce;
+    private double horizontalTransverseForce;
+    private double horizontalLongitudinalForce;
 
     public UltimateLoadsDto() {
     }
 
-    public UltimateLoadsDto(Double compressiveForce, Double tensileForce, Double horizontalTransverseForce, Double horizontalLongitudinalForce) {
+    public UltimateLoadsDto(double compressiveForce, double tensileForce, double horizontalTransverseForce, double horizontalLongitudinalForce) {
         this.compressiveForce = compressiveForce;
         this.tensileForce = tensileForce;
         this.horizontalTransverseForce = horizontalTransverseForce;
@@ -27,56 +27,56 @@ public class UltimateLoadsDto {
     /**
      * @return the compressiveForce
      */
-    public Double getCompressiveForce() {
+    public double getCompressiveForce() {
         return compressiveForce;
     }
 
     /**
      * @param compressiveForce the compressiveForce to set
      */
-    public void setCompressiveForce(Double compressiveForce) {
+    public void setCompressiveForce(double compressiveForce) {
         this.compressiveForce = compressiveForce;
     }
 
     /**
      * @return the tensileForce
      */
-    public Double getTensileForce() {
+    public double getTensileForce() {
         return tensileForce;
     }
 
     /**
      * @param tensileForce the tensileForce to set
      */
-    public void setTensileForce(Double tensileForce) {
+    public void setTensileForce(double tensileForce) {
         this.tensileForce = tensileForce;
     }
 
     /**
      * @return the horizontalTransverseForce
      */
-    public Double getHorizontalTransverseForce() {
+    public double getHorizontalTransverseForce() {
         return horizontalTransverseForce;
     }
 
     /**
      * @param horizontalTransverseForce the horizontalTransverseForce to set
      */
-    public void setHorizontalTransverseForce(Double horizontalTransverseForce) {
+    public void setHorizontalTransverseForce(double horizontalTransverseForce) {
         this.horizontalTransverseForce = horizontalTransverseForce;
     }
 
     /**
      * @return the horizontalLongitudinalForce
      */
-    public Double getHorizontalLongitudinalForce() {
+    public double getHorizontalLongitudinalForce() {
         return horizontalLongitudinalForce;
     }
 
     /**
      * @param horizontalLongitudinalForce the horizontalLongitudinalForce to set
      */
-    public void setHorizontalLongitudinalForce(Double horizontalLongitudinalForce) {
+    public void setHorizontalLongitudinalForce(double horizontalLongitudinalForce) {
         this.horizontalLongitudinalForce = horizontalLongitudinalForce;
     }
 

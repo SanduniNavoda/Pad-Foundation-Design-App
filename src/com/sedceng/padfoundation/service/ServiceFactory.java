@@ -5,6 +5,9 @@
 package com.sedceng.padfoundation.service;
 
 import com.sedceng.padfoundation.service.custom.impl.BearingCheckServiceImpl;
+import com.sedceng.padfoundation.service.custom.impl.DesignForBendingServiceImpl;
+import com.sedceng.padfoundation.service.custom.impl.DesignForOneWayShearServiceImpl;
+import com.sedceng.padfoundation.service.custom.impl.DesignForPunchingShearServiceImpl;
 import com.sedceng.padfoundation.service.custom.impl.OverturningCheckServiceImpl;
 import com.sedceng.padfoundation.service.custom.impl.SlidingCheckServiceImpl;
 import com.sedceng.padfoundation.service.custom.impl.UprootingCheckServiceImpl;
@@ -37,12 +40,18 @@ public class ServiceFactory {
                 return new SlidingCheckServiceImpl();
             case OVERTURNING:
                 return new OverturningCheckServiceImpl();
+            case BENDING:
+                return new DesignForBendingServiceImpl();
+            case ONE_WAY_SHEAR:
+                return new DesignForOneWayShearServiceImpl();
+            case PUNCHING_SHEAR:
+                return new DesignForPunchingShearServiceImpl();
             default:
                 return null;
         }
     }
     
     public enum ServiceType{
-        UPROOTING, BEARING, SLIDING, OVERTURNING;
+        UPROOTING, BEARING, SLIDING, OVERTURNING, BENDING, ONE_WAY_SHEAR, PUNCHING_SHEAR;
     }
 }

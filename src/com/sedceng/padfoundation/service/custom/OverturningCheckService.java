@@ -17,6 +17,5 @@ import com.sedceng.padfoundation.util.SoilPressureCalculatorUtil;
  */
 public interface OverturningCheckService extends SuperService{
     boolean fosSatisfied(FoundationGeometryDto geometry, SoilPressureCalculatorUtil soilCalculator, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto loadsDto) throws Exception;
-
-   
+ 
 }
