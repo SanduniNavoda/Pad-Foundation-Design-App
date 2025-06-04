@@ -15,9 +15,17 @@ import com.sedceng.padfoundation.util.ReinforcementCalculatorUtil;
 import com.sedceng.padfoundation.util.ShearReinforcementCalculatorUtil;
 import com.sedceng.padfoundation.util.SoilPressureCalculatorUtil;
 import com.sedceng.padfoundation.util.ValidationUtil;
+import java.awt.BorderLayout;
+import java.awt.Image;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
@@ -34,8 +42,68 @@ public class SoilReportView extends javax.swing.JFrame {
         inputController = new UserInputController();
         reinforcementInputController = new UserInputControllerForReinforcementDesign();
         initComponents();
+        
+        
+        FoundationDrawingPanel foundationPanel = new FoundationDrawingPanel();
+        foundationPanel.setPreferredSize(ImagePanel.getSize());
+        ImagePanel.setLayout(new BorderLayout());
+        ImagePanel.add(foundationPanel, BorderLayout.CENTER);
+        ImagePanel.revalidate();
+        ImagePanel.repaint();
+        
+        addInputListeners();
+        
         ValidationUtil.applyDoubleFilterToAllTextFields(this);
         setupTabChangeListener();
+        
+        rbNo.addActionListener(e
+                -> {
+            depthOfWaterTable.setVisible(false);
+            tfWaterTableDepth.setVisible(false);
+            jLabel36.setVisible(false);
+
+            SaturatedUnitWeightOfSoil.setVisible(false);
+            tfSaturatedUnitWeight.setVisible(false);
+            jLabel37.setVisible(false);
+
+            UnitWeightOfWater.setVisible(false);
+            gammaWat.setVisible(false);
+            jLabel38.setVisible(false);
+
+            tfWaterTableDepth.setText(String.valueOf(Integer.MAX_VALUE));
+        }
+        );
+
+        rbYes.addActionListener(e
+                -> {
+            depthOfWaterTable.setVisible(true);
+            tfWaterTableDepth.setVisible(true);
+            jLabel36.setVisible(true);
+
+            SaturatedUnitWeightOfSoil.setVisible(true);
+            tfSaturatedUnitWeight.setVisible(true);
+            jLabel37.setVisible(true);
+
+            UnitWeightOfWater.setVisible(true);
+            gammaWat.setVisible(true);
+            jLabel38.setVisible(true);
+
+            tfWaterTableDepth.setText(""); // Clear or reset as needed
+        }
+        );
+        
+        rbNo.addActionListener(e -> {
+            foundationPanel.setShowGroundWaterLine(false); // hides the line
+            dwgWaterTableDepth2.setVisible(false);
+            dwgWaterTableDepth.setVisible(false);
+        });
+        
+        rbYes.addActionListener(e -> {
+            foundationPanel.setShowGroundWaterLine(true); // shows the line
+            dwgWaterTableDepth2.setVisible(true);
+            dwgWaterTableDepth.setVisible(true);
+            
+});
     }
     
     private void setupTabChangeListener() {
@@ -113,6 +181,15 @@ public class SoilReportView extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
+        ImagePanel = new javax.swing.JPanel();
+        dwgWaterTableDepth = new javax.swing.JLabel();
+        dwgFootingWidth = new javax.swing.JLabel();
+        dwgColWidth = new javax.swing.JLabel();
+        dwgFootingHeight = new javax.swing.JLabel();
+        dwgColHeightBelowGround = new javax.swing.JLabel();
+        dwgColHeightAboveGround = new javax.swing.JLabel();
+        dwgWaterTableDepth1 = new javax.swing.JLabel();
+        dwgWaterTableDepth2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -218,6 +295,7 @@ public class SoilReportView extends javax.swing.JFrame {
 
         tfCohesion.setText("8");
 
+        buttonGroup1.add(rbYes);
         rbYes.setText("Yes");
         rbYes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -225,6 +303,7 @@ public class SoilReportView extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup1.add(rbNo);
         rbNo.setText("No");
 
         depthOfWaterTable.setText("Depth of Water Table (m)  : ");
@@ -347,7 +426,7 @@ public class SoilReportView extends javax.swing.JFrame {
                     .addComponent(UnitWeightOfWater)
                     .addComponent(gammaWat)
                     .addComponent(jLabel38))
-                .addContainerGap(177, Short.MAX_VALUE))
+                .addContainerGap(225, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Soil Report Details", jPanel1);
@@ -409,6 +488,89 @@ public class SoilReportView extends javax.swing.JFrame {
 
         jLabel24.setText("kN/m3");
 
+        dwgWaterTableDepth.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        dwgWaterTableDepth.setText("jLabel59");
+
+        dwgFootingWidth.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dwgFootingWidth.setText("jLabel59");
+
+        dwgColWidth.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dwgColWidth.setText("jLabel59");
+
+        dwgFootingHeight.setText("jLabel59");
+
+        dwgColHeightBelowGround.setText("jLabel59");
+
+        dwgColHeightAboveGround.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        dwgColHeightAboveGround.setText("jLabel59");
+
+        dwgWaterTableDepth1.setFont(new java.awt.Font("Segoe UI", 3, 10)); // NOI18N
+        dwgWaterTableDepth1.setText("Ground Level");
+
+        dwgWaterTableDepth2.setFont(new java.awt.Font("Segoe UI", 3, 10)); // NOI18N
+        dwgWaterTableDepth2.setText("G.W.T");
+
+        javax.swing.GroupLayout ImagePanelLayout = new javax.swing.GroupLayout(ImagePanel);
+        ImagePanel.setLayout(ImagePanelLayout);
+        ImagePanelLayout.setHorizontalGroup(
+            ImagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ImagePanelLayout.createSequentialGroup()
+                .addGroup(ImagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ImagePanelLayout.createSequentialGroup()
+                        .addGap(147, 147, 147)
+                        .addComponent(dwgColHeightAboveGround))
+                    .addGroup(ImagePanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(dwgFootingHeight, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(ImagePanelLayout.createSequentialGroup()
+                        .addGap(235, 235, 235)
+                        .addComponent(dwgFootingWidth)))
+                .addContainerGap(238, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ImagePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(ImagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ImagePanelLayout.createSequentialGroup()
+                        .addComponent(dwgColHeightBelowGround)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(dwgWaterTableDepth1)
+                        .addGap(16, 16, 16))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ImagePanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(ImagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ImagePanelLayout.createSequentialGroup()
+                                .addComponent(dwgWaterTableDepth)
+                                .addGap(14, 14, 14))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ImagePanelLayout.createSequentialGroup()
+                                .addComponent(dwgColWidth)
+                                .addGap(230, 230, 230))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ImagePanelLayout.createSequentialGroup()
+                                .addComponent(dwgWaterTableDepth2)
+                                .addGap(40, 40, 40))))))
+        );
+        ImagePanelLayout.setVerticalGroup(
+            ImagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ImagePanelLayout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(dwgColWidth)
+                .addGap(13, 13, 13)
+                .addComponent(dwgColHeightAboveGround)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addComponent(dwgColHeightBelowGround)
+                .addGap(105, 105, 105)
+                .addComponent(dwgFootingHeight)
+                .addGap(25, 25, 25)
+                .addComponent(dwgFootingWidth)
+                .addGap(37, 37, 37))
+            .addGroup(ImagePanelLayout.createSequentialGroup()
+                .addGap(111, 111, 111)
+                .addComponent(dwgWaterTableDepth1)
+                .addGap(27, 27, 27)
+                .addComponent(dwgWaterTableDepth)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(dwgWaterTableDepth2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -434,14 +596,6 @@ public class SoilReportView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel14))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(sideLenghtOfFooting, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel15))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(heightOfFooting, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel16))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(sideLenghtOfColumn, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel17))
@@ -456,48 +610,61 @@ public class SoilReportView extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(columnHeightBelowGround, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel23)))
-                .addContainerGap(740, Short.MAX_VALUE))
+                        .addComponent(jLabel23))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(sideLenghtOfFooting, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel15))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(heightOfFooting, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel16)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 315, Short.MAX_VALUE)
+                .addComponent(ImagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(132, 132, 132))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(foundationDepth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(sideLenghtOfFooting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(heightOfFooting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel16))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(sideLenghtOfColumn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel17))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(columnHeightAboveGround, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel22))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(columnHeightBelowGround, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel23)
-                    .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(unitWeightOfConcrete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel24))
-                .addContainerGap(264, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ImagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(foundationDepth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel14))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(sideLenghtOfFooting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(heightOfFooting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel16))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(sideLenghtOfColumn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel17))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(columnHeightAboveGround, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel22))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(columnHeightBelowGround, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel23)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(unitWeightOfConcrete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel24))))
+                .addContainerGap(127, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Foundation Geometry", jPanel2);
@@ -615,7 +782,7 @@ public class SoilReportView extends javax.swing.JFrame {
                     .addComponent(jLabel30)
                     .addComponent(jLabel31)
                     .addComponent(jLabel32))
-                .addContainerGap(715, Short.MAX_VALUE))
+                .addContainerGap(940, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -668,7 +835,7 @@ public class SoilReportView extends javax.swing.JFrame {
                     .addComponent(jLabel21)
                     .addComponent(txtUlsHorizntalLongitudinalForce, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel32))
-                .addContainerGap(145, Short.MAX_VALUE))
+                .addContainerGap(193, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Loads", jPanel3);
@@ -692,7 +859,7 @@ public class SoilReportView extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(209, 209, 209)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblFosUprooting, javax.swing.GroupLayout.DEFAULT_SIZE, 867, Short.MAX_VALUE)
+                    .addComponent(lblFosUprooting, javax.swing.GroupLayout.DEFAULT_SIZE, 1053, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblFosOverturning)
@@ -711,7 +878,7 @@ public class SoilReportView extends javax.swing.JFrame {
                 .addComponent(lblFosSliding)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblFosOverturning)
-                .addContainerGap(311, Short.MAX_VALUE))
+                .addContainerGap(359, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Check Stability", jPanel4);
@@ -756,8 +923,10 @@ public class SoilReportView extends javax.swing.JFrame {
             }
         });
 
+        jLabel48.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel48.setText("Compressive Reinforcement");
 
+        jLabel49.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel49.setText("Tensile Reinforcement");
 
         lblAsReqComForSagging.setText("--");
@@ -767,18 +936,25 @@ public class SoilReportView extends javax.swing.JFrame {
         lblProvComRfConfigForSagging.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         lblProvComRfConfigForSagging.setText("--");
 
+        jLabel51.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel51.setText("Sagging");
 
+        jLabel52.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel52.setText("Hogging");
 
+        jLabel53.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel53.setText("Shear");
 
+        jLabel54.setFont(new java.awt.Font("Segoe UI", 3, 10)); // NOI18N
         jLabel54.setText("As Required");
 
+        jLabel55.setFont(new java.awt.Font("Segoe UI", 3, 10)); // NOI18N
         jLabel55.setText("As Provided");
 
+        jLabel56.setFont(new java.awt.Font("Segoe UI", 3, 10)); // NOI18N
         jLabel56.setText("As Required");
 
+        jLabel57.setFont(new java.awt.Font("Segoe UI", 3, 10)); // NOI18N
         jLabel57.setText("As Provided");
 
         lblAsProvComForHogging.setText("--");
@@ -788,6 +964,7 @@ public class SoilReportView extends javax.swing.JFrame {
 
         lblAsReqComForHogging.setText("--");
 
+        jLabel58.setFont(new java.awt.Font("Segoe UI", 3, 10)); // NOI18N
         jLabel58.setText("Asv Required");
 
         lblAsReqTensForSagging.setText("--");
@@ -806,6 +983,7 @@ public class SoilReportView extends javax.swing.JFrame {
 
         lblAsvReq.setText("--");
 
+        lblShearRefConfig.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         lblShearRefConfig.setText("--");
 
         txtNoOfLegs.setText("2");
@@ -975,7 +1153,7 @@ public class SoilReportView extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblProvTensRfConfigForSagging)
                     .addComponent(lblProvTensRfConfigForHogging))
-                .addContainerGap(142, Short.MAX_VALUE))
+                .addContainerGap(192, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Reinforcement Details", jPanel5);
@@ -1030,6 +1208,7 @@ public class SoilReportView extends javax.swing.JFrame {
         reinforcementDesign();// TODO add your handling code here:
     }//GEN-LAST:event_btnRfDesignActionPerformed
 
+    
     /**
      * @param args the command line arguments
      */
@@ -1066,6 +1245,7 @@ public class SoilReportView extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel ImagePanel;
     private javax.swing.JLabel SaturatedUnitWeightOfSoil;
     private javax.swing.JLabel UnitWeightOfWater;
     private javax.swing.JLabel bearingCapacity;
@@ -1077,6 +1257,14 @@ public class SoilReportView extends javax.swing.JFrame {
     private javax.swing.JTextField columnHeightAboveGround;
     private javax.swing.JTextField columnHeightBelowGround;
     private javax.swing.JLabel depthOfWaterTable;
+    private javax.swing.JLabel dwgColHeightAboveGround;
+    private javax.swing.JLabel dwgColHeightBelowGround;
+    private javax.swing.JLabel dwgColWidth;
+    private javax.swing.JLabel dwgFootingHeight;
+    private javax.swing.JLabel dwgFootingWidth;
+    private javax.swing.JLabel dwgWaterTableDepth;
+    private javax.swing.JLabel dwgWaterTableDepth1;
+    private javax.swing.JLabel dwgWaterTableDepth2;
     private javax.swing.JTextField foundationDepth;
     private javax.swing.JLabel frictionAngleConcreteAndSoil;
     private javax.swing.JLabel gammaWat;
@@ -1195,7 +1383,48 @@ public class SoilReportView extends javax.swing.JFrame {
     private javax.swing.JLabel waterTableLocation;
     // End of variables declaration//GEN-END:variables
     
-     private void performStabilityCheck() {
+    private void setDrawingDimentions(){
+        dwgColHeightAboveGround.setText(columnHeightAboveGround.getText()+"m");
+        dwgColHeightBelowGround.setText(columnHeightBelowGround.getText()+"m");
+        dwgColWidth.setText(sideLenghtOfColumn.getText()+"m");
+        dwgFootingWidth.setText(sideLenghtOfFooting.getText()+"m");
+        dwgWaterTableDepth.setText(tfWaterTableDepth.getText()+"m");
+        dwgFootingHeight.setText(heightOfFooting.getText()+"m");
+        
+        
+    }
+    
+    private void addInputListeners() {
+        addDocumentListener(columnHeightAboveGround);
+        addDocumentListener(columnHeightBelowGround);
+        addDocumentListener(sideLenghtOfColumn);
+        addDocumentListener(sideLenghtOfFooting);
+        addDocumentListener(tfWaterTableDepth);
+        addDocumentListener(heightOfFooting);
+    }
+
+    private void addDocumentListener(JTextField textField) {
+        textField.getDocument().addDocumentListener(new DocumentListener() {
+           
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                setDrawingDimentions();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                setDrawingDimentions();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                setDrawingDimentions();
+            }
+        });
+    }
+    
+    
+    private void performStabilityCheck() {
         SoilPropertiesNewDto dto = new SoilPropertiesNewDto();
         dto.setBearingCapacity(Double.parseDouble(tfBearignCapacity.getText()));
         //dto.setBreadthOfColumn(Double.parseDouble(tfBearignCapacity.getText()));

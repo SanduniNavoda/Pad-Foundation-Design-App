@@ -170,7 +170,7 @@ public class DesignForBendingServiceImpl implements DesignForBendingService{
         }
         
         // otherwise, spacing is valid
-        return "T" + diameter+ "@" + spacing + "C/C";
+        return "T" + (int)diameter+ "@" + spacing + "C/C";
         
     } 
     

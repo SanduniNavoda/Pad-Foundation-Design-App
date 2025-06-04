@@ -132,6 +132,6 @@ public class ShearReinforcementCalculatorUtil {
         if (roundedSpacing > 300) roundedSpacing = 300;
         if (roundedSpacing < 75) roundedSpacing = 75;
 
-        return numLegs + "T" + barDiameter + "@" + roundedSpacing;
+        return numLegs + "T" + (int)barDiameter + "@" + roundedSpacing;
     }
 }
