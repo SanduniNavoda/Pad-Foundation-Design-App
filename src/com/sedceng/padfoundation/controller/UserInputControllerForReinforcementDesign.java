@@ -27,7 +27,8 @@ public class UserInputControllerForReinforcementDesign {
         
 
     public double CompressiveRfRequirementForSagging(FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ReinforcementDto rfDto, UltimateLoadsDto loadsDto, SoilPressureCalculatorUtil soilCalculator, ReinforcementCalculatorUtil rfCal) throws Exception{
-        double axialCompressiveForce = loadsDto.getCompressiveForce() + geometryDto.calculateWeightOfFoundation();
+        double axialCompressiveForce = loadsDto.getCompressiveForce();
+        System.out.println(axialCompressiveForce);
         return designForBendingService.compressionReinforcementRequirement(soilDto, rfDto, geometryDto, soilCalculator, loadsDto, rfCal, axialCompressiveForce);
     }
     
@@ -36,7 +37,7 @@ public class UserInputControllerForReinforcementDesign {
     }
     
     public String compressiveRfDesignForSagging(FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ReinforcementDto rfDto, UltimateLoadsDto loadsDto, SoilPressureCalculatorUtil soilCalculator, ReinforcementCalculatorUtil rfCal) throws Exception{
-        double axialCompressiveForce = loadsDto.getCompressiveForce() + geometryDto.calculateWeightOfFoundation();
+        double axialCompressiveForce = loadsDto.getCompressiveForce();
         double asRequired = designForBendingService.compressionReinforcementRequirement(soilDto, rfDto, geometryDto, soilCalculator, loadsDto, rfCal, axialCompressiveForce);
         if(asRequired > 0){
             return designForBendingService.TensionOrCompressionReinforcement(asRequired, rfDto, geometryDto, rfCal);
@@ -51,7 +52,7 @@ public class UserInputControllerForReinforcementDesign {
     }
     
     public String compressiveRfDesignForHogging(FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ReinforcementDto rfDto, UltimateLoadsDto loadsDto, SoilPressureCalculatorUtil soilCalculator, ReinforcementCalculatorUtil rfCal) throws Exception{
-        double axialTensileForce = loadsDto.getTensileForce() - geometryDto.calculateWeightOfFoundation();
+        double axialTensileForce = loadsDto.getTensileForce();
         double asRequired =  designForBendingService.compressionReinforcementRequirement(soilDto, rfDto, geometryDto, soilCalculator, loadsDto, rfCal, axialTensileForce);
         if(asRequired > 0){
             return designForBendingService.TensionOrCompressionReinforcement(asRequired, rfDto, geometryDto, rfCal);
@@ -63,13 +64,13 @@ public class UserInputControllerForReinforcementDesign {
     //Tensile Reinforcement Design
     
     public double tensileRfRequirementForSagging(FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ReinforcementDto rfDto, UltimateLoadsDto loadsDto, SoilPressureCalculatorUtil soilCalculator, ReinforcementCalculatorUtil rfCal) throws Exception{
-        double axialCompressiveForce = loadsDto.getCompressiveForce() + geometryDto.calculateWeightOfFoundation();
+        double axialCompressiveForce = loadsDto.getCompressiveForce();
         double asDash = designForBendingService.compressionReinforcementRequirement(soilDto, rfDto, geometryDto, soilCalculator, loadsDto, rfCal, axialCompressiveForce);
         return designForBendingService.tensionReinforcementRequirement(soilDto, rfDto, geometryDto, soilCalculator, loadsDto, rfCal, axialCompressiveForce, asDash);
     }
     
     public String tensileRfDesignForSagging(FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ReinforcementDto rfDto, UltimateLoadsDto loadsDto, SoilPressureCalculatorUtil soilCalculator, ReinforcementCalculatorUtil rfCal) throws Exception{
-        double axialCompressiveForce = loadsDto.getCompressiveForce() + geometryDto.calculateWeightOfFoundation();
+        double axialCompressiveForce = loadsDto.getCompressiveForce();
         double asDash = designForBendingService.compressionReinforcementRequirement(soilDto, rfDto, geometryDto, soilCalculator, loadsDto, rfCal, axialCompressiveForce);
         double asRequired = designForBendingService.tensionReinforcementRequirement(soilDto, rfDto, geometryDto, soilCalculator, loadsDto, rfCal, axialCompressiveForce, asDash);
         
@@ -78,13 +79,13 @@ public class UserInputControllerForReinforcementDesign {
     }
     
     public double tensileRfRequirementForHogging(FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ReinforcementDto rfDto, UltimateLoadsDto loadsDto, SoilPressureCalculatorUtil soilCalculator, ReinforcementCalculatorUtil rfCal) throws Exception{
-        double axialTensileForce = loadsDto.getTensileForce() - geometryDto.calculateWeightOfFoundation();
+        double axialTensileForce = loadsDto.getTensileForce();
         double asDash = designForBendingService.compressionReinforcementRequirement(soilDto, rfDto, geometryDto, soilCalculator, loadsDto, rfCal, axialTensileForce);
         return designForBendingService.tensionReinforcementRequirement(soilDto, rfDto, geometryDto, soilCalculator, loadsDto, rfCal, axialTensileForce, asDash);
     }
     
     public String tensileRfDesignForHogging(FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ReinforcementDto rfDto, UltimateLoadsDto loadsDto, SoilPressureCalculatorUtil soilCalculator, ReinforcementCalculatorUtil rfCal) throws Exception{
-        double axialTensileForce = loadsDto.getTensileForce() - geometryDto.calculateWeightOfFoundation();
+        double axialTensileForce = loadsDto.getTensileForce();
         double asDash = designForBendingService.compressionReinforcementRequirement(soilDto, rfDto, geometryDto, soilCalculator, loadsDto, rfCal, axialTensileForce);
         double asRequired = designForBendingService.tensionReinforcementRequirement(soilDto, rfDto, geometryDto, soilCalculator, loadsDto, rfCal, axialTensileForce, asDash);
         

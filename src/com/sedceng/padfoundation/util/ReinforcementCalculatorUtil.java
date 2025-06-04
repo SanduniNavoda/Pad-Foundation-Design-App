@@ -34,7 +34,7 @@ public class ReinforcementCalculatorUtil {
     public double dDash(){
         double cover = rfDto.getClearCover();
         double barDia = rfDto.getBarDiameter();
-        return cover - 0.5 * barDia;
+        return cover + 0.5 * barDia;
     }
     
     

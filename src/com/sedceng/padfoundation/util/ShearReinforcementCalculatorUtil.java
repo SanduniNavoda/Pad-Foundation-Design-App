@@ -28,26 +28,53 @@ public class ShearReinforcementCalculatorUtil {
     };
 
     public double getVc(double asInput, double depthInput) {
-        // Clamp asOverBvd
+        int lastCol = DEPTHS.length - 1;
+
+        // Handle asInput ≤ 0.15 (use first row only)
         if (asInput <= AS_OVER_BVD[0]) {
-            return interpolateDepthOnly(0, depthInput);
-        }
-        if (asInput >= AS_OVER_BVD[AS_OVER_BVD.length - 1]) {
-            return interpolateDepthOnly(AS_OVER_BVD.length - 1, depthInput);
+            // Clamp depth between two columns
+            int leftCol = 0;
+            while (leftCol < lastCol && DEPTHS[leftCol + 1] < depthInput) {
+                leftCol++;
+            }
+
+            int rightCol = Math.min(leftCol + 1, lastCol);
+            double y1 = DEPTHS[leftCol];
+            double y2 = DEPTHS[rightCol];
+
+            double Q1 = VC_VALUES[0][leftCol];
+            double Q2 = VC_VALUES[0][rightCol];
+
+            if (y2 == y1) {
+                return Q1;
+            }
+            return Q1 + (Q2 - Q1) * ((depthInput - y1) / (y2 - y1));
         }
 
-        // Clamp depth
-        if (depthInput <= DEPTHS[0]) depthInput = DEPTHS[0];
-        if (depthInput >= DEPTHS[DEPTHS.length - 1]) depthInput = DEPTHS[DEPTHS.length - 1];
-
+        // Find row indices
         int lowerRow = 0;
-        while (AS_OVER_BVD[lowerRow + 1] < asInput) {
+        while (lowerRow + 1 < AS_OVER_BVD.length && AS_OVER_BVD[lowerRow + 1] < asInput) {
             lowerRow++;
         }
-        int upperRow = lowerRow + 1;
+        int upperRow = Math.min(lowerRow + 1, AS_OVER_BVD.length - 1);
 
+        // For depth > 400: use last column, vertical interpolation only
+        if (depthInput >= DEPTHS[lastCol]) {
+            double x1 = AS_OVER_BVD[lowerRow];
+            double x2 = AS_OVER_BVD[upperRow];
+
+            double Q1 = VC_VALUES[lowerRow][lastCol];
+            double Q2 = VC_VALUES[upperRow][lastCol];
+
+            if (x2 == x1) {
+                return Q1;
+            }
+            return Q1 + (Q2 - Q1) * ((asInput - x1) / (x2 - x1));
+        }
+
+        // Otherwise, do bilinear interpolation
         int leftCol = 0;
-        while (DEPTHS[leftCol + 1] < depthInput) {
+        while (leftCol + 1 < DEPTHS.length && DEPTHS[leftCol + 1] < depthInput) {
             leftCol++;
         }
         int rightCol = leftCol + 1;
@@ -62,16 +89,14 @@ public class ShearReinforcementCalculatorUtil {
         double Q21 = VC_VALUES[upperRow][leftCol];
         double Q22 = VC_VALUES[upperRow][rightCol];
 
-        // Bilinear interpolation
         double denom = (x2 - x1) * (y2 - y1);
-        double vc = 1.0 / denom * (
-                Q11 * (x2 - asInput) * (y2 - depthInput) +
-                Q21 * (asInput - x1) * (y2 - depthInput) +
-                Q12 * (x2 - asInput) * (depthInput - y1) +
-                Q22 * (asInput - x1) * (depthInput - y1)
-        );
-
-        return vc;
+        if (denom == 0) {
+            return Q11; // avoid division by zero
+        }
+        return 1.0 / denom * (Q11 * (x2 - asInput) * (y2 - depthInput)
+                + Q21 * (asInput - x1) * (y2 - depthInput)
+                + Q12 * (x2 - asInput) * (depthInput - y1)
+                + Q22 * (asInput - x1) * (depthInput - y1));
     }
 
     // Interpolate only across depth row (used for ≤0.15 or ≥3.00)

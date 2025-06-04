@@ -32,13 +32,13 @@ public class DesignForBendingServiceImpl implements DesignForBendingService{
         double hc_bg = geometry.getColumnHeightBelowGround();
         double sigmaC;
         if (d > h){
-            sigmaC = axialForce/wf*wf;
+            sigmaC = axialForce/(wf*wf);
         }else{
-            sigmaC = (axialForce + u)/wf*wf;
+            sigmaC = (axialForce + u)/(wf*wf);
         }
         
-        double sigmaCDashVl = (vl*(hc_ag + hc_bg))/(wf*wf*wf);
-        double sigmaCDashVt = (vt*(hc_ag + hc_bg))/(wf*wf*wf);
+        double sigmaCDashVl = (12*vl*(hc_ag + hc_bg))/(2*wf*wf*wf);
+        double sigmaCDashVt = (12*vt*(hc_ag + hc_bg))/(2*wf*wf*wf);
         
         double sigmaMin = sigmaC - sigmaCDashVl - sigmaCDashVt;
         double sigmaMax = sigmaC + sigmaCDashVl + sigmaCDashVt;
@@ -46,7 +46,7 @@ public class DesignForBendingServiceImpl implements DesignForBendingService{
         double y = (wf - wc)*0.5;
         double sigmaCr = sigmaMin + (sigmaMax - sigmaMin)*(wf - y)/wf;
         
-        double forceAtCriticalPortion = 0.5 * (sigmaCr + sigmaMax) * wf * (wf - y);
+        double forceAtCriticalPortion = 0.5 * (sigmaCr + sigmaMax) * y * wf;
         double distanceFromFaceOfColumn = (2*y/3) * ((2*sigmaCr + sigmaMax)/(sigmaCr + sigmaMax));
         
         return forceAtCriticalPortion * distanceFromFaceOfColumn;
@@ -73,7 +73,7 @@ public class DesignForBendingServiceImpl implements DesignForBendingService{
         if (k > kDash){
             z = d * (0.5 + Math.sqrt(0.25 - (kDash)/0.9));
         }else {
-            z = d * (0.5 + Math.sqrt(0.25 - k/0.9));
+            z = d * (0.5 + Math.sqrt(0.25 - (k/0.9)));
             if (z > (0.95 * d)){
                 z = 0.95 * d;
             }
@@ -180,7 +180,7 @@ public class DesignForBendingServiceImpl implements DesignForBendingService{
             ReinforcementDto rfDto, 
             FoundationGeometryDto geometry, 
             ReinforcementCalculatorUtil rfUtil){
-        
+        if (asRequired == 0) return 0;
         double diameter = rfDto.getBarDiameter();//in mm
         double footingLength = 1000 * geometry.getSideLengthOfFooting();//mm
         double footingHeight = 1000 * geometry.getHeightOfFooting();//mm

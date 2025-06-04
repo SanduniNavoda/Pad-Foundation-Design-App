@@ -169,7 +169,7 @@
                           <Component id="gammaWat" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel38" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="68" max="32767" attributes="0"/>
+                      <EmptySpace pref="177" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -376,7 +376,7 @@
                               <Component id="jLabel23" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="440" max="32767" attributes="0"/>
+                      <EmptySpace pref="740" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -425,7 +425,7 @@
                           <Component id="unitWeightOfConcrete" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel24" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="155" max="32767" attributes="0"/>
+                      <EmptySpace pref="264" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -570,7 +570,7 @@
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="txtUlsCompressiveForce1" alignment="0" min="-2" pref="71" max="-2" attributes="0"/>
+                                  <Component id="txtUlsCompressiveForce" alignment="0" min="-2" pref="71" max="-2" attributes="0"/>
                                   <Component id="txtUlsTensileForce" alignment="0" min="-2" pref="71" max="-2" attributes="0"/>
                                   <Component id="txtUlsHorizontalTransverseForce" alignment="0" min="-2" pref="71" max="-2" attributes="0"/>
                                   <Component id="txtUlsHorizntalLongitudinalForce" alignment="0" min="-2" pref="71" max="-2" attributes="0"/>
@@ -619,7 +619,7 @@
                           <Component id="jLabel31" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel32" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="415" max="32767" attributes="0"/>
+                      <EmptySpace pref="715" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -661,7 +661,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtUlsCompressiveForce1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtUlsCompressiveForce" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel29" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -684,7 +684,7 @@
                           <Component id="txtUlsHorizntalLongitudinalForce" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel32" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="36" max="32767" attributes="0"/>
+                      <EmptySpace pref="145" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -745,7 +745,7 @@
                 <Property name="text" type="java.lang.String" value="63"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtUlsCompressiveForce1">
+            <Component class="javax.swing.JTextField" name="txtUlsCompressiveForce">
               <Properties>
                 <Property name="text" type="java.lang.String" value="1502"/>
               </Properties>
@@ -842,15 +842,72 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="737" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="209" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblFosUprooting" pref="867" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="lblFosOverturning" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblFosSliding" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblFosBearing" min="-2" pref="515" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="371" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+                      <Component id="lblFosBearing" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblFosUprooting" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblFosSliding" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblFosOverturning" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="311" max="32767" attributes="0"/>
+                  </Group>
               </Group>
             </DimensionLayout>
           </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="lblFosBearing">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="18" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="jLabel59"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblFosUprooting">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="18" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="jLabel59"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblFosSliding">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="18" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="jLabel59"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblFosOverturning">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="18" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="jLabel59"/>
+              </Properties>
+            </Component>
+          </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanel5">
           <Constraints>
@@ -925,44 +982,50 @@
                                   <Component id="lblAsReqComForSagging" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jLabel55" max="32767" attributes="0"/>
-                                  <Component id="lblAsProvComForSagging" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblProvComRfConfigForSagging" alignment="0" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="jLabel55" max="32767" attributes="0"/>
+                                      <Component id="lblAsProvComForSagging" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="lblAsProvTensForSagging" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
                                   <Component id="lblProvTensRfConfigForSagging" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="lblAsProvTensForSagging" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblProvComRfConfigForSagging" alignment="0" min="-2" pref="224" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="lblAsReqComForHogging" alignment="0" min="-2" pref="43" max="-2" attributes="0"/>
                                           <Component id="jLabel56" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel52" alignment="0" min="-2" pref="47" max="-2" attributes="0"/>
                                           <Component id="lblAsReqTensForHogging" alignment="0" min="-2" pref="43" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lblAsProvComForHogging" min="-2" pref="43" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Component id="jLabel57" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lblProvComRfConfigForHogging" min="-2" pref="43" max="-2" attributes="0"/>
-                                          <Component id="lblProvTensRfConfigForHogging" min="-2" pref="43" max="-2" attributes="0"/>
-                                          <Component id="lblAsProvTensForHogging" min="-2" pref="43" max="-2" attributes="0"/>
+                                          <Component id="lblProvComRfConfigForHogging" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="lblProvTensRfConfigForHogging" alignment="0" pref="190" max="32767" attributes="0"/>
+                                          <Component id="lblAsProvComForHogging" alignment="0" min="-2" pref="77" max="-2" attributes="0"/>
+                                          <Component id="lblAsProvTensForHogging" alignment="0" min="-2" pref="79" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <Component id="btnRfDesign" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="jLabel52" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="btnRfDesign" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                           <Component id="jLabel51" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="43" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblShearRefConfig" min="-2" pref="107" max="-2" attributes="0"/>
                           <Component id="jLabel53" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel58" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblAsvReq" min="-2" pref="43" max="-2" attributes="0"/>
-                          <Component id="lblShearRefConfig" min="-2" pref="43" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="lblAsvReq" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jLabel58" alignment="0" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="113" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1061,7 +1124,7 @@
                           <Component id="lblProvTensRfConfigForSagging" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblProvTensRfConfigForHogging" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="31" max="32767" attributes="0"/>
+                      <EmptySpace pref="142" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1160,17 +1223,20 @@
             </Component>
             <Component class="javax.swing.JLabel" name="lblAsReqComForSagging">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel51"/>
+                <Property name="text" type="java.lang.String" value="--"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblAsProvComForSagging">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel51"/>
+                <Property name="text" type="java.lang.String" value="--"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblProvComRfConfigForSagging">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel51"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="10" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="--"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel51">
@@ -1210,17 +1276,20 @@
             </Component>
             <Component class="javax.swing.JLabel" name="lblAsProvComForHogging">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel51"/>
+                <Property name="text" type="java.lang.String" value="--"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblProvComRfConfigForHogging">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel51"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="10" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="--"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblAsReqComForHogging">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel51"/>
+                <Property name="text" type="java.lang.String" value="--"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel58">
@@ -1230,42 +1299,48 @@
             </Component>
             <Component class="javax.swing.JLabel" name="lblAsReqTensForSagging">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel51"/>
+                <Property name="text" type="java.lang.String" value="--"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblProvTensRfConfigForSagging">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel51"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="10" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="--"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblAsProvTensForSagging">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel51"/>
+                <Property name="text" type="java.lang.String" value="--"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblAsReqTensForHogging">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel51"/>
+                <Property name="text" type="java.lang.String" value="--"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblProvTensRfConfigForHogging">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel51"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="10" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="--"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblAsProvTensForHogging">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel51"/>
+                <Property name="text" type="java.lang.String" value="--"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblAsvReq">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel51"/>
+                <Property name="text" type="java.lang.String" value="--"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblShearRefConfig">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel51"/>
+                <Property name="text" type="java.lang.String" value="--"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtNoOfLegs">

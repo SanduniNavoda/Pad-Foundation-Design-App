@@ -35,19 +35,19 @@ public class DesignForOneWayShearServiceImpl implements DesignForOneWayShearServ
         double fcu = geometry.getUnitWeightOfConcrete();
         double sigmaC;
         if (d > h){
-            sigmaC = axialForce/wf*wf;
+            sigmaC = axialForce/(wf*wf);
         }else{
-            sigmaC = (axialForce + u)/wf*wf;
+            sigmaC = (axialForce + u)/(wf*wf);
         }
         
-        double sigmaCDashVl = (vl*(hc_ag + hc_bg))/(wf*wf*wf);
-        double sigmaCDashVt = (vt*(hc_ag + hc_bg))/(wf*wf*wf);
+        double sigmaCDashVl = (12*vl*(hc_ag + hc_bg))/(2*wf*wf*wf);
+        double sigmaCDashVt = (12*vt*(hc_ag + hc_bg))/(2*wf*wf*wf);
         
         double sigmaMin = sigmaC - sigmaCDashVl - sigmaCDashVt;
         double sigmaMax = sigmaC + sigmaCDashVl + sigmaCDashVt;
         
         double effectiveDepth = rfUtil.calculateEffectiveDepth();
-        double a = (wf - wc)*0.5 - effectiveDepth;
+        double a = (wf - wc)*0.5 - effectiveDepth/1000;
         double sigmaCr = sigmaMin + (sigmaMax - sigmaMin)*(wf - a)/wf;
         
         double shearForce = sigmaCr*wf*a;

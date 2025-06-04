@@ -41,9 +41,9 @@ public class DesignForPunchingShearServiceImpl implements DesignForPunchingShear
         
         double sigmaC;
         if (d > h){
-            sigmaC = axialForce/wf*wf;
+            sigmaC = axialForce/(wf*wf);
         }else{
-            sigmaC = (axialForce + u)/wf*wf;
+            sigmaC = (axialForce + u)/(wf*wf);
         }
         
         double sigmaCDashVl = (vl*(hc_ag + hc_bg))/(wf*wf*wf);
