@@ -34,13 +34,19 @@ public class FoundationGeometryDto {
         this.unitWeightOfConcrete = unitWeightOfConcrete;
     }
     
-    public List<String> getReportLines() {
-        List<String> lines = new ArrayList<>();
-        lines.add("Footing Side Length: " + sideLengthOfFooting + " m");
-        lines.add("Height of The Footing: " + heightOfFooting + " m");
-        lines.add("Unit Weight of Concrete: " + unitWeightOfConcrete);
-        // Add more as needed
-        return lines;
+    public List<String[]> getReportLines() {
+//        List<String> lines = new ArrayList<>();
+//        lines.add("Footing Side Length: " + sideLengthOfFooting + " m");
+//        lines.add("Height of The Footing: " + heightOfFooting + " m");
+//        lines.add("Unit Weight of Concrete: " + unitWeightOfConcrete);
+//        // Add more as needed
+//        return lines;
+        List<String[]> data = new ArrayList<>();
+        data.add(new String[]{"Footing Side Length", ":", sideLengthOfFooting + " m"});
+        data.add(new String[]{"Height of The Footing", ":", heightOfFooting + " m"});
+        data.add(new String[]{"Unit Weight of Concrete", ":", unitWeightOfConcrete + "kN/m3"});
+        // Add more rows as needed
+        return data;
     }
 
     /**

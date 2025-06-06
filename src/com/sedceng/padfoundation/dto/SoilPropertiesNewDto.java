@@ -4,6 +4,9 @@
  */
 package com.sedceng.padfoundation.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  *
@@ -33,6 +36,22 @@ public class SoilPropertiesNewDto {
         this.cohesion = cohesion;
         this.waterTableDepth = waterTableDepth;
         this.kp = Math.pow(Math.tan(Math.toRadians(45+(internalFrictionAngle/2))), 2);
+    }
+    
+    public List<String[]> getReportLines() {
+
+        List<String[]> data = new ArrayList<>();
+        data.add(new String[]{"Material Properties"});
+        data.add(new String[]{"Following Engineering Parameters was recommended for  the soil in the provided Geo Investigation Report "});
+        data.add(new String[]{"Effective soil Angle of Internal Friction (Ø’)", ":", internalFrictionAngle + ""});
+        data.add(new String[]{"Friction angle between concrete foundation and soil (δ)", ":", frictionAngleWithFoundation + ""});
+        data.add(new String[]{"Safe bearing capacity of Soil", ":", bearingCapacity + "kN/m2"});
+        data.add(new String[]{"Effective soil Cohesion/ Adhesion (c’) (kN/m2)", ":", cohesion + ""});
+        data.add(new String[]{"Bulk unit weight of soil", ":", bulkUnitWeight + "kN/m3"});
+        data.add(new String[]{"Saturated unit weight of soil", ":", saturatedUnitWeight + "kN/m3"});
+        data.add(new String[]{"Depth of water table from ground level", ":", waterTableDepth + "kN/m3"});
+        // Add more rows as needed
+        return data;
     }
 
     /**

@@ -114,7 +114,7 @@ public class SoilReportView extends javax.swing.JFrame {
         
         btnGetReport.addActionListener(e -> {
 
-            ReportFrame report = new ReportFrame(geometryDto, slidingDto);
+            ReportFrame report = new ReportFrame(geometryDto, slidingDto, soilDto);
             report.setVisible(true);
         });
     }

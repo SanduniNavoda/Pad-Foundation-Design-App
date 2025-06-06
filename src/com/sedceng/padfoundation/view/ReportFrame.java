@@ -6,11 +6,13 @@ package com.sedceng.padfoundation.view;
 
 import com.sedceng.padfoundation.dto.FoundationGeometryDto;
 import com.sedceng.padfoundation.dto.SlidingDto;
+import com.sedceng.padfoundation.dto.SoilPropertiesNewDto;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -18,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -30,7 +33,7 @@ public class ReportFrame extends javax.swing.JFrame {
      * @param geometryDto
      * @param slidingDto
      */
-    public ReportFrame(FoundationGeometryDto geometryDto, SlidingDto slidingDto) {
+    public ReportFrame(FoundationGeometryDto geometryDto, SlidingDto slidingDto, SoilPropertiesNewDto soilDto) {
         initComponents();
         
         setTitle("Report");
@@ -38,23 +41,34 @@ public class ReportFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        reportArea.setEditable(false);
-        reportArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
+//        reportArea.setEditable(false);
+//        reportArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
+//
+//        StringBuilder report = new StringBuilder();
+//        report.append("----- Foundation Report -----\n");
+//
+//        for (String line : geometryDto.getReportLines()) {
+//            report.append(line).append("\n");
+//        }
+//
+//        reportArea.setText(report.toString());
+//        
+//         DefaultTableModel model = new DefaultTableModel(
+//                new Object[][]{
+//                    {"Footing Side Length", geometryDto.getSideLengthOfFooting() + " m"},
+//                    {"Footing Depth", geometryDto.getHeightOfFooting() + " m"}
+//                },
+//                new String[]{"Parameter", "Value"}
+//        );
+         
+        List<String[]> reportData = soilDto.getReportLines(); // or any dto.getReportLines()
+        DefaultTableModel model = new DefaultTableModel(new String[]{"Parameter", "", "Value"}, 0);
 
-        StringBuilder report = new StringBuilder();
-        report.append("----- Foundation Report -----\n");
-//        report.append("Bar Diameter: ").append(rfDto.getBarDiameter()).append(" mm\n");
-//        report.append("Footing Side Length: ").append(geometryDto.getSideLengthOfFooting()).append(" m\n");
-//        report.append("Effective Depth (d): ").append(rfDto.getEffectiveDepth()).append(" mm\n");
-//        report.append("Required Area of Steel (As): ").append(String.format("%.2f", asRequired)).append(" mm²\n");
-//        report.append("Column Height: ").append(columnHeight).append(" mm\n");
-//        // Add more fields as needed
-        for (String line : geometryDto.getReportLines()) {
-            report.append(line).append("\n");
+        for (String[] row : reportData) {
+            model.addRow(row);
         }
 
-        reportArea.setText(report.toString());
-        
+        reportTable.setModel(model);
 
 //        JButton saveButton = new JButton("Save Report");
 //        saveButton.addActionListener(e -> {
@@ -88,24 +102,39 @@ public class ReportFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        reportArea = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        reportTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        reportArea.setColumns(20);
-        reportArea.setRows(5);
-        jScrollPane1.setViewportView(reportArea);
+        reportTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "", "", ""
+            }
+        ));
+        jScrollPane2.setViewportView(reportTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -147,7 +176,7 @@ public class ReportFrame extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea reportArea;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable reportTable;
     // End of variables declaration//GEN-END:variables
 }
