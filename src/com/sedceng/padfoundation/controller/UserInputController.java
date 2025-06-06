@@ -4,12 +4,15 @@
  */
 package com.sedceng.padfoundation.controller;
 
+import com.sedceng.padfoundation.dto.BearingDto;
 import com.sedceng.padfoundation.dto.FoundationFootingDto;
 import com.sedceng.padfoundation.dto.FoundationGeometryDto;
 import com.sedceng.padfoundation.dto.ServiceabilityLoadsDto;
+import com.sedceng.padfoundation.dto.SlidingDto;
 import com.sedceng.padfoundation.dto.SoilPropertiesDto;
 import com.sedceng.padfoundation.dto.SoilPropertiesNewDto;
 import com.sedceng.padfoundation.dto.StubColumnDto;
+import com.sedceng.padfoundation.dto.UprootingDto;
 import com.sedceng.padfoundation.service.ServiceFactory;
 import com.sedceng.padfoundation.service.custom.BearingCheckService;
 import com.sedceng.padfoundation.service.custom.OverturningCheckService;
@@ -27,16 +30,16 @@ public class UserInputController {
         private OverturningCheckService overturningCheck = (OverturningCheckService) ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.OVERTURNING);
         
 
-    public boolean fosCheckForUprooting(FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto serviceabilityLoadsDto, SoilPressureCalculatorUtil soilCalculator) throws Exception{
-        return uprootingCheckService.fosSatisfied(geometryDto, soilDto, serviceabilityLoadsDto, soilCalculator);
+    public UprootingDto fosCheckForUprooting(FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto serviceabilityLoadsDto, SoilPressureCalculatorUtil soilCalculator, UprootingDto uprootingDto) throws Exception{
+        return uprootingCheckService.fosSatisfied(geometryDto, soilDto, serviceabilityLoadsDto, soilCalculator, uprootingDto);
     }
     
-    public boolean fosCheckForBearing(FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto serviceabilityLoadsDto, SoilPressureCalculatorUtil soilCalculator) throws Exception{
-        return bearingCheckService.fosSatisfied(geometryDto, soilDto, soilCalculator, serviceabilityLoadsDto);
+    public BearingDto fosCheckForBearing(FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto serviceabilityLoadsDto, SoilPressureCalculatorUtil soilCalculator, BearingDto bearingDto) throws Exception{
+        return bearingCheckService.fosSatisfied(geometryDto, soilDto, soilCalculator, serviceabilityLoadsDto, bearingDto);
     }
     
-    public boolean fosCheckForSliding(FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto serviceabilityLoadsDto, SoilPressureCalculatorUtil soilCalculator) throws Exception{
-        return slidingCheckService.fosSatisfied(soilCalculator, geometryDto, soilDto, serviceabilityLoadsDto);
+    public SlidingDto fosCheckForSliding(FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto serviceabilityLoadsDto, SoilPressureCalculatorUtil soilCalculator, SlidingDto slidingDto) throws Exception{
+        return slidingCheckService.fosSatisfied(soilCalculator, geometryDto, soilDto, serviceabilityLoadsDto, slidingDto);
     }
     
     public boolean fosCheckForOverturning(FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto serviceabilityLoadsDto, SoilPressureCalculatorUtil soilCalculator) throws Exception{

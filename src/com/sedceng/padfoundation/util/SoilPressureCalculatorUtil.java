@@ -34,15 +34,18 @@ public class SoilPressureCalculatorUtil {
         return ((1d/3)*(height)*(areaAboveGround+Math.sqrt(areaAboveGround*areaBelowGround)+areaBelowGround)-(sideLenghtOfColumn*sideLenghtOfColumn*height));
     }
     
-    public double calculateRectangularVolume(double sideLengthOfFooting, double sideLengthOfColumn, double height){
-        return (sideLengthOfFooting*sideLengthOfFooting - sideLengthOfColumn*sideLengthOfColumn)*height;
-    }
-    
-    public double calculateRectangularSoilWeight(){
+    public double calculateRectangularVolume(){
         double sideLengthOfFooting = geometry.getSideLengthOfFooting();
         double sideLengthOfColumn = geometry.getSideLenghtOfColumn();
         double soilHeightAboveFooting = geometry.getColumnHeightBelowGround();
-        double v = calculateRectangularVolume(sideLengthOfFooting, sideLengthOfColumn, soilHeightAboveFooting);
+        return (sideLengthOfFooting*sideLengthOfFooting - sideLengthOfColumn*sideLengthOfColumn)*soilHeightAboveFooting;
+    }
+    
+    
+    public double calculateRectangularSoilWeight(){
+        
+        double soilHeightAboveFooting = geometry.getColumnHeightBelowGround();
+        double v = calculateRectangularVolume();
         
         double waterTableDepth = soil.getWaterTableDepth();
         double foundationDepth = geometry.getFoundationDepth();

@@ -4,6 +4,9 @@
  */
 package com.sedceng.padfoundation.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  *
@@ -29,6 +32,15 @@ public class FoundationGeometryDto {
         this.columnHeightAboveGround = columnHeightAboveGround;
         this.columnHeightBelowGround = columnHeightBelowGround;
         this.unitWeightOfConcrete = unitWeightOfConcrete;
+    }
+    
+    public List<String> getReportLines() {
+        List<String> lines = new ArrayList<>();
+        lines.add("Footing Side Length: " + sideLengthOfFooting + " m");
+        lines.add("Height of The Footing: " + heightOfFooting + " m");
+        lines.add("Unit Weight of Concrete: " + unitWeightOfConcrete);
+        // Add more as needed
+        return lines;
     }
 
     /**
@@ -138,6 +150,7 @@ public class FoundationGeometryDto {
     public double calculateWeightOfFoundation(){
         return (sideLengthOfFooting*sideLengthOfFooting*heightOfFooting + sideLenghtOfColumn*sideLenghtOfColumn*(columnHeightAboveGround + columnHeightBelowGround))*unitWeightOfConcrete;
     }
+    
     
     
 }

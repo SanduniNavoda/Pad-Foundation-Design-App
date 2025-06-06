@@ -6,11 +6,14 @@ package com.sedceng.padfoundation.view;
 
 import com.sedceng.padfoundation.controller.UserInputController;
 import com.sedceng.padfoundation.controller.UserInputControllerForReinforcementDesign;
+import com.sedceng.padfoundation.dto.BearingDto;
 import com.sedceng.padfoundation.dto.FoundationGeometryDto;
 import com.sedceng.padfoundation.dto.ReinforcementDto;
 import com.sedceng.padfoundation.dto.ServiceabilityLoadsDto;
+import com.sedceng.padfoundation.dto.SlidingDto;
 import com.sedceng.padfoundation.dto.SoilPropertiesNewDto;
 import com.sedceng.padfoundation.dto.UltimateLoadsDto;
+import com.sedceng.padfoundation.dto.UprootingDto;
 import com.sedceng.padfoundation.util.ReinforcementCalculatorUtil;
 import com.sedceng.padfoundation.util.ShearReinforcementCalculatorUtil;
 import com.sedceng.padfoundation.util.SoilPressureCalculatorUtil;
@@ -35,6 +38,10 @@ public class SoilReportView extends javax.swing.JFrame {
     
     private UserInputController inputController;
     private UserInputControllerForReinforcementDesign reinforcementInputController;
+    private SoilPropertiesNewDto soilDto;
+    private FoundationGeometryDto geometryDto;
+    private ServiceabilityLoadsDto loadsDto;
+    private SlidingDto slidingDto;
     /**
      * Creates new form GuestView
      */
@@ -103,11 +110,53 @@ public class SoilReportView extends javax.swing.JFrame {
             dwgWaterTableDepth2.setVisible(true);
             dwgWaterTableDepth.setVisible(true);
             
-});
+        });
+        
+        btnGetReport.addActionListener(e -> {
+
+            ReportFrame report = new ReportFrame(geometryDto, slidingDto);
+            report.setVisible(true);
+        });
     }
     
     private void setupTabChangeListener() {
+        
+        
+        
         jTabbedPane1.addChangeListener(e -> {
+            
+            SoilPropertiesNewDto dto = new SoilPropertiesNewDto();
+            dto.setBearingCapacity(Double.parseDouble(tfBearignCapacity.getText()));
+            //dto.setBreadthOfColumn(Double.parseDouble(tfBearignCapacity.getText()));
+            dto.setBulkUnitWeight(Double.parseDouble(tfUnitWeightOfSoil.getText()));
+            dto.setCohesion(Double.parseDouble(tfCohesion.getText()));
+            dto.setFrictionAngleWithFoundation(Double.parseDouble(tfFrictionAngleFoundationAndSoil.getText()));
+            dto.setInternalFrictionAngle(Double.parseDouble(tfInternalFrictionAngle.getText()));
+            dto.setSaturatedUnitWeight(Double.parseDouble(tfSaturatedUnitWeight.getText()));
+            dto.setWaterUnitWeight(Double.parseDouble(gammaWat.getText()));
+            dto.setWaterTableDepth(Double.parseDouble(tfWaterTableDepth.getText()));
+            System.out.println(dto.toString());
+            this.soilDto = dto;
+
+            FoundationGeometryDto geometryDto = new FoundationGeometryDto();
+            geometryDto.setColumnHeightAboveGround(Double.parseDouble(columnHeightAboveGround.getText()));
+            geometryDto.setColumnHeightBelowGround(Double.parseDouble(columnHeightBelowGround.getText()));
+            geometryDto.setFoundationDepth(Double.parseDouble(foundationDepth.getText()));
+            geometryDto.setHeightOfFooting(Double.parseDouble(heightOfFooting.getText()));
+            geometryDto.setSideLenghtOfColumn(Double.parseDouble(sideLenghtOfColumn.getText()));
+            geometryDto.setSideLengthOfFooting(Double.parseDouble(sideLenghtOfFooting.getText()));
+            geometryDto.setUnitWeightOfConcrete(Double.parseDouble(unitWeightOfConcrete.getText()));
+            System.out.println(geometryDto.toString());
+            this.geometryDto = geometryDto;
+
+            ServiceabilityLoadsDto loadsDto = new ServiceabilityLoadsDto();
+            loadsDto.setCompressiveForce(Double.parseDouble(txtSlsCompressiveForce.getText()));
+            loadsDto.setTensileForce(Double.parseDouble(txtSlsTensileForce.getText()));
+            loadsDto.setHorizontalLongitudinalForce(Double.parseDouble(txtSlsHorizontalLongitudinalForce.getText()));
+            loadsDto.setHorizontalTransverseForce(Double.parseDouble(txtSlsHorizontalTransverseForce.getText()));
+            System.out.println(loadsDto.toString());
+            this.loadsDto = loadsDto;
+            
             int selectedIndex = jTabbedPane1.getSelectedIndex();
             String selectedTitle = jTabbedPane1.getTitleAt(selectedIndex);
 
@@ -265,6 +314,7 @@ public class SoilReportView extends javax.swing.JFrame {
         lblShearRefConfig = new javax.swing.JLabel();
         txtNoOfLegs = new javax.swing.JTextField();
         jLabel50 = new javax.swing.JLabel();
+        btnGetReport = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -990,6 +1040,13 @@ public class SoilReportView extends javax.swing.JFrame {
 
         jLabel50.setText("Number of Legs");
 
+        btnGetReport.setText("Get Report");
+        btnGetReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGetReportActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -1047,7 +1104,7 @@ public class SoilReportView extends javax.swing.JFrame {
                                 .addComponent(jLabel55, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lblAsProvComForSagging, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lblAsProvTensForSagging, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(lblProvTensRfConfigForSagging, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblProvTensRfConfigForSagging, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
                             .addComponent(lblProvComRfConfigForSagging, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1063,9 +1120,12 @@ public class SoilReportView extends javax.swing.JFrame {
                                     .addComponent(lblProvTensRfConfigForHogging, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
                                     .addComponent(lblAsProvComForHogging, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblAsProvTensForHogging, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jLabel52, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnRfDesign, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel52, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnRfDesign, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(118, 118, 118)
+                                .addComponent(btnGetReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addComponent(jLabel51))
                 .addGap(33, 33, 33)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1107,7 +1167,8 @@ public class SoilReportView extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel50)
                     .addComponent(txtNoOfLegs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRfDesign))
+                    .addComponent(btnRfDesign)
+                    .addComponent(btnGetReport))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel51)
@@ -1208,6 +1269,10 @@ public class SoilReportView extends javax.swing.JFrame {
         reinforcementDesign();// TODO add your handling code here:
     }//GEN-LAST:event_btnRfDesignActionPerformed
 
+    private void btnGetReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGetReportActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGetReportActionPerformed
+
     
     /**
      * @param args the command line arguments
@@ -1249,6 +1314,7 @@ public class SoilReportView extends javax.swing.JFrame {
     private javax.swing.JLabel SaturatedUnitWeightOfSoil;
     private javax.swing.JLabel UnitWeightOfWater;
     private javax.swing.JLabel bearingCapacity;
+    private javax.swing.JButton btnGetReport;
     private javax.swing.JButton btnRfDesign;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
@@ -1425,48 +1491,59 @@ public class SoilReportView extends javax.swing.JFrame {
     
     
     private void performStabilityCheck() {
-        SoilPropertiesNewDto dto = new SoilPropertiesNewDto();
-        dto.setBearingCapacity(Double.parseDouble(tfBearignCapacity.getText()));
-        //dto.setBreadthOfColumn(Double.parseDouble(tfBearignCapacity.getText()));
-        dto.setBulkUnitWeight(Double.parseDouble(tfUnitWeightOfSoil.getText()));
-        dto.setCohesion(Double.parseDouble(tfCohesion.getText()));
-        dto.setFrictionAngleWithFoundation(Double.parseDouble(tfFrictionAngleFoundationAndSoil.getText()));
-        dto.setInternalFrictionAngle(Double.parseDouble(tfInternalFrictionAngle.getText()));
-        dto.setSaturatedUnitWeight(Double.parseDouble(tfSaturatedUnitWeight.getText()));
-        dto.setWaterUnitWeight(Double.parseDouble(gammaWat.getText()));
-        dto.setWaterTableDepth(Double.parseDouble(tfWaterTableDepth.getText()));
+//        SoilPropertiesNewDto soilDto = new SoilPropertiesNewDto();
+//        soilDto.setBearingCapacity(Double.parseDouble(tfBearignCapacity.getText()));
+//        //dto.setBreadthOfColumn(Double.parseDouble(tfBearignCapacity.getText()));
+//        soilDto.setBulkUnitWeight(Double.parseDouble(tfUnitWeightOfSoil.getText()));
+//        soilDto.setCohesion(Double.parseDouble(tfCohesion.getText()));
+//        soilDto.setFrictionAngleWithFoundation(Double.parseDouble(tfFrictionAngleFoundationAndSoil.getText()));
+//        soilDto.setInternalFrictionAngle(Double.parseDouble(tfInternalFrictionAngle.getText()));
+//        soilDto.setSaturatedUnitWeight(Double.parseDouble(tfSaturatedUnitWeight.getText()));
+//        soilDto.setWaterUnitWeight(Double.parseDouble(gammaWat.getText()));
+//        soilDto.setWaterTableDepth(Double.parseDouble(tfWaterTableDepth.getText()));
+//        
+//        System.out.println(soilDto.toString());
         
-        System.out.println(dto.toString());
         
+//        FoundationGeometryDto geometryDto = new FoundationGeometryDto();
+//        geometryDto.setColumnHeightAboveGround(Double.parseDouble(columnHeightAboveGround.getText()));
+//        geometryDto.setColumnHeightBelowGround(Double.parseDouble(columnHeightBelowGround.getText()));
+//        geometryDto.setFoundationDepth(Double.parseDouble(foundationDepth.getText()));
+//        geometryDto.setHeightOfFooting(Double.parseDouble(heightOfFooting.getText()));
+//        geometryDto.setSideLenghtOfColumn(Double.parseDouble(sideLenghtOfColumn.getText()));
+//        geometryDto.setSideLengthOfFooting(Double.parseDouble(sideLenghtOfFooting.getText()));
+//        geometryDto.setUnitWeightOfConcrete(Double.parseDouble(unitWeightOfConcrete.getText()));
+//        System.out.println(geometryDto.toString());
         
-        FoundationGeometryDto geometryDto = new FoundationGeometryDto();
-        geometryDto.setColumnHeightAboveGround(Double.parseDouble(columnHeightAboveGround.getText()));
-        geometryDto.setColumnHeightBelowGround(Double.parseDouble(columnHeightBelowGround.getText()));
-        geometryDto.setFoundationDepth(Double.parseDouble(foundationDepth.getText()));
-        geometryDto.setHeightOfFooting(Double.parseDouble(heightOfFooting.getText()));
-        geometryDto.setSideLenghtOfColumn(Double.parseDouble(sideLenghtOfColumn.getText()));
-        geometryDto.setSideLengthOfFooting(Double.parseDouble(sideLenghtOfFooting.getText()));
-        geometryDto.setUnitWeightOfConcrete(Double.parseDouble(unitWeightOfConcrete.getText()));
-        System.out.println(geometryDto.toString());
+//        ServiceabilityLoadsDto loadsDto = new ServiceabilityLoadsDto();
+//        loadsDto.setCompressiveForce(Double.parseDouble(txtSlsCompressiveForce.getText()));
+//        loadsDto.setTensileForce(Double.parseDouble(txtSlsTensileForce.getText()));
+//        loadsDto.setHorizontalLongitudinalForce(Double.parseDouble(txtSlsHorizontalLongitudinalForce.getText()));
+//        loadsDto.setHorizontalTransverseForce(Double.parseDouble(txtSlsHorizontalTransverseForce.getText()));
+//        System.out.println(loadsDto.toString());
         
-        ServiceabilityLoadsDto loadsDto = new ServiceabilityLoadsDto();
-        loadsDto.setCompressiveForce(Double.parseDouble(txtSlsCompressiveForce.getText()));
-        loadsDto.setTensileForce(Double.parseDouble(txtSlsTensileForce.getText()));
-        loadsDto.setHorizontalLongitudinalForce(Double.parseDouble(txtSlsHorizontalLongitudinalForce.getText()));
-        loadsDto.setHorizontalTransverseForce(Double.parseDouble(txtSlsHorizontalTransverseForce.getText()));
-        
-        System.out.println(loadsDto.toString());
-        
-        SoilPressureCalculatorUtil soilCalculator = new SoilPressureCalculatorUtil(dto, geometryDto);
-        
+        SoilPressureCalculatorUtil soilCalculator = new SoilPressureCalculatorUtil(soilDto, geometryDto);
+        UprootingDto uprootingDto = new UprootingDto();
+        BearingDto bearingDto = new BearingDto();
+        SlidingDto slidingDto = new SlidingDto();
         
               
         
         try {
-            boolean bearingCheckResult = inputController.fosCheckForBearing(geometryDto, dto, loadsDto, soilCalculator);
-            boolean uprootingCheckResult = inputController.fosCheckForUprooting(geometryDto, dto, loadsDto, soilCalculator);
-            boolean slidingCheckResult = inputController.fosCheckForSliding(geometryDto, dto, loadsDto, soilCalculator);
-            boolean overturningCheckResult = inputController.fosCheckForOverturning(geometryDto, dto, loadsDto, soilCalculator);
+            bearingDto = inputController.fosCheckForBearing(geometryDto, soilDto, loadsDto, soilCalculator, bearingDto);
+            boolean bearingCheckResult = bearingDto.isIsFosSatisfied();
+            System.out.println(bearingDto.toString());
+            
+            uprootingDto = inputController.fosCheckForUprooting(geometryDto, soilDto, loadsDto, soilCalculator, uprootingDto);
+            boolean uprootingCheckResult = uprootingDto.isIsFosSatisfied();
+            System.out.println(uprootingDto.toString());
+            
+            slidingDto = inputController.fosCheckForSliding(geometryDto, soilDto, loadsDto, soilCalculator, slidingDto);
+            this.slidingDto = slidingDto;
+            boolean slidingCheckResult = slidingDto.isIsFosSatisfied();
+            System.out.println(slidingDto.toString());
+            
+            boolean overturningCheckResult = inputController.fosCheckForOverturning(geometryDto, soilDto, loadsDto, soilCalculator);
             
             
             lblFosBearing.setText(bearingCheckResult
@@ -1494,18 +1571,18 @@ public class SoilReportView extends javax.swing.JFrame {
     }
      
      private void reinforcementDesign(){
-        SoilPropertiesNewDto dto = new SoilPropertiesNewDto();
-        dto.setBearingCapacity(Double.parseDouble(tfBearignCapacity.getText()));
+        SoilPropertiesNewDto soilDto = new SoilPropertiesNewDto();
+        soilDto.setBearingCapacity(Double.parseDouble(tfBearignCapacity.getText()));
         //dto.setBreadthOfColumn(Double.parseDouble(tfBearignCapacity.getText()));
-        dto.setBulkUnitWeight(Double.parseDouble(tfUnitWeightOfSoil.getText()));
-        dto.setCohesion(Double.parseDouble(tfCohesion.getText()));
-        dto.setFrictionAngleWithFoundation(Double.parseDouble(tfFrictionAngleFoundationAndSoil.getText()));
-        dto.setInternalFrictionAngle(Double.parseDouble(tfInternalFrictionAngle.getText()));
-        dto.setSaturatedUnitWeight(Double.parseDouble(tfSaturatedUnitWeight.getText()));
-        dto.setWaterUnitWeight(Double.parseDouble(gammaWat.getText()));
-        dto.setWaterTableDepth(Double.parseDouble(tfWaterTableDepth.getText()));
+        soilDto.setBulkUnitWeight(Double.parseDouble(tfUnitWeightOfSoil.getText()));
+        soilDto.setCohesion(Double.parseDouble(tfCohesion.getText()));
+        soilDto.setFrictionAngleWithFoundation(Double.parseDouble(tfFrictionAngleFoundationAndSoil.getText()));
+        soilDto.setInternalFrictionAngle(Double.parseDouble(tfInternalFrictionAngle.getText()));
+        soilDto.setSaturatedUnitWeight(Double.parseDouble(tfSaturatedUnitWeight.getText()));
+        soilDto.setWaterUnitWeight(Double.parseDouble(gammaWat.getText()));
+        soilDto.setWaterTableDepth(Double.parseDouble(tfWaterTableDepth.getText()));
         
-        System.out.println(dto.toString());
+        System.out.println(soilDto.toString());
         
         
         FoundationGeometryDto geometryDto = new FoundationGeometryDto();
@@ -1536,29 +1613,29 @@ public class SoilReportView extends javax.swing.JFrame {
         
         
         
-        SoilPressureCalculatorUtil soilCalculator = new SoilPressureCalculatorUtil(dto, geometryDto);
+        SoilPressureCalculatorUtil soilCalculator = new SoilPressureCalculatorUtil(soilDto, geometryDto);
         ReinforcementCalculatorUtil rfCalculator = new ReinforcementCalculatorUtil(rfDto, geometryDto);
         ShearReinforcementCalculatorUtil shearRfCalculator = new ShearReinforcementCalculatorUtil();
         
 
         try {
-            double asRequiredForCompressionInSagging = reinforcementInputController.CompressiveRfRequirementForSagging(geometryDto, dto, rfDto, loadsDto, soilCalculator, rfCalculator);
+            double asRequiredForCompressionInSagging = reinforcementInputController.CompressiveRfRequirementForSagging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator);
             double asProvidedForCompressionInSagging = reinforcementInputController.getAsProvided(asRequiredForCompressionInSagging, geometryDto, rfDto, rfCalculator);
-            String compressiveRfDesignForSagging = reinforcementInputController.compressiveRfDesignForSagging(geometryDto, dto, rfDto, loadsDto, soilCalculator, rfCalculator);
+            String compressiveRfDesignForSagging = reinforcementInputController.compressiveRfDesignForSagging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator);
             
-            double asRequiredForCompressionInHogging = reinforcementInputController.compressiveRfRequirementForHogging(geometryDto, dto, rfDto, loadsDto, soilCalculator, rfCalculator);
+            double asRequiredForCompressionInHogging = reinforcementInputController.compressiveRfRequirementForHogging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator);
             double asProvidedForCompressionInHogging = reinforcementInputController.getAsProvided(asRequiredForCompressionInHogging, geometryDto, rfDto, rfCalculator);
-            String compressiveRfDesignForHogging = reinforcementInputController.compressiveRfDesignForHogging(geometryDto, dto, rfDto, loadsDto, soilCalculator, rfCalculator);
+            String compressiveRfDesignForHogging = reinforcementInputController.compressiveRfDesignForHogging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator);
             
-            double asRequiredForTensileInSagging = reinforcementInputController.tensileRfRequirementForSagging(geometryDto, dto, rfDto, loadsDto, soilCalculator, rfCalculator);
+            double asRequiredForTensileInSagging = reinforcementInputController.tensileRfRequirementForSagging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator);
             double asProvidedForTensileInSagging = reinforcementInputController.getAsProvided(asRequiredForTensileInSagging, geometryDto, rfDto, rfCalculator);
-            String tensileRfDesignForSagging = reinforcementInputController.tensileRfDesignForSagging(geometryDto, dto, rfDto, loadsDto, soilCalculator, rfCalculator);
+            String tensileRfDesignForSagging = reinforcementInputController.tensileRfDesignForSagging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator);
             
-            double asRequiredForTensileInHogging = reinforcementInputController.tensileRfRequirementForHogging(geometryDto, dto, rfDto, loadsDto, soilCalculator, rfCalculator);
+            double asRequiredForTensileInHogging = reinforcementInputController.tensileRfRequirementForHogging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator);
             double asProvidedForTensileInHogging = reinforcementInputController.getAsProvided(asRequiredForTensileInHogging, geometryDto, rfDto, rfCalculator);
-            String tensileRfDesignForHogging = reinforcementInputController.tensileRfDesignForHogging(geometryDto, dto, rfDto, loadsDto, soilCalculator, rfCalculator);
+            String tensileRfDesignForHogging = reinforcementInputController.tensileRfDesignForHogging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator);
             
-            double asv = reinforcementInputController.ShearReinforcementRequirement(geometryDto, dto, rfDto, loadsDto, soilCalculator, rfCalculator, shearRfCalculator);
+            double asv = reinforcementInputController.ShearReinforcementRequirement(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator, shearRfCalculator);
             double shearLinkDia = rfDto.getShearLinksDiameter();
             int noOfLegs = rfDto.getNoOfLegs();
             String asvDesign = reinforcementInputController.ShearReinforcementDesign(shearRfCalculator, asv, noOfLegs, shearLinkDia);

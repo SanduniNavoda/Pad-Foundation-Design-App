@@ -10,6 +10,7 @@ import com.sedceng.padfoundation.dto.ServiceabilityLoadsDto;
 import com.sedceng.padfoundation.dto.SoilPropertiesDto;
 import com.sedceng.padfoundation.dto.SoilPropertiesNewDto;
 import com.sedceng.padfoundation.dto.StubColumnDto;
+import com.sedceng.padfoundation.dto.UprootingDto;
 import com.sedceng.padfoundation.service.custom.UprootingCheckService;
 import com.sedceng.padfoundation.util.SoilPressureCalculatorUtil;
 
@@ -22,7 +23,7 @@ public class UprootingCheckServiceImpl implements UprootingCheckService{
     
 
     @Override
-    public boolean fosSatisfied(FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto serviceabilityLoadsDto, SoilPressureCalculatorUtil soilCalculator) throws Exception {
+    public UprootingDto fosSatisfied(FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto serviceabilityLoadsDto, SoilPressureCalculatorUtil soilCalculator, UprootingDto uprootingDto) throws Exception {
         double foundationWeight = geometryDto.calculateWeightOfFoundation();
         double pyramidSoilWeightAboveFooting = soilCalculator.calculatePyramidSoilWeight();
         double rectangularSoilWeightAboveFooting = soilCalculator.calculateRectangularSoilWeight();
@@ -33,6 +34,12 @@ public class UprootingCheckServiceImpl implements UprootingCheckService{
         System.out.println("sw rectangular = " + rectangularSoilWeightAboveFooting);
         System.out.println("Ft = " + maximumTensileForcePerBase);
         System.out.println("Upthrust = " + upthrustForce);
+        
+        uprootingDto.setMaxTensileForce(maximumTensileForcePerBase);
+        uprootingDto.setRectangularSoilWeight(rectangularSoilWeightAboveFooting);
+        uprootingDto.setPyramidSoilWeight(pyramidSoilWeightAboveFooting);
+        uprootingDto.setUpliftForce(upthrustForce);
+        
         
         double fos_Pyramid;
         double fos_Rectangular;
@@ -46,7 +53,14 @@ public class UprootingCheckServiceImpl implements UprootingCheckService{
         System.out.println("fos Pyramid = " + fos_Pyramid);
         System.out.println("fos Rectangular = " + fos_Rectangular);
         
-        return (fos_Pyramid > 1.75 && fos_Rectangular > 1);
+        uprootingDto.setFosRectangular(fos_Rectangular);
+        uprootingDto.setFosPyramid(fos_Pyramid);
+        
+        
+        boolean isFosSatisfied = (fos_Pyramid > 1.75 && fos_Rectangular > 1);
+        uprootingDto.setIsFosSatisfied(isFosSatisfied);
+        
+        return uprootingDto;
             
     }
     

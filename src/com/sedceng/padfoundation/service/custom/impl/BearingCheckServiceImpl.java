@@ -4,6 +4,7 @@
  */
 package com.sedceng.padfoundation.service.custom.impl;
 
+import com.sedceng.padfoundation.dto.BearingDto;
 import com.sedceng.padfoundation.dto.FoundationGeometryDto;
 import com.sedceng.padfoundation.dto.ServiceabilityLoadsDto;
 import com.sedceng.padfoundation.dto.SoilPropertiesNewDto;
@@ -19,7 +20,7 @@ public class BearingCheckServiceImpl implements BearingCheckService{
     
 
     @Override
-    public boolean fosSatisfied(FoundationGeometryDto geometryDto,  SoilPropertiesNewDto soilDto, SoilPressureCalculatorUtil soilCalculator, ServiceabilityLoadsDto serviceabilityLoadsDto) throws Exception {
+    public BearingDto fosSatisfied(FoundationGeometryDto geometryDto,  SoilPropertiesNewDto soilDto, SoilPressureCalculatorUtil soilCalculator, ServiceabilityLoadsDto serviceabilityLoadsDto, BearingDto bearingDto) throws Exception {
         double sw = soilCalculator.calculateRectangularSoilWeight();
         double w = geometryDto.calculateWeightOfFoundation();
         double fc = serviceabilityLoadsDto.getCompressiveForce();
@@ -31,6 +32,17 @@ public class BearingCheckServiceImpl implements BearingCheckService{
         double vl = serviceabilityLoadsDto.getHorizontalLongitudinalForce();
         double hc_ag = geometryDto.getColumnHeightAboveGround();
         
+        bearingDto.setSoilWeight(sw);
+        bearingDto.setFoundationWeight(w);
+        bearingDto.setCompressiveForce(fc);
+        bearingDto.setUpliftForce(u);
+        
+        bearingDto.setSideLenghtOfFooting(sideLength);
+        bearingDto.setHorizontalLongitudinalForce(vl);
+        bearingDto.setHorizontalTransverseForce(vt);
+        bearingDto.setLeverArmForHorizontalForce(h + hc_ag);
+        
+        
         double sigmaC;
         if(h <= d){
             //sigmaC = (sw + w + fc)/(wf*bf);
@@ -39,6 +51,8 @@ public class BearingCheckServiceImpl implements BearingCheckService{
             //sigmaC = (sw + w + fc - u)/(wf*bf);
             sigmaC = (sw + w + fc - u)/(sideLength*sideLength);
         }
+        
+        bearingDto.setSigmaC(sigmaC);
         
         double v;
         double x;
@@ -58,7 +72,16 @@ public class BearingCheckServiceImpl implements BearingCheckService{
                
         double maximumPressureUnderBase = sigmaC + 2*sigmaCDash;
         
-        return (soilDto.getBearingCapacity()/maximumPressureUnderBase) > 1.00;
+        bearingDto.setSigmaDashC(sigmaCDash);
+        bearingDto.setSigmaMax(maximumPressureUnderBase);
+        
+        double fos = (soilDto.getBearingCapacity()/maximumPressureUnderBase);
+        bearingDto.setFos(fos);
+
+        boolean isFosSatisfied = (soilDto.getBearingCapacity()/maximumPressureUnderBase) > 1.00;
+        bearingDto.setIsFosSatisfied(isFosSatisfied);
+        
+        return bearingDto;
         
     }
     

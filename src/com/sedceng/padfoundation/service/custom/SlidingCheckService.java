@@ -6,6 +6,7 @@ package com.sedceng.padfoundation.service.custom;
 
 import com.sedceng.padfoundation.dto.FoundationGeometryDto;
 import com.sedceng.padfoundation.dto.ServiceabilityLoadsDto;
+import com.sedceng.padfoundation.dto.SlidingDto;
 import com.sedceng.padfoundation.dto.SoilPropertiesNewDto;
 import com.sedceng.padfoundation.service.SuperService;
 import com.sedceng.padfoundation.util.SoilPressureCalculatorUtil;
@@ -14,7 +15,7 @@ import com.sedceng.padfoundation.util.SoilPressureCalculatorUtil;
  * @author Sanduni Navoda
  */
 public interface SlidingCheckService extends SuperService{
-    boolean fosSatisfied(SoilPressureCalculatorUtil soilcalculator, FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto loadsDto) throws Exception;
+    SlidingDto fosSatisfied(SoilPressureCalculatorUtil soilcalculator, FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto loadsDto, SlidingDto slidingDto) throws Exception;
 
     
 }

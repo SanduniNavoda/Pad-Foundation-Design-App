@@ -6,6 +6,7 @@ package com.sedceng.padfoundation.service.custom.impl;
 
 import com.sedceng.padfoundation.dto.FoundationGeometryDto;
 import com.sedceng.padfoundation.dto.ServiceabilityLoadsDto;
+import com.sedceng.padfoundation.dto.SlidingDto;
 import com.sedceng.padfoundation.dto.SoilPropertiesNewDto;
 import com.sedceng.padfoundation.service.custom.SlidingCheckService;
 import com.sedceng.padfoundation.util.SoilPressureCalculatorUtil;
@@ -18,16 +19,19 @@ public class SlidingCheckServiceImpl implements SlidingCheckService{
     
 
     @Override
-    public boolean fosSatisfied(SoilPressureCalculatorUtil soilCalculator, FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto loadsDto) throws Exception {
+    public SlidingDto fosSatisfied(SoilPressureCalculatorUtil soilCalculator, FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto loadsDto, SlidingDto slidingDto) throws Exception {
         
         double lf = geometryDto.getSideLengthOfFooting();
         double lc = geometryDto.getSideLenghtOfColumn();
+        //set values to slidingDto
+        slidingDto.setSideLengthOfColumn(lc);
+        slidingDto.setSideLengthOfFooting(lf);
+        
+        
         double hc_bg = geometryDto.getColumnHeightBelowGround();
         double hf = geometryDto.getHeightOfFooting();
         double d = soilDto.getWaterTableDepth();
         double h = geometryDto.getFoundationDepth();
-        
-        
         
         
         double sigmaDashD;
@@ -36,10 +40,14 @@ public class SlidingCheckServiceImpl implements SlidingCheckService{
         }else{
             sigmaDashD = soilCalculator.calculateLateralPressure(d);
         }
+        
+        slidingDto.setSigmaAtGwt(sigmaDashD);
        
         double sigmaHc = soilCalculator.calculateLateralPressure(hc_bg);
         double sigmaHf = soilCalculator.calculateLateralPressure(h);
         
+        slidingDto.setSigmaC(sigmaHc);
+        slidingDto.setSigmaF(sigmaHf);
         
         double fc;
         double fc1;
@@ -51,18 +59,21 @@ public class SlidingCheckServiceImpl implements SlidingCheckService{
         if(d > hc_bg){
             //Water table below column face
             fc = soilCalculator.calculatePassivePressure(0, sigmaHc, hc_bg)*lc;
+            slidingDto.setFc1(fc);
             
             if(d < h){
                 //Footing face spans water table
                 ff1 = soilCalculator.calculatePassivePressure(sigmaHc, sigmaDashD, d - hc_bg)*lf;
                 ff2 = soilCalculator.calculatePassivePressure(sigmaDashD, sigmaHf, h - d)*lf;
                 ff = ff1 + ff2;
+                slidingDto.setFf1(ff1);
+                slidingDto.setFf2(ff2);
                 
                 
             }else{
                 //Entire footing face above water table
                 ff = soilCalculator.calculatePassivePressure(sigmaHc, sigmaHf, hf)*lf;
-                
+                slidingDto.setFf1(ff);
             }
         }else{
             //water table cuts column face
@@ -70,7 +81,9 @@ public class SlidingCheckServiceImpl implements SlidingCheckService{
             fc2 = soilCalculator.calculateLeaverArm(sigmaDashD, sigmaHc, hc_bg - d)*lc;
             ff = soilCalculator.calculatePassivePressure(sigmaHc, sigmaHf, hf)*lf;
             fc = fc1 + fc2;
-            
+            slidingDto.setFc1(fc1);
+            slidingDto.setFc2(fc2);
+            slidingDto.setFf1(ff);
         }
         
         double vl = loadsDto.getHorizontalLongitudinalForce();
@@ -81,13 +94,21 @@ public class SlidingCheckServiceImpl implements SlidingCheckService{
         }else{
             v = vt;
         }
+        slidingDto.setMaxHorizontalForce(v);
         
         double w = geometryDto.calculateWeightOfFoundation();
         double sw = soilCalculator.calculateRectangularSoilWeight();
         
         double fr = (sw + w)*Math.tan(Math.toRadians(soilDto.getFrictionAngleWithFoundation()));
         
-        return ((fr + fc + ff)/v) > 1.50;
+        slidingDto.setWeightOfSoil(sw);
+        slidingDto.setWeightOfFoundation(w);
+        slidingDto.setResistanceToSliding(fr+fc+ff);
+        
+        boolean isFosSatisfied = ((fr + fc + ff)/v) > 1.50;
+        slidingDto.setIsFosSatisfied(isFosSatisfied);
+        
+        return slidingDto;
     }
     
     

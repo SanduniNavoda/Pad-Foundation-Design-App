@@ -1133,7 +1133,7 @@
                                       <Component id="lblAsProvComForSagging" alignment="0" max="32767" attributes="0"/>
                                       <Component id="lblAsProvTensForSagging" alignment="0" max="32767" attributes="0"/>
                                   </Group>
-                                  <Component id="lblProvTensRfConfigForSagging" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="lblProvTensRfConfigForSagging" alignment="0" pref="410" max="32767" attributes="0"/>
                                   <Component id="lblProvComRfConfigForSagging" alignment="0" min="-2" pref="224" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -1153,9 +1153,13 @@
                                           <Component id="lblAsProvTensForHogging" alignment="0" min="-2" pref="79" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="jLabel52" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="btnRfDesign" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                          <Component id="jLabel52" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="btnRfDesign" alignment="0" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="118" max="-2" attributes="0"/>
+                                      <Component id="btnGetReport" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -1211,6 +1215,7 @@
                           <Component id="jLabel50" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtNoOfLegs" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnRfDesign" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnGetReport" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -1530,6 +1535,14 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Number of Legs"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnGetReport">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Get Report"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGetReportActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
