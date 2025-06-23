@@ -6,6 +6,7 @@ package com.sedceng.padfoundation.service.custom;
 
 import com.sedceng.padfoundation.dto.FoundationFootingDto;
 import com.sedceng.padfoundation.dto.FoundationGeometryDto;
+import com.sedceng.padfoundation.dto.ResultDto;
 import com.sedceng.padfoundation.dto.ServiceabilityLoadsDto;
 import com.sedceng.padfoundation.dto.SoilPropertiesDto;
 import com.sedceng.padfoundation.dto.SoilPropertiesNewDto;
@@ -16,6 +17,6 @@ import com.sedceng.padfoundation.util.SoilPressureCalculatorUtil;
  * @author Sanduni Navoda
  */
 public interface OverturningCheckService extends SuperService{
-    boolean fosSatisfied(FoundationGeometryDto geometry, SoilPressureCalculatorUtil soilCalculator, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto loadsDto) throws Exception;
+    ResultDto fosSatisfied(double weightOfFoundation, double weightOFPyramidSoilFrustum, FoundationGeometryDto geometry, SoilPressureCalculatorUtil soilCalculator, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto loadsDto, ResultDto result) throws Exception;
  
 }

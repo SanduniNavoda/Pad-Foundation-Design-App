@@ -4,6 +4,9 @@
  */
 package com.sedceng.padfoundation.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Sanduni Navoda
@@ -22,6 +25,21 @@ public class ServiceabilityLoadsDto {
         this.tensileForce = tensileForce;
         this.horizontalTransverseForce = horizontalTransverseForce;
         this.horizontalLongitudinalForce = horizontalLongitudinalForce;
+    }
+    
+    public List<String[]> getReportLines() {
+
+        List<String[]> data = new ArrayList<>();
+        data.add(new String[]{""});
+        data.add(new String[]{"Resultant Reactions at Tower Base"});
+        data.add(new String[]{"Analysis Foundation Reactions under Serviceability Limit State"});
+        data.add(new String[]{"Compressive Force", ":", compressiveForce + "kN"});
+        data.add(new String[]{"Tensile Force", ":", tensileForce + "kN"});
+        data.add(new String[]{"Horizontal Force Transverse Direction", ":", horizontalTransverseForce + "kN"});
+        data.add(new String[]{"Horizontal Force Longitudinal Direction", ":", horizontalLongitudinalForce + "kN"});
+        
+        // Add more rows as needed
+        return data;
     }
 
     /**

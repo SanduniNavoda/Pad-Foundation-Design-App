@@ -6,6 +6,7 @@ package com.sedceng.padfoundation.service.custom.impl;
 
 
 import com.sedceng.padfoundation.dto.FoundationGeometryDto;
+import com.sedceng.padfoundation.dto.ResultDto;
 import com.sedceng.padfoundation.dto.ServiceabilityLoadsDto;
 import com.sedceng.padfoundation.dto.SoilPropertiesNewDto;
 import com.sedceng.padfoundation.service.custom.OverturningCheckService;
@@ -18,7 +19,7 @@ import com.sedceng.padfoundation.util.SoilPressureCalculatorUtil;
 public class OverturningCheckServiceImpl implements OverturningCheckService{
 
     @Override
-    public boolean fosSatisfied(FoundationGeometryDto geometry, SoilPressureCalculatorUtil soilCalculator, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto loadsDto) throws Exception {
+    public ResultDto fosSatisfied(double weightOfFoundation, double weightOFPyramidSoilFrustum, FoundationGeometryDto geometry, SoilPressureCalculatorUtil soilCalculator, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto loadsDto, ResultDto result) throws Exception {
         //double fc = soilCalculator.calculatePassiveForceOnColumnFace();
         //double ff = soilCalculator.calculatePassiveForceOnFootingFace();
         double ft = loadsDto.getTensileForce();
@@ -32,8 +33,8 @@ public class OverturningCheckServiceImpl implements OverturningCheckService{
         double d = soilDto.getWaterTableDepth();
         double h = geometry.getFoundationDepth();
         
-        double w = geometry.calculateWeightOfFoundation();
-        double sw = soilCalculator.calculatePyramidSoilWeight();
+        double w = weightOfFoundation;
+        double sw = weightOFPyramidSoilFrustum;
         
         double v;
         if (vl > vt){
@@ -111,8 +112,15 @@ public class OverturningCheckServiceImpl implements OverturningCheckService{
         
         double resistantMoment = (w + sw)*(lf/2) + lateralMoment;
         
+        double fos = (resistantMoment/overturningMoment);
         System.out.println("fos Overturning = " + (resistantMoment/overturningMoment));
-        return resistantMoment/overturningMoment > 1.75;
+       
+        boolean isSatisfied = resistantMoment/overturningMoment > 1.75;
+        
+        result.setResult(fos);
+        result.setIsSatisfied(isSatisfied);
+        
+        return result;
         
         
     }

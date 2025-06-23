@@ -9,6 +9,7 @@ import com.sedceng.padfoundation.controller.UserInputControllerForReinforcementD
 import com.sedceng.padfoundation.dto.BearingDto;
 import com.sedceng.padfoundation.dto.FoundationGeometryDto;
 import com.sedceng.padfoundation.dto.ReinforcementDto;
+import com.sedceng.padfoundation.dto.ResultDto;
 import com.sedceng.padfoundation.dto.ServiceabilityLoadsDto;
 import com.sedceng.padfoundation.dto.SlidingDto;
 import com.sedceng.padfoundation.dto.SoilPropertiesNewDto;
@@ -40,14 +41,21 @@ public class SoilReportView extends javax.swing.JFrame {
     private UserInputControllerForReinforcementDesign reinforcementInputController;
     private SoilPropertiesNewDto soilDto;
     private FoundationGeometryDto geometryDto;
-    private ServiceabilityLoadsDto loadsDto;
-    private SlidingDto slidingDto;
+    private ServiceabilityLoadsDto serviceabilityLoadsDto;
+    private UltimateLoadsDto ultimateLoadsDto;
+    private ResultDto slidingResultDto;
+    private ResultDto bearingResultDto;
+    private ResultDto uprootingResultDto;
+    private ResultDto overturningResultDto;
+    private ResultDto soilCalculatorResultDto;
+    private SoilPressureCalculatorUtil soilCalculator;
     /**
      * Creates new form GuestView
      */
     public SoilReportView() {
         inputController = new UserInputController();
         reinforcementInputController = new UserInputControllerForReinforcementDesign();
+        soilCalculatorResultDto = new ResultDto();
         initComponents();
         
         
@@ -114,15 +122,13 @@ public class SoilReportView extends javax.swing.JFrame {
         
         btnGetReport.addActionListener(e -> {
 
-            ReportFrame report = new ReportFrame(geometryDto, slidingDto, soilDto);
+            ReportFrame report = new ReportFrame(geometryDto,soilCalculator, soilDto, serviceabilityLoadsDto, ultimateLoadsDto, bearingResultDto, uprootingResultDto, slidingResultDto);
             report.setVisible(true);
         });
     }
     
     private void setupTabChangeListener() {
-        
-        
-        
+
         jTabbedPane1.addChangeListener(e -> {
             
             SoilPropertiesNewDto dto = new SoilPropertiesNewDto();
@@ -146,6 +152,7 @@ public class SoilReportView extends javax.swing.JFrame {
             geometryDto.setSideLenghtOfColumn(Double.parseDouble(sideLenghtOfColumn.getText()));
             geometryDto.setSideLengthOfFooting(Double.parseDouble(sideLenghtOfFooting.getText()));
             geometryDto.setUnitWeightOfConcrete(Double.parseDouble(unitWeightOfConcrete.getText()));
+            geometryDto.setWeightOfFoundation();
             System.out.println(geometryDto.toString());
             this.geometryDto = geometryDto;
 
@@ -155,7 +162,10 @@ public class SoilReportView extends javax.swing.JFrame {
             loadsDto.setHorizontalLongitudinalForce(Double.parseDouble(txtSlsHorizontalLongitudinalForce.getText()));
             loadsDto.setHorizontalTransverseForce(Double.parseDouble(txtSlsHorizontalTransverseForce.getText()));
             System.out.println(loadsDto.toString());
-            this.loadsDto = loadsDto;
+            this.serviceabilityLoadsDto = loadsDto;
+            
+            
+            this.soilCalculator = new SoilPressureCalculatorUtil(dto, geometryDto);
             
             int selectedIndex = jTabbedPane1.getSelectedIndex();
             String selectedTitle = jTabbedPane1.getTitleAt(selectedIndex);
@@ -314,7 +324,24 @@ public class SoilReportView extends javax.swing.JFrame {
         lblShearRefConfig = new javax.swing.JLabel();
         txtNoOfLegs = new javax.swing.JTextField();
         jLabel50 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel59 = new javax.swing.JLabel();
+        jLabel60 = new javax.swing.JLabel();
+        jLabel61 = new javax.swing.JLabel();
+        jLabel62 = new javax.swing.JLabel();
+        jLabel63 = new javax.swing.JLabel();
+        jLabel64 = new javax.swing.JLabel();
+        jLabel65 = new javax.swing.JLabel();
+        jLabel66 = new javax.swing.JLabel();
         btnGetReport = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
+        jTextField4 = new javax.swing.JTextField();
+        jTextField5 = new javax.swing.JTextField();
+        jTextField6 = new javax.swing.JTextField();
+        jTextField7 = new javax.swing.JTextField();
+        jTextField8 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -1040,13 +1067,6 @@ public class SoilReportView extends javax.swing.JFrame {
 
         jLabel50.setText("Number of Legs");
 
-        btnGetReport.setText("Get Report");
-        btnGetReport.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGetReportActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -1120,12 +1140,9 @@ public class SoilReportView extends javax.swing.JFrame {
                                     .addComponent(lblProvTensRfConfigForHogging, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
                                     .addComponent(lblAsProvComForHogging, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblAsProvTensForHogging, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel52, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnRfDesign, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(118, 118, 118)
-                                .addComponent(btnGetReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel52, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnRfDesign, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addComponent(jLabel51))
                 .addGap(33, 33, 33)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1167,8 +1184,7 @@ public class SoilReportView extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel50)
                     .addComponent(txtNoOfLegs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRfDesign)
-                    .addComponent(btnGetReport))
+                    .addComponent(btnRfDesign))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel51)
@@ -1218,6 +1234,127 @@ public class SoilReportView extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("Reinforcement Details", jPanel5);
+
+        jLabel59.setText("Site");
+
+        jLabel60.setText("Client");
+
+        jLabel61.setText("Vendor");
+
+        jLabel62.setText("Location");
+
+        jLabel63.setText("Designed by");
+
+        jLabel64.setText("Checked by");
+
+        jLabel65.setText("Tower Height");
+
+        jLabel66.setText("No. of Legs");
+
+        btnGetReport.setText("Get Report");
+        btnGetReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGetReportActionPerformed(evt);
+            }
+        });
+
+        jTextField1.setText("jTextField1");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        jTextField2.setText("jTextField1");
+
+        jTextField3.setText("jTextField1");
+
+        jTextField4.setText("jTextField1");
+
+        jTextField5.setText("jTextField1");
+
+        jTextField6.setText("jTextField1");
+
+        jTextField7.setText("jTextField1");
+
+        jTextField8.setText("jTextField1");
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel66)
+                    .addComponent(jLabel64)
+                    .addComponent(jLabel63)
+                    .addComponent(jLabel62)
+                    .addComponent(jLabel61)
+                    .addComponent(jLabel60)
+                    .addComponent(jLabel59)
+                    .addComponent(jLabel65))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                            .addComponent(jTextField8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 466, Short.MAX_VALUE)
+                        .addComponent(btnGetReport, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(397, 397, 397))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
+                            .addComponent(jTextField2)
+                            .addComponent(jTextField3)
+                            .addComponent(jTextField4)
+                            .addComponent(jTextField5)
+                            .addComponent(jTextField6))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnGetReport)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel59)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel60)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel61)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel62)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel63)
+                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel64)
+                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel65)
+                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel66)
+                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(258, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Project Details", jPanel6);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1272,6 +1409,10 @@ public class SoilReportView extends javax.swing.JFrame {
     private void btnGetReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGetReportActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnGetReportActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     
     /**
@@ -1390,7 +1531,15 @@ public class SoilReportView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel58;
+    private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel60;
+    private javax.swing.JLabel jLabel61;
+    private javax.swing.JLabel jLabel62;
+    private javax.swing.JLabel jLabel63;
+    private javax.swing.JLabel jLabel64;
+    private javax.swing.JLabel jLabel65;
+    private javax.swing.JLabel jLabel66;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -1399,8 +1548,17 @@ public class SoilReportView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jTextField8;
     private javax.swing.JLabel lblAsProvComForHogging;
     private javax.swing.JLabel lblAsProvComForSagging;
     private javax.swing.JLabel lblAsProvTensForHogging;
@@ -1515,35 +1673,57 @@ public class SoilReportView extends javax.swing.JFrame {
 //        geometryDto.setUnitWeightOfConcrete(Double.parseDouble(unitWeightOfConcrete.getText()));
 //        System.out.println(geometryDto.toString());
         
-//        ServiceabilityLoadsDto loadsDto = new ServiceabilityLoadsDto();
-//        loadsDto.setCompressiveForce(Double.parseDouble(txtSlsCompressiveForce.getText()));
-//        loadsDto.setTensileForce(Double.parseDouble(txtSlsTensileForce.getText()));
-//        loadsDto.setHorizontalLongitudinalForce(Double.parseDouble(txtSlsHorizontalLongitudinalForce.getText()));
-//        loadsDto.setHorizontalTransverseForce(Double.parseDouble(txtSlsHorizontalTransverseForce.getText()));
-//        System.out.println(loadsDto.toString());
+//        ServiceabilityLoadsDto serviceabilityLoadsDto = new ServiceabilityLoadsDto();
+//        serviceabilityLoadsDto.setCompressiveForce(Double.parseDouble(txtSlsCompressiveForce.getText()));
+//        serviceabilityLoadsDto.setTensileForce(Double.parseDouble(txtSlsTensileForce.getText()));
+//        serviceabilityLoadsDto.setHorizontalLongitudinalForce(Double.parseDouble(txtSlsHorizontalLongitudinalForce.getText()));
+//        serviceabilityLoadsDto.setHorizontalTransverseForce(Double.parseDouble(txtSlsHorizontalTransverseForce.getText()));
+//        System.out.println(serviceabilityLoadsDto.toString());
         
-        SoilPressureCalculatorUtil soilCalculator = new SoilPressureCalculatorUtil(soilDto, geometryDto);
-        UprootingDto uprootingDto = new UprootingDto();
-        BearingDto bearingDto = new BearingDto();
-        SlidingDto slidingDto = new SlidingDto();
         
+        
+        
+        
+        
+        
+        
+        ResultDto weightCalculationResultDto = new ResultDto();
+        soilCalculator.setResult(weightCalculationResultDto);
               
         
         try {
-            bearingDto = inputController.fosCheckForBearing(geometryDto, soilDto, loadsDto, soilCalculator, bearingDto);
-            boolean bearingCheckResult = bearingDto.isIsFosSatisfied();
-            System.out.println(bearingDto.toString());
+            double weightOfFoundation = geometryDto.getWeightOfFoundation();
+            double weightOfRectangularSoilVolume = soilCalculator.calculateRectangularSoilWeight();
+            double weightOfPyramidsoilFrustum = soilCalculator.calculatePyramidSoilWeight();
             
-            uprootingDto = inputController.fosCheckForUprooting(geometryDto, soilDto, loadsDto, soilCalculator, uprootingDto);
-            boolean uprootingCheckResult = uprootingDto.isIsFosSatisfied();
-            System.out.println(uprootingDto.toString());
             
-            slidingDto = inputController.fosCheckForSliding(geometryDto, soilDto, loadsDto, soilCalculator, slidingDto);
-            this.slidingDto = slidingDto;
-            boolean slidingCheckResult = slidingDto.isIsFosSatisfied();
-            System.out.println(slidingDto.toString());
+            ResultDto bearingResult = new ResultDto();
+            soilCalculator.setResult(bearingResult);
+            bearingResult = inputController.fosCheckForBearing(weightOfFoundation, weightOfRectangularSoilVolume, geometryDto, soilDto, serviceabilityLoadsDto, soilCalculator, bearingResult);
+            this.bearingResultDto = bearingResult;
+            boolean bearingCheckResult = bearingResult.isIsSatisfied();
             
-            boolean overturningCheckResult = inputController.fosCheckForOverturning(geometryDto, soilDto, loadsDto, soilCalculator);
+            
+            
+            ResultDto uprootingResult = new ResultDto();
+            soilCalculator.setResult(uprootingResult);
+            uprootingResult = inputController.fosCheckForUprooting(weightOfFoundation, weightOfRectangularSoilVolume, weightOfPyramidsoilFrustum, geometryDto, soilDto, serviceabilityLoadsDto, soilCalculator, uprootingResult);
+            this.uprootingResultDto = uprootingResult;
+            boolean uprootingCheckResult = uprootingResult.isIsSatisfied();
+            
+            
+            
+            ResultDto slidingResult = new ResultDto();
+            soilCalculator.setResult(slidingResult);
+            slidingResult = inputController.fosCheckForSliding(weightOfFoundation, weightOfRectangularSoilVolume, geometryDto, soilDto, serviceabilityLoadsDto, soilCalculator, slidingResult);
+            this.slidingResultDto = slidingResult;
+            boolean slidingCheckResult = slidingResult.isIsSatisfied();
+            
+            ResultDto overturningResult = new ResultDto();
+            soilCalculator.setResult(overturningResult);
+            overturningResult = inputController.fosCheckForOverturning(weightOfFoundation, weightOfPyramidsoilFrustum, geometryDto, soilDto, serviceabilityLoadsDto, soilCalculator, overturningResult);
+            this.overturningResultDto = overturningResult;
+            boolean overturningCheckResult = overturningResult.isIsSatisfied();
             
             
             lblFosBearing.setText(bearingCheckResult
@@ -1562,7 +1742,6 @@ public class SoilReportView extends javax.swing.JFrame {
                     ? "<html>FOS - Overturning: PASS</html>"
                     : "<html>FOS - Overturning: <font color='red'>FAIL</font></html>");
             
-            clear();
             
         } catch (Exception ex) {
             Logger.getLogger(SoilReportView.class.getName()).log(Level.SEVERE, null, ex);
@@ -1585,15 +1764,16 @@ public class SoilReportView extends javax.swing.JFrame {
         System.out.println(soilDto.toString());
         
         
-        FoundationGeometryDto geometryDto = new FoundationGeometryDto();
-        geometryDto.setColumnHeightAboveGround(Double.parseDouble(columnHeightAboveGround.getText()));
-        geometryDto.setColumnHeightBelowGround(Double.parseDouble(columnHeightBelowGround.getText()));
-        geometryDto.setFoundationDepth(Double.parseDouble(foundationDepth.getText()));
-        geometryDto.setHeightOfFooting(Double.parseDouble(heightOfFooting.getText()));
-        geometryDto.setSideLenghtOfColumn(Double.parseDouble(sideLenghtOfColumn.getText()));
-        geometryDto.setSideLengthOfFooting(Double.parseDouble(sideLenghtOfFooting.getText()));
-        geometryDto.setUnitWeightOfConcrete(Double.parseDouble(unitWeightOfConcrete.getText()));
-        System.out.println(geometryDto.toString());
+//        FoundationGeometryDto geometryDto = new FoundationGeometryDto();
+//        geometryDto.setColumnHeightAboveGround(Double.parseDouble(columnHeightAboveGround.getText()));
+//        geometryDto.setColumnHeightBelowGround(Double.parseDouble(columnHeightBelowGround.getText()));
+//        geometryDto.setFoundationDepth(Double.parseDouble(foundationDepth.getText()));
+//        geometryDto.setHeightOfFooting(Double.parseDouble(heightOfFooting.getText()));
+//        geometryDto.setSideLenghtOfColumn(Double.parseDouble(sideLenghtOfColumn.getText()));
+//        geometryDto.setSideLengthOfFooting(Double.parseDouble(sideLenghtOfFooting.getText()));
+//        geometryDto.setUnitWeightOfConcrete(Double.parseDouble(unitWeightOfConcrete.getText()));
+//        System.out.println(geometryDto.toString());
+//        this.geometryDto = geometryDto;
         
         UltimateLoadsDto loadsDto = new UltimateLoadsDto();
         loadsDto.setCompressiveForce(Double.parseDouble(txtUlsCompressiveForce.getText()));
@@ -1601,6 +1781,8 @@ public class SoilReportView extends javax.swing.JFrame {
         loadsDto.setHorizontalLongitudinalForce(Double.parseDouble(txtUlsHorizntalLongitudinalForce.getText()));
         loadsDto.setHorizontalTransverseForce(Double.parseDouble(txtUlsHorizontalTransverseForce.getText()));
         System.out.println(loadsDto.toString());
+        this.ultimateLoadsDto = loadsDto;
+        
         
         ReinforcementDto rfDto = new ReinforcementDto();
         rfDto.setYieldStrenghtOfReinforcement(Double.parseDouble(txtFy.getText()));
@@ -1613,7 +1795,7 @@ public class SoilReportView extends javax.swing.JFrame {
         
         
         
-        SoilPressureCalculatorUtil soilCalculator = new SoilPressureCalculatorUtil(soilDto, geometryDto);
+        
         ReinforcementCalculatorUtil rfCalculator = new ReinforcementCalculatorUtil(rfDto, geometryDto);
         ShearReinforcementCalculatorUtil shearRfCalculator = new ShearReinforcementCalculatorUtil();
         

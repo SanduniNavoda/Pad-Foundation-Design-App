@@ -7,6 +7,7 @@ package com.sedceng.padfoundation.service.custom;
 import com.sedceng.padfoundation.dto.BearingDto;
 import com.sedceng.padfoundation.dto.FoundationFootingDto;
 import com.sedceng.padfoundation.dto.FoundationGeometryDto;
+import com.sedceng.padfoundation.dto.ResultDto;
 import com.sedceng.padfoundation.dto.SoilPropertiesDto;
 import com.sedceng.padfoundation.dto.ServiceabilityLoadsDto;
 import com.sedceng.padfoundation.dto.SoilPropertiesNewDto;
@@ -19,7 +20,7 @@ import com.sedceng.padfoundation.util.SoilPressureCalculatorUtil;
  */
 public interface BearingCheckService extends SuperService{
     
-    BearingDto fosSatisfied(FoundationGeometryDto geometryDto,  SoilPropertiesNewDto soilDto, SoilPressureCalculatorUtil soilCalculator, ServiceabilityLoadsDto serviceabilityLoadsDto, BearingDto bearingDto) throws Exception;
+    ResultDto fosSatisfied(double foundationWeight, double rectangularSoilWeight, FoundationGeometryDto geometryDto,  SoilPropertiesNewDto soilDto, SoilPressureCalculatorUtil soilCalculator, ServiceabilityLoadsDto serviceabilityLoadsDto, ResultDto result) throws Exception;
 
     
 }

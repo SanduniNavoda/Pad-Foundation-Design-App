@@ -6,6 +6,7 @@ package com.sedceng.padfoundation.service.custom;
 
 
 import com.sedceng.padfoundation.dto.FoundationGeometryDto;
+import com.sedceng.padfoundation.dto.ResultDto;
 import com.sedceng.padfoundation.dto.ServiceabilityLoadsDto;
 import com.sedceng.padfoundation.dto.SoilPropertiesNewDto;
 import com.sedceng.padfoundation.dto.UprootingDto;
@@ -17,6 +18,6 @@ import com.sedceng.padfoundation.util.SoilPressureCalculatorUtil;
  */
 public interface UprootingCheckService extends SuperService{
     
-    UprootingDto fosSatisfied(FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto serviceabilityLoadsDto, SoilPressureCalculatorUtil soilCalculator, UprootingDto uprootingDto) throws Exception;
+    ResultDto fosSatisfied(double foundationWeight, double rectangularSoilWeight, double weightOfPyramidsoilFrustum, FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto serviceabilityLoadsDto, SoilPressureCalculatorUtil soilCalculator, ResultDto result) throws Exception;
 
 }

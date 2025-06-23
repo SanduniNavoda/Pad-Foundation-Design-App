@@ -5,8 +5,12 @@
 package com.sedceng.padfoundation.view;
 
 import com.sedceng.padfoundation.dto.FoundationGeometryDto;
+import com.sedceng.padfoundation.dto.ResultDto;
+import com.sedceng.padfoundation.dto.ServiceabilityLoadsDto;
 import com.sedceng.padfoundation.dto.SlidingDto;
 import com.sedceng.padfoundation.dto.SoilPropertiesNewDto;
+import com.sedceng.padfoundation.dto.UltimateLoadsDto;
+import com.sedceng.padfoundation.util.SoilPressureCalculatorUtil;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.io.File;
@@ -31,9 +35,16 @@ public class ReportFrame extends javax.swing.JFrame {
     /**
      * Creates new form ReportFrame
      * @param geometryDto
+     * @param soilCalculator
+     * @param slidingResultDto
+     * @param soilDto
+     * @param serviceabilityLoadsDto
+     * @param ultimateLoadsDto
+     * @param bearingResutDto
+     * @param uprootingResultDto
      * @param slidingDto
      */
-    public ReportFrame(FoundationGeometryDto geometryDto, SlidingDto slidingDto, SoilPropertiesNewDto soilDto) {
+    public ReportFrame(FoundationGeometryDto geometryDto, SoilPressureCalculatorUtil soilCalculator, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto serviceabilityLoadsDto, UltimateLoadsDto ultimateLoadsDto, ResultDto bearingResutDto, ResultDto uprootingResultDto, ResultDto slidingResultDto) {
         initComponents();
         
         setTitle("Report");
@@ -61,12 +72,41 @@ public class ReportFrame extends javax.swing.JFrame {
 //                new String[]{"Parameter", "Value"}
 //        );
          
-        List<String[]> reportData = soilDto.getReportLines(); // or any dto.getReportLines()
+        List<String[]> soilReportData = soilDto.getReportLines(); 
+        List<String[]> serviceabilityLoadData = serviceabilityLoadsDto.getReportLines(); 
+        List<String[]> ultimateLoadsDtoData = ultimateLoadsDto.getReportLines(); 
+        List<String[]> foundationGeometryDtoData = geometryDto.getReportLines(); 
+        List<String[]> bearingResultDtoData = bearingResutDto.getData(); 
+        List<String[]> uprootingResultDtoData = uprootingResultDto.getData();
+        List<String[]> slidingResultDtoData = slidingResultDto.getData();
+        //List<String[]> soilCalculatorUtilData = soilCalculator.getResult().getData(); 
         DefaultTableModel model = new DefaultTableModel(new String[]{"Parameter", "", "Value"}, 0);
 
-        for (String[] row : reportData) {
+        for (String[] row : soilReportData) {
             model.addRow(row);
         }
+        for (String[] row : serviceabilityLoadData) {
+            model.addRow(row);
+        }
+        for (String[] row : ultimateLoadsDtoData) {
+            model.addRow(row);
+        }
+        for (String[] row : foundationGeometryDtoData) {
+            model.addRow(row);
+        }
+        for (String[] row : bearingResultDtoData) {
+            model.addRow(row);
+        }
+        for (String[] row : uprootingResultDtoData) {
+            model.addRow(row);
+        }
+        for (String[] row : slidingResultDtoData) {
+            model.addRow(row);
+        }
+        
+//        for (String[] row : soilCalculatorUtilData) {
+//            model.addRow(row);
+//        }
 
         reportTable.setModel(model);
 

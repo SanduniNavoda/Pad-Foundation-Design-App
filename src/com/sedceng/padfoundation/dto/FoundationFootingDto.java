@@ -34,6 +34,7 @@ public class FoundationFootingDto {
         this.foundationDepth = foundationDepth;
     }
 
+
     /**
      * @return the widthOfFooting
      */

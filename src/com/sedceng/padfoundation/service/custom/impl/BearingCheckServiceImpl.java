@@ -6,6 +6,7 @@ package com.sedceng.padfoundation.service.custom.impl;
 
 import com.sedceng.padfoundation.dto.BearingDto;
 import com.sedceng.padfoundation.dto.FoundationGeometryDto;
+import com.sedceng.padfoundation.dto.ResultDto;
 import com.sedceng.padfoundation.dto.ServiceabilityLoadsDto;
 import com.sedceng.padfoundation.dto.SoilPropertiesNewDto;
 import com.sedceng.padfoundation.service.custom.BearingCheckService;
@@ -15,15 +16,20 @@ import com.sedceng.padfoundation.util.SoilPressureCalculatorUtil;
  *
  * @author Sanduni Navoda
  */
-public class BearingCheckServiceImpl implements BearingCheckService{
-    
-    
+public class BearingCheckServiceImpl implements BearingCheckService {
 
     @Override
-    public BearingDto fosSatisfied(FoundationGeometryDto geometryDto,  SoilPropertiesNewDto soilDto, SoilPressureCalculatorUtil soilCalculator, ServiceabilityLoadsDto serviceabilityLoadsDto, BearingDto bearingDto) throws Exception {
-        double sw = soilCalculator.calculateRectangularSoilWeight();
-        double w = geometryDto.calculateWeightOfFoundation();
+    public ResultDto fosSatisfied(double foundationWeight, double rectangularSoilWeight, FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, SoilPressureCalculatorUtil soilCalculator, ServiceabilityLoadsDto serviceabilityLoadsDto, ResultDto result) throws Exception {
+        soilCalculator.setResult(result);
+        
+        double sw = rectangularSoilWeight;
+        double w = foundationWeight;
         double fc = serviceabilityLoadsDto.getCompressiveForce();
+        result.addReportLine("");
+        result.addReportLine("Bearing Check");
+        result.addReportLine("Rectangular Soil Weight", ":", String.format("%.2f kN", sw));
+        result.addReportLine("Foundation Weight", ":", String.format("%.2f kN", w));
+        result.addReportLine("Compressive Force", ":", String.format("%.2f kN", fc));
         double u = soilCalculator.calculateUpthrustForce();
         double h = geometryDto.getHeightOfFooting();
         double d = soilDto.getWaterTableDepth();
@@ -31,58 +37,56 @@ public class BearingCheckServiceImpl implements BearingCheckService{
         double vt = serviceabilityLoadsDto.getHorizontalTransverseForce();
         double vl = serviceabilityLoadsDto.getHorizontalLongitudinalForce();
         double hc_ag = geometryDto.getColumnHeightAboveGround();
-        
-        bearingDto.setSoilWeight(sw);
-        bearingDto.setFoundationWeight(w);
-        bearingDto.setCompressiveForce(fc);
-        bearingDto.setUpliftForce(u);
-        
-        bearingDto.setSideLenghtOfFooting(sideLength);
-        bearingDto.setHorizontalLongitudinalForce(vl);
-        bearingDto.setHorizontalTransverseForce(vt);
-        bearingDto.setLeverArmForHorizontalForce(h + hc_ag);
-        
-        
+
+
+
         double sigmaC;
-        if(h <= d){
+        if (h <= d) {
             //sigmaC = (sw + w + fc)/(wf*bf);
-            sigmaC = (sw + w + fc)/(sideLength*sideLength);
-        }else{
+            sigmaC = (sw + w + fc) / (sideLength * sideLength);
+        } else {
             //sigmaC = (sw + w + fc - u)/(wf*bf);
-            sigmaC = (sw + w + fc - u)/(sideLength*sideLength);
+            sigmaC = (sw + w + fc - u) / (sideLength * sideLength);
         }
-        
-        bearingDto.setSigmaC(sigmaC);
-        
+
+
+
         double v;
         double x;
         double y;
-        if (vt > vl){
+        if (vt > vl) {
             v = vt;
             //x = bf;
             //y = wf;
-        }else{
+        } else {
             v = vl;
             //x = wf;
             //y = bf;
         }
-        
-        //double sigmaCDash = (v * (h + hc_ag) * y * 12) / (2 * x * (y*y*y));
-        double sigmaCDash = (v * (h + hc_ag) * sideLength * 12) / (2 * sideLength * (sideLength*sideLength*sideLength));
-               
-        double maximumPressureUnderBase = sigmaC + 2*sigmaCDash;
-        
-        bearingDto.setSigmaDashC(sigmaCDash);
-        bearingDto.setSigmaMax(maximumPressureUnderBase);
-        
-        double fos = (soilDto.getBearingCapacity()/maximumPressureUnderBase);
-        bearingDto.setFos(fos);
 
-        boolean isFosSatisfied = (soilDto.getBearingCapacity()/maximumPressureUnderBase) > 1.00;
-        bearingDto.setIsFosSatisfied(isFosSatisfied);
+        //double sigmaCDash = (v * (h + hc_ag) * y * 12) / (2 * x * (y*y*y));
+        double sigmaCDash = (v * (h + hc_ag) * sideLength * 12) / (2 * sideLength * (sideLength * sideLength * sideLength));
+
+        double maximumPressureUnderBase = sigmaC + 2 * sigmaCDash;
+
+
+        double bearingCapacity = soilDto.getBearingCapacity();
+
+        double fos = (bearingCapacity / maximumPressureUnderBase);
+
+        boolean isFosSatisfied = (soilDto.getBearingCapacity() / maximumPressureUnderBase) > 1.00;
+        result.setResult(fos);
+        result.setIsSatisfied(isFosSatisfied);
         
-        return bearingDto;
-        
+        result.addReportLine(String.format("Sigma C = (%.2f+%.2f+%.2f-%.2f)/(%.2f x %.2f);", sw, w, fc, u, sideLength, sideLength), ":", String.format("%.2f kN/m²", sigmaC));
+        result.addReportLine(String.format("Sigma CDash = (%.2f x (%.2f+%.2f) x %.2f x 12)/(2 x %.2f x (%.2f x %.2f x %.2f));", v, h, hc_ag, sideLength, sideLength, sideLength, sideLength, sideLength), ":", String.format("%.2f kN/m²", sigmaCDash));
+        result.addReportLine(String.format("Maximum Pressure Under Base = %.2f+2 x %.2f;", sigmaC, sigmaCDash), ":", String.format("%.2f kN/m²", maximumPressureUnderBase));
+        result.addReportLine(String.format("Fos = (%.2f/%.2f);", bearingCapacity, maximumPressureUnderBase), ":", String.format("%.2f kN/m²", fos));
+        result.addReportLine(isFosSatisfied? "Bearing Check Pass" : "Bearing Check Fail", "", "" );
+        result.addReportLine("");
+
+        return result;
+
     }
-    
+
 }

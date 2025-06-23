@@ -20,6 +20,7 @@ public class FoundationGeometryDto {
     private double columnHeightAboveGround;
     private double columnHeightBelowGround;
     private double unitWeightOfConcrete;
+    private double weightOfFoundation;
 
     public FoundationGeometryDto() {
     }
@@ -32,19 +33,27 @@ public class FoundationGeometryDto {
         this.columnHeightAboveGround = columnHeightAboveGround;
         this.columnHeightBelowGround = columnHeightBelowGround;
         this.unitWeightOfConcrete = unitWeightOfConcrete;
+        this.weightOfFoundation = (sideLengthOfFooting*sideLengthOfFooting*heightOfFooting + sideLenghtOfColumn*sideLenghtOfColumn*(columnHeightAboveGround + columnHeightBelowGround))*unitWeightOfConcrete;
     }
     
     public List<String[]> getReportLines() {
-//        List<String> lines = new ArrayList<>();
-//        lines.add("Footing Side Length: " + sideLengthOfFooting + " m");
-//        lines.add("Height of The Footing: " + heightOfFooting + " m");
-//        lines.add("Unit Weight of Concrete: " + unitWeightOfConcrete);
-//        // Add more as needed
-//        return lines;
+
         List<String[]> data = new ArrayList<>();
-        data.add(new String[]{"Footing Side Length", ":", sideLengthOfFooting + " m"});
-        data.add(new String[]{"Height of The Footing", ":", heightOfFooting + " m"});
-        data.add(new String[]{"Unit Weight of Concrete", ":", unitWeightOfConcrete + "kN/m3"});
+        data.add(new String[]{""});
+        data.add(new String[]{"Initial Foundation Size"});
+        data.add(new String[]{"Assumed Width of Footing", ":", sideLengthOfFooting + "m"});
+        data.add(new String[]{"Assumed Breadth of Footing", ":", sideLengthOfFooting + "m"});
+        data.add(new String[]{"Height of Footing", ":", heightOfFooting + "m"});
+        data.add(new String[]{"Foundation Depth", ":", foundationDepth + "m"});
+        data.add(new String[]{"Height of Lean Concrete", ":", 0.05 + "m"});
+        data.add(new String[]{""});
+        data.add(new String[]{"Initial Column Size"});
+        data.add(new String[]{"Assumed Width of Column", ":", sideLenghtOfColumn + "m"});
+        data.add(new String[]{"Assumed Breadth of Column", ":", sideLenghtOfColumn + "m"});
+        data.add(new String[]{"Height of column above ground", ":", columnHeightAboveGround + "m"});
+        data.add(new String[]{"Height of column below ground", ":", columnHeightBelowGround + "m"});
+        data.add(new String[]{(String.format("Weight Of Foundation = (%.2f x %.2f x %.2f+%.2f x %.2f x (%.2f+%.2f)) x %.2f;", sideLengthOfFooting, sideLengthOfFooting, heightOfFooting, sideLenghtOfColumn, sideLenghtOfColumn, columnHeightAboveGround, columnHeightBelowGround, unitWeightOfConcrete)), ":",  String.format("%.2f kN", weightOfFoundation)});
+        data.add(new String[]{""});
         // Add more rows as needed
         return data;
     }
@@ -154,8 +163,25 @@ public class FoundationGeometryDto {
     }
     
     public double calculateWeightOfFoundation(){
-        return (sideLengthOfFooting*sideLengthOfFooting*heightOfFooting + sideLenghtOfColumn*sideLenghtOfColumn*(columnHeightAboveGround + columnHeightBelowGround))*unitWeightOfConcrete;
+        double weightOfFoundation = (sideLengthOfFooting*sideLengthOfFooting*heightOfFooting + sideLenghtOfColumn*sideLenghtOfColumn*(columnHeightAboveGround + columnHeightBelowGround))*unitWeightOfConcrete;
+        
+//        result.addReportLine(String.format("Weight Of Foundation = (%.2f x %.2f x %.2f+%.2f x %.2f x (%.2f+%.2f)) x %.2f;", sideLengthOfFooting, sideLengthOfFooting, heightOfFooting, sideLenghtOfColumn, sideLenghtOfColumn, columnHeightAboveGround, columnHeightBelowGround, unitWeightOfConcrete));
+        return weightOfFoundation;
     }
+
+    /**
+     * @return the weightOfFoundation
+     */
+    public double getWeightOfFoundation() {
+        return weightOfFoundation;
+    }
+
+    
+    public void setWeightOfFoundation() {
+        this.weightOfFoundation = (sideLengthOfFooting*sideLengthOfFooting*heightOfFooting + sideLenghtOfColumn*sideLenghtOfColumn*(columnHeightAboveGround + columnHeightBelowGround))*unitWeightOfConcrete;;
+    }
+    
+    
     
     
     
