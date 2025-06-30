@@ -30,8 +30,8 @@ public class UltimateLoadsDto {
     public List<String[]> getReportLines() {
 
         List<String[]> data = new ArrayList<>();
-        data.add(new String[]{""});
-        data.add(new String[]{"Analysis Foundation Reactions under Serviceability Limit State"});
+        data.add(new String[]{" "});
+        data.add(new String[]{"**Analysis Foundation Reactions under Ultimat Limit State**"});
         data.add(new String[]{"Compressive Force", ":", compressiveForce + "kN"});
         data.add(new String[]{"Tensile Force", ":", tensileForce + "kN"});
         data.add(new String[]{"Horizontal Force Transverse Direction", ":", horizontalTransverseForce + "kN"});

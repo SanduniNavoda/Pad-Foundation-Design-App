@@ -8,6 +8,7 @@ import com.sedceng.padfoundation.controller.UserInputController;
 import com.sedceng.padfoundation.controller.UserInputControllerForReinforcementDesign;
 import com.sedceng.padfoundation.dto.BearingDto;
 import com.sedceng.padfoundation.dto.FoundationGeometryDto;
+import com.sedceng.padfoundation.dto.ProjectDetailDto;
 import com.sedceng.padfoundation.dto.ReinforcementDto;
 import com.sedceng.padfoundation.dto.ResultDto;
 import com.sedceng.padfoundation.dto.ServiceabilityLoadsDto;
@@ -39,6 +40,7 @@ public class SoilReportView extends javax.swing.JFrame {
     
     private UserInputController inputController;
     private UserInputControllerForReinforcementDesign reinforcementInputController;
+    private ProjectDetailDto projectDetailDto;
     private SoilPropertiesNewDto soilDto;
     private FoundationGeometryDto geometryDto;
     private ServiceabilityLoadsDto serviceabilityLoadsDto;
@@ -121,8 +123,8 @@ public class SoilReportView extends javax.swing.JFrame {
         });
         
         btnGetReport.addActionListener(e -> {
-
-            ReportFrame report = new ReportFrame(geometryDto,soilCalculator, soilDto, serviceabilityLoadsDto, ultimateLoadsDto, bearingResultDto, uprootingResultDto, slidingResultDto);
+            setProjectDetails();
+            ReportFrame1 report = new ReportFrame1(projectDetailDto,geometryDto,soilCalculator, soilDto, serviceabilityLoadsDto, ultimateLoadsDto, bearingResultDto, uprootingResultDto, slidingResultDto, overturningResultDto);
             report.setVisible(true);
         });
     }
@@ -334,13 +336,13 @@ public class SoilReportView extends javax.swing.JFrame {
         jLabel65 = new javax.swing.JLabel();
         jLabel66 = new javax.swing.JLabel();
         btnGetReport = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
+        txtSite = new javax.swing.JTextField();
+        txtClient = new javax.swing.JTextField();
+        txtVender = new javax.swing.JTextField();
+        txtLocation = new javax.swing.JTextField();
+        txtDesignedBy = new javax.swing.JTextField();
+        txtCheckedBy = new javax.swing.JTextField();
+        txtTowerHeight = new javax.swing.JTextField();
         jTextField8 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1258,26 +1260,31 @@ public class SoilReportView extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.setText("jTextField1");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtSite.setText("30m Telecom Tower at Jayasumana Road");
+        txtSite.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtSiteActionPerformed(evt);
             }
         });
 
-        jTextField2.setText("jTextField1");
+        txtClient.setText("Dialog Axiata PLC");
 
-        jTextField3.setText("jTextField1");
+        txtVender.setText("Trailers");
 
-        jTextField4.setText("jTextField1");
+        txtLocation.setText("Jayasumana Road");
+        txtLocation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtLocationActionPerformed(evt);
+            }
+        });
 
-        jTextField5.setText("jTextField1");
+        txtDesignedBy.setText("SK");
 
-        jTextField6.setText("jTextField1");
+        txtCheckedBy.setText("BK");
 
-        jTextField7.setText("jTextField1");
+        txtTowerHeight.setText("30 ");
 
-        jTextField8.setText("jTextField1");
+        jTextField8.setText("3");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -1298,19 +1305,19 @@ public class SoilReportView extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                            .addComponent(txtTowerHeight, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
                             .addComponent(jTextField8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 466, Short.MAX_VALUE)
                         .addComponent(btnGetReport, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(397, 397, 397))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField4)
-                            .addComponent(jTextField5)
-                            .addComponent(jTextField6))
+                            .addComponent(txtSite, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
+                            .addComponent(txtClient)
+                            .addComponent(txtVender)
+                            .addComponent(txtLocation)
+                            .addComponent(txtDesignedBy)
+                            .addComponent(txtCheckedBy))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel6Layout.setVerticalGroup(
@@ -1322,31 +1329,31 @@ public class SoilReportView extends javax.swing.JFrame {
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel59)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtSite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel60)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtClient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel61)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtVender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel62)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel63)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtDesignedBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel64)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtCheckedBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(30, 30, 30)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel65)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtTowerHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel66)
@@ -1410,9 +1417,13 @@ public class SoilReportView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnGetReportActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtSiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSiteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtSiteActionPerformed
+
+    private void txtLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLocationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtLocationActionPerformed
 
     
     /**
@@ -1551,13 +1562,6 @@ public class SoilReportView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JLabel lblAsProvComForHogging;
     private javax.swing.JLabel lblAsProvComForSagging;
@@ -1589,23 +1593,45 @@ public class SoilReportView extends javax.swing.JFrame {
     private javax.swing.JTextField tfUnitWeightOfSoil;
     private javax.swing.JTextField tfWaterTableDepth;
     private javax.swing.JTextField txtBarDia;
+    private javax.swing.JTextField txtCheckedBy;
+    private javax.swing.JTextField txtClient;
     private javax.swing.JTextField txtCover;
+    private javax.swing.JTextField txtDesignedBy;
     private javax.swing.JTextField txtFcu;
     private javax.swing.JTextField txtFy;
+    private javax.swing.JTextField txtLocation;
     private javax.swing.JTextField txtNoOfLegs;
     private javax.swing.JTextField txtShearLinksDia;
+    private javax.swing.JTextField txtSite;
     private javax.swing.JTextField txtSlsCompressiveForce;
     private javax.swing.JTextField txtSlsHorizontalLongitudinalForce;
     private javax.swing.JTextField txtSlsHorizontalTransverseForce;
     private javax.swing.JTextField txtSlsTensileForce;
+    private javax.swing.JTextField txtTowerHeight;
     private javax.swing.JTextField txtUlsCompressiveForce;
     private javax.swing.JTextField txtUlsHorizntalLongitudinalForce;
     private javax.swing.JTextField txtUlsHorizontalTransverseForce;
     private javax.swing.JTextField txtUlsTensileForce;
+    private javax.swing.JTextField txtVender;
     private javax.swing.JTextField unitWeightOfConcrete;
     private javax.swing.JLabel unitWeightOfSoil;
     private javax.swing.JLabel waterTableLocation;
     // End of variables declaration//GEN-END:variables
+    
+    private void setProjectDetails(){
+        ProjectDetailDto projectDetailDto = new ProjectDetailDto();
+        
+        projectDetailDto.setSite(txtSite.getText());
+        projectDetailDto.setClient(txtClient.getText());
+        projectDetailDto.setVender(txtVender.getText());
+        projectDetailDto.setLocation(txtLocation.getText());
+        projectDetailDto.setDesignedBy(txtDesignedBy.getText());
+        projectDetailDto.setCheckedBy(txtCheckedBy.getText());
+        projectDetailDto.setTowerHeight(txtTowerHeight.getText());
+        projectDetailDto.setNoOfLegs(txtNoOfLegs.getText());
+        
+        this.projectDetailDto = projectDetailDto;
+    }
     
     private void setDrawingDimentions(){
         dwgColHeightAboveGround.setText(columnHeightAboveGround.getText()+"m");
@@ -1680,12 +1706,7 @@ public class SoilReportView extends javax.swing.JFrame {
 //        serviceabilityLoadsDto.setHorizontalTransverseForce(Double.parseDouble(txtSlsHorizontalTransverseForce.getText()));
 //        System.out.println(serviceabilityLoadsDto.toString());
         
-        
-        
-        
-        
-        
-        
+
         
         ResultDto weightCalculationResultDto = new ResultDto();
         soilCalculator.setResult(weightCalculationResultDto);
@@ -1719,6 +1740,8 @@ public class SoilReportView extends javax.swing.JFrame {
             this.slidingResultDto = slidingResult;
             boolean slidingCheckResult = slidingResult.isIsSatisfied();
             
+            
+            
             ResultDto overturningResult = new ResultDto();
             soilCalculator.setResult(overturningResult);
             overturningResult = inputController.fosCheckForOverturning(weightOfFoundation, weightOfPyramidsoilFrustum, geometryDto, soilDto, serviceabilityLoadsDto, soilCalculator, overturningResult);
@@ -1750,18 +1773,7 @@ public class SoilReportView extends javax.swing.JFrame {
     }
      
      private void reinforcementDesign(){
-        SoilPropertiesNewDto soilDto = new SoilPropertiesNewDto();
-        soilDto.setBearingCapacity(Double.parseDouble(tfBearignCapacity.getText()));
-        //dto.setBreadthOfColumn(Double.parseDouble(tfBearignCapacity.getText()));
-        soilDto.setBulkUnitWeight(Double.parseDouble(tfUnitWeightOfSoil.getText()));
-        soilDto.setCohesion(Double.parseDouble(tfCohesion.getText()));
-        soilDto.setFrictionAngleWithFoundation(Double.parseDouble(tfFrictionAngleFoundationAndSoil.getText()));
-        soilDto.setInternalFrictionAngle(Double.parseDouble(tfInternalFrictionAngle.getText()));
-        soilDto.setSaturatedUnitWeight(Double.parseDouble(tfSaturatedUnitWeight.getText()));
-        soilDto.setWaterUnitWeight(Double.parseDouble(gammaWat.getText()));
-        soilDto.setWaterTableDepth(Double.parseDouble(tfWaterTableDepth.getText()));
         
-        System.out.println(soilDto.toString());
         
         
 //        FoundationGeometryDto geometryDto = new FoundationGeometryDto();
@@ -1801,6 +1813,7 @@ public class SoilReportView extends javax.swing.JFrame {
         
 
         try {
+            ResultDto asReqForCompInSagging = new ResultDto();
             double asRequiredForCompressionInSagging = reinforcementInputController.CompressiveRfRequirementForSagging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator);
             double asProvidedForCompressionInSagging = reinforcementInputController.getAsProvided(asRequiredForCompressionInSagging, geometryDto, rfDto, rfCalculator);
             String compressiveRfDesignForSagging = reinforcementInputController.compressiveRfDesignForSagging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator);
@@ -1858,7 +1871,5 @@ public class SoilReportView extends javax.swing.JFrame {
 //        txtContact.setText("");
 //        txtAddress.setText("");
     }
-    
-    
 
 }

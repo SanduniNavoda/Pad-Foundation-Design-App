@@ -22,7 +22,7 @@ public class SlidingCheckServiceImpl implements SlidingCheckService{
     @Override
     public ResultDto fosSatisfied(double foundationWeight, double rectangularSoilWeight, SoilPressureCalculatorUtil soilCalculator, FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto loadsDto, ResultDto result) throws Exception {
         soilCalculator.setResult(result);
-        result.addReportLine("Sliding Check");
+        result.addReportLine("**Sliding Check**");
         
         double lf = geometryDto.getSideLengthOfFooting();
         double lc = geometryDto.getSideLenghtOfColumn();
@@ -109,7 +109,7 @@ public class SlidingCheckServiceImpl implements SlidingCheckService{
 //        result.addReportLine(String.format("Fos = (%.2f/%.2f);", bearingCapacity, maximumPressureUnderBase), ":", String.format("%.2f kN/m²", fos));
         result.addReportLine(String.format("Fos = (%.2f+%.2f+%.2f)/%.2f;", fr, fc, ff, v),  ":", String.format("%.2f kN/m²", fos));
         result.addReportLine(isFosSatisfied? "Sliding Check Pass" : "Sliding Check Fail", "", "" );
-        result.addReportLine("");
+        result.addReportLine(" ");
         
         
         return result;

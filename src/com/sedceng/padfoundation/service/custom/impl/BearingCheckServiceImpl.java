@@ -25,8 +25,8 @@ public class BearingCheckServiceImpl implements BearingCheckService {
         double sw = rectangularSoilWeight;
         double w = foundationWeight;
         double fc = serviceabilityLoadsDto.getCompressiveForce();
-        result.addReportLine("");
-        result.addReportLine("Bearing Check");
+        result.addReportLine(" ");
+        result.addReportLine("**Bearing Check**");
         result.addReportLine("Rectangular Soil Weight", ":", String.format("%.2f kN", sw));
         result.addReportLine("Foundation Weight", ":", String.format("%.2f kN", w));
         result.addReportLine("Compressive Force", ":", String.format("%.2f kN", fc));
@@ -83,7 +83,7 @@ public class BearingCheckServiceImpl implements BearingCheckService {
         result.addReportLine(String.format("Maximum Pressure Under Base = %.2f+2 x %.2f;", sigmaC, sigmaCDash), ":", String.format("%.2f kN/m²", maximumPressureUnderBase));
         result.addReportLine(String.format("Fos = (%.2f/%.2f);", bearingCapacity, maximumPressureUnderBase), ":", String.format("%.2f kN/m²", fos));
         result.addReportLine(isFosSatisfied? "Bearing Check Pass" : "Bearing Check Fail", "", "" );
-        result.addReportLine("");
+        result.addReportLine(" ");
 
         return result;
 

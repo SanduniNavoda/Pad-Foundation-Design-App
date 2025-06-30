@@ -6,6 +6,7 @@ package com.sedceng.padfoundation.util;
 
 import com.sedceng.padfoundation.dto.FoundationGeometryDto;
 import com.sedceng.padfoundation.dto.ReinforcementDto;
+import com.sedceng.padfoundation.dto.ResultDto;
 
 /**
  *
@@ -15,6 +16,7 @@ public class ReinforcementCalculatorUtil {
     
     private ReinforcementDto rfDto;
     private FoundationGeometryDto geometry;
+    private ResultDto result;
 
     public ReinforcementCalculatorUtil(ReinforcementDto rfDto, FoundationGeometryDto geometry) {
         this.rfDto = rfDto;
@@ -36,6 +38,22 @@ public class ReinforcementCalculatorUtil {
         double barDia = rfDto.getBarDiameter();
         return cover + 0.5 * barDia;
     }
+
+    /**
+     * @return the result
+     */
+    public ResultDto getResult() {
+        return result;
+    }
+
+    /**
+     * @param result the result to set
+     */
+    public void setResult(ResultDto result) {
+        this.result = result;
+    }
+    
+    
     
     
     

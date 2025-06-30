@@ -39,8 +39,8 @@ public class FoundationGeometryDto {
     public List<String[]> getReportLines() {
 
         List<String[]> data = new ArrayList<>();
-        data.add(new String[]{""});
-        data.add(new String[]{"Initial Foundation Size"});
+        data.add(new String[]{" "});
+        data.add(new String[]{"**Initial Foundation Size**"});
         data.add(new String[]{"Assumed Width of Footing", ":", sideLengthOfFooting + "m"});
         data.add(new String[]{"Assumed Breadth of Footing", ":", sideLengthOfFooting + "m"});
         data.add(new String[]{"Height of Footing", ":", heightOfFooting + "m"});

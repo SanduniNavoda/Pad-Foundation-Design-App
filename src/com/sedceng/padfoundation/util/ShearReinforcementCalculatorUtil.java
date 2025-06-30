@@ -6,6 +6,7 @@ package com.sedceng.padfoundation.util;
 
 import com.sedceng.padfoundation.dto.FoundationGeometryDto;
 import com.sedceng.padfoundation.dto.ReinforcementDto;
+import com.sedceng.padfoundation.dto.ResultDto;
 
 /**
  *
@@ -15,6 +16,7 @@ public class ShearReinforcementCalculatorUtil {
     
     private final double[] AS_OVER_BVD = {0.15, 0.25, 0.50, 0.75, 1.00, 1.50, 2.00, 3.00};
     private final int[] DEPTHS = {125, 150, 175, 200, 225, 250, 300, 400};
+    private ResultDto result;
 
     private final double[][] VC_VALUES = {
         {0.45, 0.43, 0.41, 0.40, 0.39, 0.38, 0.36, 0.34},
@@ -134,4 +136,20 @@ public class ShearReinforcementCalculatorUtil {
 
         return numLegs + "T" + (int)barDiameter + "@" + roundedSpacing;
     }
+
+    /**
+     * @return the result
+     */
+    public ResultDto getResult() {
+        return result;
+    }
+
+    /**
+     * @param result the result to set
+     */
+    public void setResult(ResultDto result) {
+        this.result = result;
+    }
+    
+    
 }

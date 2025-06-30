@@ -24,7 +24,6 @@ public class UserInputControllerForReinforcementDesign {
         private DesignForOneWayShearService designForOneWayShearService = (DesignForOneWayShearService) ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.ONE_WAY_SHEAR);
         private DesignForPunchingShearService designForPunchingShearService = (DesignForPunchingShearService) ServiceFactory.getInstance().getService(ServiceFactory.ServiceType.PUNCHING_SHEAR);
         
-        
 
     public double CompressiveRfRequirementForSagging(FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ReinforcementDto rfDto, UltimateLoadsDto loadsDto, SoilPressureCalculatorUtil soilCalculator, ReinforcementCalculatorUtil rfCal) throws Exception{
         double axialCompressiveForce = loadsDto.getCompressiveForce();

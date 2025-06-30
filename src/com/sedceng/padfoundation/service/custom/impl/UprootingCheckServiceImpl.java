@@ -26,7 +26,7 @@ public class UprootingCheckServiceImpl implements UprootingCheckService{
     @Override
     public ResultDto fosSatisfied(double foundationWeight, double rectangularSoilWeight, double weightOfPyramidsoilFrustum, FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto serviceabilityLoadsDto, SoilPressureCalculatorUtil soilCalculator, ResultDto result) throws Exception {
         soilCalculator.setResult(result);
-        result.addReportLine("Uprooting Check");
+        result.addReportLine("**Uprooting Check**");
         
         double pyramidSoilWeightAboveFooting = weightOfPyramidsoilFrustum;
         
@@ -67,7 +67,7 @@ public class UprootingCheckServiceImpl implements UprootingCheckService{
         boolean isFosSatisfied = (fos_Pyramid > 1.75 && fos_Rectangular > 1);
         result.setIsSatisfied(isFosSatisfied);
         result.addReportLine(isFosSatisfied? "Uprooting Check Pass" : "Uprooting Check Fail", "", "" );
-        result.addReportLine("");
+        result.addReportLine(" ");
         
         return result;
             

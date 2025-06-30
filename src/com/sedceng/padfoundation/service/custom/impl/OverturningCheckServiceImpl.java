@@ -20,6 +20,8 @@ public class OverturningCheckServiceImpl implements OverturningCheckService{
 
     @Override
     public ResultDto fosSatisfied(double weightOfFoundation, double weightOFPyramidSoilFrustum, FoundationGeometryDto geometry, SoilPressureCalculatorUtil soilCalculator, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto loadsDto, ResultDto result) throws Exception {
+        
+        result.addReportLine("**Overturning Check**");
         //double fc = soilCalculator.calculatePassiveForceOnColumnFace();
         //double ff = soilCalculator.calculatePassiveForceOnFootingFace();
         double ft = loadsDto.getTensileForce();
@@ -35,6 +37,8 @@ public class OverturningCheckServiceImpl implements OverturningCheckService{
         
         double w = weightOfFoundation;
         double sw = weightOFPyramidSoilFrustum;
+        result.addReportLine("Weight of Foundation (W)", "=", String.format("%.2f m³", w));
+        result.addReportLine("Weight of Soil (Sw)", "=", String.format("%.2f m³", sw));
         
         double v;
         if (vl > vt){
@@ -61,19 +65,25 @@ public class OverturningCheckServiceImpl implements OverturningCheckService{
         double leaverArmFf2 = 0;
         if(d > hc_bg){
             //Water table below column face
+            result.addReportLine("Force on Column Face, ");
             leaverArmFc = soilCalculator.calculateLeaverArm(0, sigmaHc, hc_bg)+(hf);
             if(d < h){
                 //Footing face spans water table
+                result.addReportLine("Force On Footing Face, ");
                 leaverArmFf1 = soilCalculator.calculateLeaverArm(sigmaHc, sigmaDashD, (d-hc_bg)) + (h - d);
                 leaverArmFf2 = soilCalculator.calculateLeaverArm(sigmaDashD, sigmaHf, h-d);
             }else{
+                result.addReportLine("Force On Footing Face, ");
                 //Entire footing face above water table
                 leaverArmFf = soilCalculator.calculateLeaverArm(sigmaHc, sigmaHf, hf);
             }
         }else{
             //water table cuts column face
+            result.addReportLine("Force on Column Face, ");
             leaverArmFc1 = soilCalculator.calculateLeaverArm(0, sigmaDashD, d) + (h - d);
             leaverArmFc2 = soilCalculator.calculateLeaverArm(sigmaDashD, sigmaHc, hc_bg - d) + (hf);
+            
+            result.addReportLine("Force On Footing Face, ");
             leaverArmFf = soilCalculator.calculateLeaverArm(sigmaHc, sigmaHf, hf);
         }
         
@@ -101,8 +111,8 @@ public class OverturningCheckServiceImpl implements OverturningCheckService{
             }
         }else{
             //water table cuts column face
-            fc1 = soilCalculator.calculateLeaverArm(0, sigmaDashD, d)*lc;
-            fc2 = soilCalculator.calculateLeaverArm(sigmaDashD, sigmaHc, hc_bg - d)*lc;
+            fc1 = soilCalculator.calculatePassivePressure(0, sigmaDashD, d)*lc;
+            fc2 = soilCalculator.calculatePassivePressure(sigmaDashD, sigmaHc, hc_bg - d)*lc;
             ff = soilCalculator.calculatePassivePressure(sigmaHc, sigmaHf, hf)*lf;
             lateralMoment = fc1*leaverArmFc1 + fc2*leaverArmFc2 + ff*leaverArmFf;
         }
@@ -113,16 +123,18 @@ public class OverturningCheckServiceImpl implements OverturningCheckService{
         double resistantMoment = (w + sw)*(lf/2) + lateralMoment;
         
         double fos = (resistantMoment/overturningMoment);
+        result.addReportLine(String.format("Fos (>1.75) = %.2f/%.2f;", resistantMoment, overturningMoment), ":", String.format("%.2f", fos));
         System.out.println("fos Overturning = " + (resistantMoment/overturningMoment));
        
         boolean isSatisfied = resistantMoment/overturningMoment > 1.75;
         
         result.setResult(fos);
+        
         result.setIsSatisfied(isSatisfied);
+        result.addReportLine(isSatisfied? "Overturning Check Pass" : "Overturning Check Fail", "", "" );
         
         return result;
-        
-        
+
     }
     
     

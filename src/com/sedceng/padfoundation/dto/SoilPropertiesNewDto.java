@@ -41,7 +41,7 @@ public class SoilPropertiesNewDto {
     public List<String[]> getReportLines() {
 
         List<String[]> data = new ArrayList<>();
-        data.add(new String[]{"Material Properties"});
+        data.add(new String[]{"**Material Properties**"});
         data.add(new String[]{"Following Engineering Parameters was recommended for  the soil in the provided Geo Investigation Report "});
         data.add(new String[]{"Effective soil Angle of Internal Friction (Ø’)", ":", internalFrictionAngle + ""});
         data.add(new String[]{"Friction angle between concrete foundation and soil (δ)", ":", frictionAngleWithFoundation + ""});
