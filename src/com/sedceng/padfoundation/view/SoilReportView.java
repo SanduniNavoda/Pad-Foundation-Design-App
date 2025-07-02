@@ -45,11 +45,18 @@ public class SoilReportView extends javax.swing.JFrame {
     private FoundationGeometryDto geometryDto;
     private ServiceabilityLoadsDto serviceabilityLoadsDto;
     private UltimateLoadsDto ultimateLoadsDto;
+    private ReinforcementDto reinforcementDto;
     private ResultDto slidingResultDto;
     private ResultDto bearingResultDto;
     private ResultDto uprootingResultDto;
     private ResultDto overturningResultDto;
     private ResultDto soilCalculatorResultDto;
+    private ResultDto reinforcementDesignResultDto;
+    private ResultDto designForCompInSaggingResultDto;
+    private ResultDto designForCompInHoggingResultDto;
+    private ResultDto designForTensInSaggingResultDto;
+    private ResultDto designForTenseInHoggingResultDto;
+    private ResultDto designForShearResultDto;
     private SoilPressureCalculatorUtil soilCalculator;
     /**
      * Creates new form GuestView
@@ -124,7 +131,7 @@ public class SoilReportView extends javax.swing.JFrame {
         
         btnGetReport.addActionListener(e -> {
             setProjectDetails();
-            ReportFrame1 report = new ReportFrame1(projectDetailDto,geometryDto,soilCalculator, soilDto, serviceabilityLoadsDto, ultimateLoadsDto, bearingResultDto, uprootingResultDto, slidingResultDto, overturningResultDto);
+            ReportFrame1 report = new ReportFrame1(projectDetailDto,geometryDto,soilCalculator, soilDto, serviceabilityLoadsDto, ultimateLoadsDto, bearingResultDto, uprootingResultDto, slidingResultDto, overturningResultDto, reinforcementDto);
             report.setVisible(true);
         });
     }
@@ -1804,6 +1811,7 @@ public class SoilReportView extends javax.swing.JFrame {
         rfDto.setShearLinksDiameter(Double.parseDouble(txtShearLinksDia.getText()));
         rfDto.setNoOfLegs(Integer.parseInt(txtNoOfLegs.getText()));
         System.out.println(rfDto.toString());
+        this.reinforcementDto = rfDto;
         
         
         
@@ -1813,24 +1821,37 @@ public class SoilReportView extends javax.swing.JFrame {
         
 
         try {
-            ResultDto asReqForCompInSagging = new ResultDto();
-            double asRequiredForCompressionInSagging = reinforcementInputController.CompressiveRfRequirementForSagging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator);
-            double asProvidedForCompressionInSagging = reinforcementInputController.getAsProvided(asRequiredForCompressionInSagging, geometryDto, rfDto, rfCalculator);
-            String compressiveRfDesignForSagging = reinforcementInputController.compressiveRfDesignForSagging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator);
+            ResultDto criticalBendingMomentResultDto = new ResultDto();
+            double mCr = reinforcementInputController.CriticalBendingMomentAboutTheFaceOfTheColumn(soilDto, geometryDto, soilCalculator, loadsDto, criticalBendingMomentResultDto);
+            double d = rfCalculator.calculateEffectiveDepth(criticalBendingMomentResultDto);
+            double sideLenghtOfFooting = geometryDto.getSideLengthOfFooting();
+            double fCu = reinforcementDto.getGradeOfConcrete();
+            double k = reinforcementInputController.calculateKValue(sideLenghtOfFooting, d, fCu, mCr, criticalBendingMomentResultDto);
+            this.reinforcementDesignResultDto = criticalBendingMomentResultDto;
             
-            double asRequiredForCompressionInHogging = reinforcementInputController.compressiveRfRequirementForHogging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator);
-            double asProvidedForCompressionInHogging = reinforcementInputController.getAsProvided(asRequiredForCompressionInHogging, geometryDto, rfDto, rfCalculator);
-            String compressiveRfDesignForHogging = reinforcementInputController.compressiveRfDesignForHogging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator);
+            ResultDto asReqForCompInSaggingResultDto = new ResultDto();
+            double asRequiredForCompressionInSagging = reinforcementInputController.CompressiveRfRequirementForSagging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator, mCr, d, k, asReqForCompInSaggingResultDto);
+            double asProvidedForCompressionInSagging = reinforcementInputController.getAsProvided(asRequiredForCompressionInSagging, geometryDto, rfDto, rfCalculator, d,  asReqForCompInSaggingResultDto);
+            String compressiveRfDesignForSagging = reinforcementInputController.compressiveRfDesignForSagging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator, asRequiredForCompressionInSagging, d, asReqForCompInSaggingResultDto);
+            this.designForCompInSaggingResultDto = asReqForCompInSaggingResultDto;
             
-            double asRequiredForTensileInSagging = reinforcementInputController.tensileRfRequirementForSagging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator);
-            double asProvidedForTensileInSagging = reinforcementInputController.getAsProvided(asRequiredForTensileInSagging, geometryDto, rfDto, rfCalculator);
-            String tensileRfDesignForSagging = reinforcementInputController.tensileRfDesignForSagging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator);
+            ResultDto asReqForCompInHoggingResultDto = new ResultDto();
+            double asRequiredForCompressionInHogging = reinforcementInputController.compressiveRfRequirementForHogging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator,mCr, d, k, asReqForCompInHoggingResultDto);
+            double asProvidedForCompressionInHogging = reinforcementInputController.getAsProvided(asRequiredForCompressionInHogging, geometryDto, rfDto, rfCalculator, d, asReqForCompInHoggingResultDto);
+            String compressiveRfDesignForHogging = reinforcementInputController.compressiveRfDesignForHogging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator, asRequiredForCompressionInHogging, d, asReqForCompInHoggingResultDto);
             
-            double asRequiredForTensileInHogging = reinforcementInputController.tensileRfRequirementForHogging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator);
-            double asProvidedForTensileInHogging = reinforcementInputController.getAsProvided(asRequiredForTensileInHogging, geometryDto, rfDto, rfCalculator);
-            String tensileRfDesignForHogging = reinforcementInputController.tensileRfDesignForHogging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator);
+            ResultDto asReqForTensInSaggingResultDto = new ResultDto(); 
+            double asRequiredForTensileInSagging = reinforcementInputController.tensileRfRequirementForSagging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator, asRequiredForCompressionInSagging, d, mCr, k, asReqForTensInSaggingResultDto);
+            double asProvidedForTensileInSagging = reinforcementInputController.getAsProvided(asRequiredForTensileInSagging, geometryDto, rfDto, rfCalculator, d, asReqForTensInSaggingResultDto);
+            String tensileRfDesignForSagging = reinforcementInputController.tensileRfDesignForSagging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator, asRequiredForTensileInSagging, d, asReqForTensInSaggingResultDto);
             
-            double asv = reinforcementInputController.ShearReinforcementRequirement(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator, shearRfCalculator);
+            ResultDto asReqForTenseInHoggingResultDto = new ResultDto();
+            double asRequiredForTensileInHogging = reinforcementInputController.tensileRfRequirementForHogging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator, asRequiredForCompressionInHogging, d, mCr, k, asReqForTenseInHoggingResultDto);
+            double asProvidedForTensileInHogging = reinforcementInputController.getAsProvided(asRequiredForTensileInHogging, geometryDto, rfDto, rfCalculator, d, asReqForTenseInHoggingResultDto);
+            String tensileRfDesignForHogging = reinforcementInputController.tensileRfDesignForHogging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator, asRequiredForTensileInHogging, d, asReqForTenseInHoggingResultDto);
+            
+            ResultDto asReqForShearResultDto = new ResultDto();
+            double asv = reinforcementInputController.ShearReinforcementRequirement(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator, shearRfCalculator, asProvidedForTensileInSagging, d, asReqForShearResultDto);
             double shearLinkDia = rfDto.getShearLinksDiameter();
             int noOfLegs = rfDto.getNoOfLegs();
             String asvDesign = reinforcementInputController.ShearReinforcementDesign(shearRfCalculator, asv, noOfLegs, shearLinkDia);

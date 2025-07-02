@@ -19,6 +19,7 @@ import com.itextpdf.text.Font; // Explicitly import iText's Font class here
 
 import com.sedceng.padfoundation.dto.FoundationGeometryDto;
 import com.sedceng.padfoundation.dto.ProjectDetailDto;
+import com.sedceng.padfoundation.dto.ReinforcementDto;
 import com.sedceng.padfoundation.dto.ResultDto;
 import com.sedceng.padfoundation.dto.ServiceabilityLoadsDto;
 import com.sedceng.padfoundation.dto.SoilPropertiesNewDto;
@@ -63,7 +64,7 @@ public class ReportFrame1 extends javax.swing.JFrame {
      * @param uprootingResultDto
      * @param slidingDto
      */
-    public ReportFrame1(ProjectDetailDto projectDetailDto, FoundationGeometryDto geometryDto, SoilPressureCalculatorUtil soilCalculator, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto serviceabilityLoadsDto, UltimateLoadsDto ultimateLoadsDto, ResultDto bearingResutDto, ResultDto uprootingResultDto, ResultDto slidingResultDto, ResultDto overturningResultDto) {
+    public ReportFrame1(ProjectDetailDto projectDetailDto, FoundationGeometryDto geometryDto, SoilPressureCalculatorUtil soilCalculator, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto serviceabilityLoadsDto, UltimateLoadsDto ultimateLoadsDto, ResultDto bearingResutDto, ResultDto uprootingResultDto, ResultDto slidingResultDto, ResultDto overturningResultDto, ReinforcementDto reinforcementDto) {
         initComponents();
 
         setTitle("Report");
@@ -86,6 +87,8 @@ public class ReportFrame1 extends javax.swing.JFrame {
         List<String[]> uprootingResultDtoData = uprootingResultDto.getData();
         List<String[]> slidingResultDtoData = slidingResultDto.getData();
         List<String[]> overturningResultDtoData = overturningResultDto.getData();
+        List<String[]> reinforcementDtoData = reinforcementDto.getReportLines();
+        
 
         // Add rows to the model. Assume each 'row' String[] has at least 3 elements.
         // If a row has fewer than 3, ensure you handle it to avoid ArrayIndexOutOfBoundsException
@@ -190,6 +193,10 @@ public class ReportFrame1 extends javax.swing.JFrame {
         for (String[] row : overturningResultDtoData) {
             data.add(row);
         }
+        for (String[] row : reinforcementDtoData) {
+            data.add(row);
+        }
+        
 
         for (String[] row : data) {
             // Ensure row always has exactly 3 elements

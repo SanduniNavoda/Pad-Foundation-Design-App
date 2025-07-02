@@ -16,7 +16,6 @@ public class ReinforcementCalculatorUtil {
     
     private ReinforcementDto rfDto;
     private FoundationGeometryDto geometry;
-    private ResultDto result;
 
     public ReinforcementCalculatorUtil(ReinforcementDto rfDto, FoundationGeometryDto geometry) {
         this.rfDto = rfDto;
@@ -24,34 +23,27 @@ public class ReinforcementCalculatorUtil {
     }
     
     
-    public double calculateEffectiveDepth(){
+    public double calculateEffectiveDepth(ResultDto result){
         double hf = geometry.getHeightOfFooting();
         double cover = rfDto.getClearCover();
         double barDia = rfDto.getBarDiameter();
         
-        return (hf * 1000) - cover - (0.5 * barDia);
+        double d = (hf * 1000) - cover - (0.5 * barDia);
+        result.addReportLine(String.format("Effective Depth (d) = (%.2f x 1000)-%.2f-(0.5 x %.2f);", hf, cover, barDia), "=", String.format("%.2f", d));
+        return d;
     }
     
     
-    public double dDash(){
+    public double dDash(ResultDto result){
         double cover = rfDto.getClearCover();
         double barDia = rfDto.getBarDiameter();
-        return cover + 0.5 * barDia;
+        
+        double dDash = cover + 0.5 * barDia;
+        result.addReportLine(String.format("d Dash = %.2f+0.5 x %.2f;", cover, barDia), "=", String.format("%.2f", dDash));
+        return dDash;
     }
 
-    /**
-     * @return the result
-     */
-    public ResultDto getResult() {
-        return result;
-    }
 
-    /**
-     * @param result the result to set
-     */
-    public void setResult(ResultDto result) {
-        this.result = result;
-    }
     
     
     

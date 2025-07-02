@@ -46,7 +46,7 @@ public class FoundationGeometryDto {
         data.add(new String[]{"Height of Footing", ":", heightOfFooting + "m"});
         data.add(new String[]{"Foundation Depth", ":", foundationDepth + "m"});
         data.add(new String[]{"Height of Lean Concrete", ":", 0.05 + "m"});
-        data.add(new String[]{""});
+        data.add(new String[]{" "});
         data.add(new String[]{"Initial Column Size"});
         data.add(new String[]{"Assumed Width of Column", ":", sideLenghtOfColumn + "m"});
         data.add(new String[]{"Assumed Breadth of Column", ":", sideLenghtOfColumn + "m"});

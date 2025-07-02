@@ -7,6 +7,7 @@ package com.sedceng.padfoundation.service.custom;
 import com.sedceng.padfoundation.dto.FoundationFootingDto;
 import com.sedceng.padfoundation.dto.FoundationGeometryDto;
 import com.sedceng.padfoundation.dto.ReinforcementDto;
+import com.sedceng.padfoundation.dto.ResultDto;
 import com.sedceng.padfoundation.dto.SoilPropertiesDto;
 import com.sedceng.padfoundation.dto.ServiceabilityLoadsDto;
 import com.sedceng.padfoundation.dto.SoilPropertiesNewDto;
@@ -22,5 +23,5 @@ import com.sedceng.padfoundation.util.SoilPressureCalculatorUtil;
  */
 public interface DesignForPunchingShearService extends SuperService{
 
-    double ShearReinforcementRequirementPerMm(SoilPropertiesNewDto soilDto, FoundationGeometryDto geometry, SoilPressureCalculatorUtil soilCalculator,UltimateLoadsDto loadsDto, ReinforcementCalculatorUtil rfUtil, double as, ShearReinforcementCalculatorUtil shearRfUtil) throws Exception;
+    double ShearReinforcementRequirementPerMm(SoilPropertiesNewDto soilDto, FoundationGeometryDto geometry, SoilPressureCalculatorUtil soilCalculator,UltimateLoadsDto loadsDto, ReinforcementCalculatorUtil rfUtil, double as, ShearReinforcementCalculatorUtil shearRfUtil, double effectiveDepth, ResultDto result) throws Exception;
 }

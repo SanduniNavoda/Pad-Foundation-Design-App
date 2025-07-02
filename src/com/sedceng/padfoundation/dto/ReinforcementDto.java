@@ -4,6 +4,9 @@
  */
 package com.sedceng.padfoundation.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  *
@@ -29,6 +32,23 @@ public class ReinforcementDto {
         this.shearLinksDiameter = shearLinksDiameter;
         this.noOfLegs = noOfLegs;
         
+    }
+    
+    public List<String[]> getReportLines() {
+
+        List<String[]> data = new ArrayList<>();
+        data.add(new String[]{" "});
+        data.add(new String[]{"**Reinforcement Design of Isolated Pad Footing**"});
+        data.add(new String[]{" "});
+        data.add(new String[]{"Yield Strenght of Reinforcement (fy)", ":", yieldStrenghtOfReinforcement + "MPa"});
+        data.add(new String[]{"Grade of Concrete", ":", gradeOfConcrete + "MPa"});
+        data.add(new String[]{"Clear cover to Reinforcement", ":", clearCover + "mm"});
+        data.add(new String[]{"Main Bar Diameter", ":", barDiameter + "mm"});
+        data.add(new String[]{"Shear Link Diameter", ":", shearLinksDiameter + "mm"});
+        data.add(new String[]{"No of Legs (Shear Link)", ":", noOfLegs + ""});
+        data.add(new String[]{""});
+        // Add more rows as needed
+        return data;
     }
 
     /**
