@@ -35,6 +35,7 @@ public class DesignForOneWayShearServiceImpl implements DesignForOneWayShearServ
         double axialForce = loadsDto.getCompressiveForce();
         double fcu = geometry.getUnitWeightOfConcrete();
 
+        result.addReportLine(" ");
         result.addReportLine("**Design For One Way Shear**");
 
         double sigmaC;
@@ -50,8 +51,8 @@ public class DesignForOneWayShearServiceImpl implements DesignForOneWayShearServ
         
         double sigmaMin = sigmaC - sigmaCDashVl - sigmaCDashVt;
         double sigmaMax = sigmaC + sigmaCDashVl + sigmaCDashVt;
-        result.addReportLine("Sigma Min", "=", String.format("%.2f;", sigmaMin));
-        result.addReportLine("Sigma Max", "=", String.format("%.2f;", sigmaMax));
+        result.addReportLine("Sigma Min", "=", String.format("%.2f kN/m²;", sigmaMin));
+        result.addReportLine("Sigma Max", "=", String.format("%.2f kN/m²;", sigmaMax));
         
         //double effectiveDepth = rfUtil.calculateEffectiveDepth();
         double a = (wf - wc)*0.5 - effectiveDepth/1000;

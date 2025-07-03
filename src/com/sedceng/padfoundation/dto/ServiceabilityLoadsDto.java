@@ -33,10 +33,10 @@ public class ServiceabilityLoadsDto {
         data.add(new String[]{" "});
         data.add(new String[]{"**Resultant Reactions at Tower Base**"});
         data.add(new String[]{"**Analysis Foundation Reactions under Serviceability Limit State**"});
-        data.add(new String[]{"Compressive Force", ":", compressiveForce + "kN"});
-        data.add(new String[]{"Tensile Force", ":", tensileForce + "kN"});
-        data.add(new String[]{"Horizontal Force Transverse Direction", ":", horizontalTransverseForce + "kN"});
-        data.add(new String[]{"Horizontal Force Longitudinal Direction", ":", horizontalLongitudinalForce + "kN"});
+        data.add(new String[]{"Compressive Force", "=", compressiveForce + " kN"});
+        data.add(new String[]{"Tensile Force", "=", tensileForce + " kN"});
+        data.add(new String[]{"Horizontal Force Transverse Direction", "=", horizontalTransverseForce + " kN"});
+        data.add(new String[]{"Horizontal Force Longitudinal Direction", "=", horizontalLongitudinalForce + " kN"});
         
         // Add more rows as needed
         return data;

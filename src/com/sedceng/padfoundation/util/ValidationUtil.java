@@ -6,6 +6,9 @@ package com.sedceng.padfoundation.util;
 
 import java.awt.Component;
 import java.awt.Container;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.text.AbstractDocument;
@@ -56,14 +59,18 @@ public class ValidationUtil {
         
     }
     
-    public static void applyDoubleFilterToAllTextFields(Container container) {
-        for (Component component : container.getComponents()) {
-            if (component instanceof JTextField) {
-                applyDoubleFilter((JTextField) component);
-            } else if (component instanceof Container) {
-                applyDoubleFilterToAllTextFields((Container) component); // Recursive call
+    public static void applyDoubleFilterToAllTextFields(Container container, JTextField... excludedFields) {
+          Set<JTextField> excludedSet = new HashSet<>(Arrays.asList(excludedFields));
+
+    for (Component component : container.getComponents()) {
+        if (component instanceof JTextField textField) {
+            if (!excludedSet.contains(textField)) {
+                applyDoubleFilter(textField);
             }
+        } else if (component instanceof Container nestedContainer) {
+            applyDoubleFilterToAllTextFields(nestedContainer, excludedFields); // Recursive call
         }
+    }
     }
     
     public static boolean validateRequiredFields(Container container) {

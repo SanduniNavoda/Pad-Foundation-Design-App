@@ -27,9 +27,9 @@ public class BearingCheckServiceImpl implements BearingCheckService {
         double fc = serviceabilityLoadsDto.getCompressiveForce();
         result.addReportLine(" ");
         result.addReportLine("**Bearing Check**");
-        result.addReportLine("Rectangular Soil Weight", ":", String.format("%.2f kN", sw));
-        result.addReportLine("Foundation Weight", ":", String.format("%.2f kN", w));
-        result.addReportLine("Compressive Force", ":", String.format("%.2f kN", fc));
+        result.addReportLine("Rectangular Soil Weight", "=", String.format("%.2f kN", sw));
+        result.addReportLine("Foundation Weight", "=", String.format("%.2f kN", w));
+        result.addReportLine("Compressive Force", "=", String.format("%.2f kN", fc));
         double u = soilCalculator.calculateUpthrustForce();
         double h = geometryDto.getHeightOfFooting();
         double d = soilDto.getWaterTableDepth();
@@ -78,10 +78,10 @@ public class BearingCheckServiceImpl implements BearingCheckService {
         result.setResult(fos);
         result.setIsSatisfied(isFosSatisfied);
         
-        result.addReportLine(String.format("Sigma C = (%.2f+%.2f+%.2f-%.2f)/(%.2f x %.2f);", sw, w, fc, u, sideLength, sideLength), ":", String.format("%.2f kN/m²", sigmaC));
-        result.addReportLine(String.format("Sigma CDash = (%.2f x (%.2f+%.2f) x %.2f x 12)/(2 x %.2f x (%.2f x %.2f x %.2f));", v, h, hc_ag, sideLength, sideLength, sideLength, sideLength, sideLength), ":", String.format("%.2f kN/m²", sigmaCDash));
-        result.addReportLine(String.format("Maximum Pressure Under Base = %.2f+2 x %.2f;", sigmaC, sigmaCDash), ":", String.format("%.2f kN/m²", maximumPressureUnderBase));
-        result.addReportLine(String.format("Fos = (%.2f/%.2f);", bearingCapacity, maximumPressureUnderBase), ":", String.format("%.2f kN/m²", fos));
+        result.addReportLine(String.format("Sigma C = (%.2f+%.2f+%.2f-%.2f)/(%.2f x %.2f);", sw, w, fc, u, sideLength, sideLength), "=", String.format("%.2f kN/m²", sigmaC));
+        result.addReportLine(String.format("Sigma CDash = (%.2f x (%.2f+%.2f) x %.2f x 12)/(2 x %.2f x (%.2f x %.2f x %.2f));", v, h, hc_ag, sideLength, sideLength, sideLength, sideLength, sideLength), "=", String.format("%.2f kN/m²", sigmaCDash));
+        result.addReportLine(String.format("Maximum Pressure Under Base = %.2f+2 x %.2f;", sigmaC, sigmaCDash), "=", String.format("%.2f kN/m²", maximumPressureUnderBase));
+        result.addReportLine(String.format("Fos = (%.2f/%.2f);", bearingCapacity, maximumPressureUnderBase), "=", String.format("%.2f kN/m²", fos));
         result.addReportLine(isFosSatisfied? "Bearing Check Pass" : "Bearing Check Fail", "", "" );
         result.addReportLine(" ");
 

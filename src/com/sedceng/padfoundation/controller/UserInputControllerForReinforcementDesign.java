@@ -37,6 +37,8 @@ public class UserInputControllerForReinforcementDesign {
     public double CompressiveRfRequirementForSagging(FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ReinforcementDto rfDto, UltimateLoadsDto loadsDto, SoilPressureCalculatorUtil soilCalculator, ReinforcementCalculatorUtil rfCal, double mCr, double d, double k, ResultDto resultDto) throws Exception{
         double axialCompressiveForce = loadsDto.getCompressiveForce();
         System.out.println(axialCompressiveForce);
+        resultDto.addReportLine(" ");
+        resultDto.addReportLine("**Compressive Reinforcement Design For Sagging**");
         return designForBendingService.compressionReinforcementRequirement(soilDto, rfDto, geometryDto, soilCalculator, loadsDto, rfCal, axialCompressiveForce, mCr, d, k, resultDto);
     }
     
@@ -50,12 +52,15 @@ public class UserInputControllerForReinforcementDesign {
         if(asRequiredComp > 0){
             return designForBendingService.TensionOrCompressionReinforcement(asRequiredComp, rfDto, geometryDto, rfCal, d, resultDto);
         }else{
+            resultDto.addReportLine("No Compressive Reinforcement Required");
             return "No Compressive Reinforcement Required";
         }
     }
     
     public double compressiveRfRequirementForHogging(FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ReinforcementDto rfDto, UltimateLoadsDto loadsDto, SoilPressureCalculatorUtil soilCalculator, ReinforcementCalculatorUtil rfCal, double mCr, double d, double k, ResultDto resultDto) throws Exception{
         double axialTensileForce = loadsDto.getTensileForce() - geometryDto.calculateWeightOfFoundation();
+        resultDto.addReportLine(" ");
+        resultDto.addReportLine("**Compressive Reinforcement Design For Hogging**");
         return designForBendingService.compressionReinforcementRequirement(soilDto, rfDto, geometryDto, soilCalculator, loadsDto, rfCal, axialTensileForce, mCr, d, k, resultDto);
     }
     
@@ -65,6 +70,7 @@ public class UserInputControllerForReinforcementDesign {
         if(asRequiredComp > 0){
             return designForBendingService.TensionOrCompressionReinforcement(asRequiredComp, rfDto, geometryDto, rfCal, d, resultDto);
         }else{
+            resultDto.addReportLine("No Compressive Reinforcement Required");
             return "No Compressive Reinforcement Required";
         }
     }
@@ -73,6 +79,8 @@ public class UserInputControllerForReinforcementDesign {
     
     public double tensileRfRequirementForSagging(FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ReinforcementDto rfDto, UltimateLoadsDto loadsDto, SoilPressureCalculatorUtil soilCalculator, ReinforcementCalculatorUtil rfCal, double asCompSag , double d, double mCr, double k, ResultDto resultDto) throws Exception{
         double axialCompressiveForce = loadsDto.getCompressiveForce();
+        resultDto.addReportLine(" ");
+        resultDto.addReportLine("**Tensile Reinforcement Design For Sagging**");
         //double asDash = designForBendingService.compressionReinforcementRequirement(soilDto, rfDto, geometryDto, soilCalculator, loadsDto, rfCal, axialCompressiveForce);
         return designForBendingService.tensionReinforcementRequirement(soilDto, rfDto, geometryDto, soilCalculator, loadsDto, rfCal, axialCompressiveForce, asCompSag, d, mCr, k, resultDto);
     }
@@ -88,6 +96,8 @@ public class UserInputControllerForReinforcementDesign {
     
     public double tensileRfRequirementForHogging(FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ReinforcementDto rfDto, UltimateLoadsDto loadsDto, SoilPressureCalculatorUtil soilCalculator, ReinforcementCalculatorUtil rfCal, double asCompHog , double d, double mCr, double k, ResultDto resultDto) throws Exception{
         double axialTensileForce = loadsDto.getTensileForce();
+        resultDto.addReportLine(" ");
+        resultDto.addReportLine("**Tensile Reinforcement Design For Hogging**");
         //double asDash = designForBendingService.compressionReinforcementRequirement(soilDto, rfDto, geometryDto, soilCalculator, loadsDto, rfCal, axialTensileForce);
         return designForBendingService.tensionReinforcementRequirement(soilDto, rfDto, geometryDto, soilCalculator, loadsDto, rfCal, axialTensileForce, asCompHog, d, mCr, k, resultDto);
     }
@@ -104,6 +114,8 @@ public class UserInputControllerForReinforcementDesign {
     public double ShearReinforcementRequirement(FoundationGeometryDto geometryDto, SoilPropertiesNewDto soilDto, ReinforcementDto rfDto, UltimateLoadsDto loadsDto, SoilPressureCalculatorUtil soilCalculator, ReinforcementCalculatorUtil rfCal, ShearReinforcementCalculatorUtil shearRfUtil, double asProvTensSag, double d, ResultDto resultDto) throws Exception{
         //double asRequired = tensileRfRequirementForSagging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCal);
         //double asProvided = designForBendingService.getAsProvided(asRequired, rfDto, geometryDto, rfCal);
+        resultDto.addReportLine(" ");
+        resultDto.addReportLine("**Dsign for Shear**");
         double asvForOneWayShear = designForOneWayShearService.ShearReinforcementRequirementPerMm(soilDto, geometryDto, soilCalculator, loadsDto, rfCal, asProvTensSag, shearRfUtil, d, resultDto);
         double asvForPunchingShear = designForPunchingShearService.ShearReinforcementRequirementPerMm(soilDto, geometryDto, soilCalculator, loadsDto, rfCal, asProvTensSag, shearRfUtil, d, resultDto);
         
@@ -114,8 +126,8 @@ public class UserInputControllerForReinforcementDesign {
         }
     }
     
-    public String ShearReinforcementDesign(ShearReinforcementCalculatorUtil shearRfUtil, double shearReinforcementRequirement, int numLege, double barDiameter){
-        return shearRfUtil.getShearReinforcementConfig(shearReinforcementRequirement, numLege, barDiameter);
+    public String ShearReinforcementDesign(ShearReinforcementCalculatorUtil shearRfUtil, double shearReinforcementRequirement, int numLege, double barDiameter, ResultDto resultDto){
+        return shearRfUtil.getShearReinforcementConfig(shearReinforcementRequirement, numLege, barDiameter, resultDto);
     }                        
     
   

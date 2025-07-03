@@ -120,21 +120,27 @@ public class ShearReinforcementCalculatorUtil {
         return y1 + ((depthInput - x1) / (x2 - x1)) * (y2 - y1);
     }
     
-    public String getShearReinforcementConfig(double asvPerMm, int numLegs, double barDiameter) {
+    public String getShearReinforcementConfig(double asvPerMm, int numLegs, double barDiameter, ResultDto result) {
+        
+        result.addReportLine("Asv Required" , "=",
+                String.format("%.2f mm²/mm", asvPerMm));
         // Calculate area of a single bar (πd²/4)
         double areaOfOneBar = Math.PI * Math.pow(barDiameter, 2) / 4.0; // mm²
-
+        result.addReportLine(String.format("Area of One Bar = (phi x %.2f x %.2f)/4", barDiameter, barDiameter) , "=",
+                String.format("%.2f mm²", areaOfOneBar));
         // Calculate spacing (mm)
         double spacing = (areaOfOneBar * numLegs) / asvPerMm;
-
+        
         // Round spacing to nearest 25 mm step (common practice)
         int roundedSpacing = (int) (Math.round(spacing / 25.0) * 25);
 
         // Limit spacing (you may want to validate this against code limits)
         if (roundedSpacing > 300) roundedSpacing = 300;
         if (roundedSpacing < 75) roundedSpacing = 75;
-
-        return numLegs + "T" + (int)barDiameter + "@" + roundedSpacing;
+        
+        String shearRfProv = numLegs + "T" + (int)barDiameter + "@" + roundedSpacing;
+        result.addReportLine("Shear r/f Provided" , "=", shearRfProv);
+        return shearRfProv;
     }
 
     /**

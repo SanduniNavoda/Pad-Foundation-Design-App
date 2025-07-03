@@ -40,12 +40,12 @@ public class ReinforcementDto {
         data.add(new String[]{" "});
         data.add(new String[]{"**Reinforcement Design of Isolated Pad Footing**"});
         data.add(new String[]{" "});
-        data.add(new String[]{"Yield Strenght of Reinforcement (fy)", ":", yieldStrenghtOfReinforcement + "MPa"});
-        data.add(new String[]{"Grade of Concrete", ":", gradeOfConcrete + "MPa"});
-        data.add(new String[]{"Clear cover to Reinforcement", ":", clearCover + "mm"});
-        data.add(new String[]{"Main Bar Diameter", ":", barDiameter + "mm"});
-        data.add(new String[]{"Shear Link Diameter", ":", shearLinksDiameter + "mm"});
-        data.add(new String[]{"No of Legs (Shear Link)", ":", noOfLegs + ""});
+        data.add(new String[]{"Yield Strenght of Reinforcement (fy)", "=", yieldStrenghtOfReinforcement + "MPa"});
+        data.add(new String[]{"Grade of Concrete", "=", gradeOfConcrete + "MPa"});
+        data.add(new String[]{"Clear cover to Reinforcement", "=", clearCover + "mm"});
+        data.add(new String[]{"Main Bar Diameter", "=", barDiameter + "mm"});
+        data.add(new String[]{"Shear Link Diameter", "=", shearLinksDiameter + "mm"});
+        data.add(new String[]{"No of Legs (Shear Link)", "=", noOfLegs + ""});
         data.add(new String[]{""});
         // Add more rows as needed
         return data;

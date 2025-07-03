@@ -43,13 +43,13 @@ public class SoilPropertiesNewDto {
         List<String[]> data = new ArrayList<>();
         data.add(new String[]{"**Material Properties**"});
         data.add(new String[]{"Following Engineering Parameters was recommended for  the soil in the provided Geo Investigation Report "});
-        data.add(new String[]{"Effective soil Angle of Internal Friction (Ø’)", ":", internalFrictionAngle + ""});
-        data.add(new String[]{"Friction angle between concrete foundation and soil (δ)", ":", frictionAngleWithFoundation + ""});
-        data.add(new String[]{"Safe bearing capacity of Soil", ":", bearingCapacity + "kN/m2"});
-        data.add(new String[]{"Effective soil Cohesion/ Adhesion (c’) (kN/m2)", ":", cohesion + ""});
-        data.add(new String[]{"Bulk unit weight of soil", ":", bulkUnitWeight + "kN/m3"});
-        data.add(new String[]{"Saturated unit weight of soil", ":", saturatedUnitWeight + "kN/m3"});
-        data.add(new String[]{"Depth of water table from ground level", ":", waterTableDepth + "kN/m3"});
+        data.add(new String[]{"Effective soil Angle of Internal Friction (Ø’)", "=", internalFrictionAngle + ""});
+        data.add(new String[]{"Friction angle between concrete foundation and soil (δ)", "=", frictionAngleWithFoundation + ""});
+        data.add(new String[]{"Safe bearing capacity of Soil", "=", bearingCapacity + " kN/m²"});
+        data.add(new String[]{"Effective soil Cohesion/ Adhesion (c’) ", "=", cohesion + " kN/m²"});
+        data.add(new String[]{"Bulk unit weight of soil", "=", bulkUnitWeight + " kN/m3"});
+        data.add(new String[]{"Saturated unit weight of soil", "=", saturatedUnitWeight + " kN/m3"});
+        data.add(new String[]{"Depth of water table from ground level", "=", waterTableDepth + " kN/m3"});
         // Add more rows as needed
         return data;
     }

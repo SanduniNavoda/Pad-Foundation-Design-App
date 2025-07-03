@@ -22,7 +22,7 @@ public class DesignForPunchingShearServiceImpl implements DesignForPunchingShear
     
     
     @Override
-    public double ShearReinforcementRequirementPerMm(SoilPropertiesNewDto soilDto, FoundationGeometryDto geometry, SoilPressureCalculatorUtil soilCalculator,UltimateLoadsDto loadsDto, ReinforcementCalculatorUtil rfUtil, double as, ShearReinforcementCalculatorUtil shearRfUtil, double effectiveDepth, ResultDto result){
+    public double ShearReinforcementRequirementPerMm(SoilPropertiesNewDto soilDto, FoundationGeometryDto geometry, SoilPressureCalculatorUtil soilCalculator,UltimateLoadsDto loadsDto, ReinforcementCalculatorUtil rfUtil, double as, ShearReinforcementCalculatorUtil shearRfUtil, double ed, ResultDto result){
         double d = soilDto.getWaterTableDepth();
         double h = geometry.getFoundationDepth();
         double wf = geometry.getSideLengthOfFooting();
@@ -34,14 +34,17 @@ public class DesignForPunchingShearServiceImpl implements DesignForPunchingShear
         double hc_bg = geometry.getColumnHeightBelowGround();
         double axialForce = loadsDto.getCompressiveForce();
         double fcu = geometry.getUnitWeightOfConcrete();
-        //double effectiveDepth = rfUtil.calculateEffectiveDepth()/1000;
+        double effectiveDepth = ed/1000;
 
+        result.addReportLine(" ");
         result.addReportLine("**Design For Punching Shear**");
         
         double areaOutsideThePerimeter = (wf * wf) - ((wc + 3*effectiveDepth)*(wc + 3*effectiveDepth));
         double p = 4*(wc + 3*effectiveDepth);
-        result.addReportLine(String.format("Area Outside The Perimeter = (%.2f x %.2f)-((%.2f+3 x %.2f) x (%.2f+3 x %.2f));", wf, wf, wc, effectiveDepth, wc, effectiveDepth));
-        result.addReportLine(String.format("P = 4 x (%.2f+3 x %.2f);", wc, effectiveDepth));
+        result.addReportLine(String.format("Area Outside The Perimeter = (%.2f x %.2f)-((%.2f+3 x %.2f) x (%.2f+3 x %.2f));", wf, wf, wc, effectiveDepth, wc, effectiveDepth), "=",
+                String.format("%.2f m²", areaOutsideThePerimeter));
+        result.addReportLine(String.format("P = 4 x (%.2f+3 x %.2f);", wc, effectiveDepth), "=",
+                String.format("%.2f m", p));
 
         double sigmaC;
         if (d > h){
@@ -55,24 +58,29 @@ public class DesignForPunchingShearServiceImpl implements DesignForPunchingShear
         
         double sigmaMin = sigmaC - sigmaCDashVl - sigmaCDashVt;
         double sigmaMax = sigmaC + sigmaCDashVl + sigmaCDashVt;
-        result.addReportLine("Sigma Min", "=", String.format("%.2f;", sigmaMin));
-        result.addReportLine("Sigma Max", "=", String.format("%.2f;", sigmaMax));
+        result.addReportLine("Sigma Min", "=", String.format("%.2f kN/m²;", sigmaMin));
+        result.addReportLine("Sigma Max", "=", String.format("%.2f kN/m²;", sigmaMax));
         
         
         double b = (wf - (wc + 3*effectiveDepth))*0.5;
         double sigma1_5d = sigmaMin + (sigmaMax - sigmaMin)*(wf - b)/(wf);
-        result.addReportLine(String.format("B = (%.2f-(%.2f+3 x %.2f)) x 0.5;", wf, wc, effectiveDepth));
-        result.addReportLine(String.format("Sigma1 5d = %.2f+(%.2f-%.2f) x (%.2f-%.2f)/(%.2f);", sigmaMin, sigmaMax, sigmaMin, wf, b, wf));
+        result.addReportLine(String.format("B = (%.2f-(%.2f+3 x %.2f)) x 0.5;", wf, wc, effectiveDepth), "=",
+                String.format("%.2f m", b));
+        result.addReportLine(String.format("Sigma1 5d = %.2f+(%.2f-%.2f) x (%.2f-%.2f)/(%.2f);", sigmaMin, sigmaMax, sigmaMin, wf, b, wf), "=",
+                String.format("%.2f kN/m²", sigma1_5d));
 
         double punchingShearForce = sigma1_5d*areaOutsideThePerimeter;
-        result.addReportLine(String.format("Punching Shear Force = %.2f x %.2f;", sigma1_5d, areaOutsideThePerimeter));
+        result.addReportLine(String.format("Punching Shear Force = %.2f x %.2f;", sigma1_5d, areaOutsideThePerimeter), "=",
+                String.format("%.2f kN", punchingShearForce));
 
         double shearStress = punchingShearForce*1000/((p*1000)*(effectiveDepth*1000));
         double rfPercentage = (100*as)/((p*1000)*(effectiveDepth*1000));
         double vc = shearRfUtil.getVc(rfPercentage, effectiveDepth*1000);
         double fyv = 460;
-        result.addReportLine(String.format("Shear Stress = %.2f x 1000/((%.2f x 1000) x (%.2f x 1000));", punchingShearForce, p, effectiveDepth));
-        result.addReportLine(String.format("Rf Percentage = (100 x %.2f)/((%.2f x 1000) x (%.2f x 1000));", as, p, effectiveDepth));
+        result.addReportLine(String.format("Shear Stress = %.2f x 1000/((%.2f x 1000) x (%.2f x 1000));", punchingShearForce, p, effectiveDepth), "=",
+                String.format("%.2f N/mm²", shearStress));
+        result.addReportLine(String.format("Rf Percentage = (100 x %.2f)/((%.2f x 1000) x (%.2f x 1000));", as, p, effectiveDepth), "=",
+                String.format("%.2f", rfPercentage));
         result.addReportLine("vc", "=", vc + "");
         result.addReportLine("Fyv", "=", fyv + "");
 

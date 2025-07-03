@@ -63,8 +63,32 @@ public class ReportFrame1 extends javax.swing.JFrame {
      * @param bearingResutDto
      * @param uprootingResultDto
      * @param slidingDto
+     * @param overturningResultDto
+     * @param reinforcementDto
+     * @param reinforcementDesignResultDto
+     * @param designForCompInSaggingResultDto
+     * @param designForCompInHoggingResultDto
+     * @param designForTensInSaggingResultDto
+     * @param designForTenseInHoggingResultDto
+     * @param designForShearResultDto
      */
-    public ReportFrame1(ProjectDetailDto projectDetailDto, FoundationGeometryDto geometryDto, SoilPressureCalculatorUtil soilCalculator, SoilPropertiesNewDto soilDto, ServiceabilityLoadsDto serviceabilityLoadsDto, UltimateLoadsDto ultimateLoadsDto, ResultDto bearingResutDto, ResultDto uprootingResultDto, ResultDto slidingResultDto, ResultDto overturningResultDto, ReinforcementDto reinforcementDto) {
+    public ReportFrame1(ProjectDetailDto projectDetailDto, 
+            FoundationGeometryDto geometryDto, 
+            SoilPressureCalculatorUtil soilCalculator, 
+            SoilPropertiesNewDto soilDto, 
+            ServiceabilityLoadsDto serviceabilityLoadsDto, 
+            UltimateLoadsDto ultimateLoadsDto, 
+            ResultDto bearingResutDto, 
+            ResultDto uprootingResultDto, 
+            ResultDto slidingResultDto, 
+            ResultDto overturningResultDto, 
+            ReinforcementDto reinforcementDto,
+            ResultDto reinforcementDesignResultDto, 
+            ResultDto designForCompInSaggingResultDto,
+            ResultDto designForCompInHoggingResultDto,
+            ResultDto designForTensInSaggingResultDto,
+            ResultDto designForTenseInHoggingResultDto,
+            ResultDto designForShearResultDto) {
         initComponents();
 
         setTitle("Report");
@@ -88,6 +112,14 @@ public class ReportFrame1 extends javax.swing.JFrame {
         List<String[]> slidingResultDtoData = slidingResultDto.getData();
         List<String[]> overturningResultDtoData = overturningResultDto.getData();
         List<String[]> reinforcementDtoData = reinforcementDto.getReportLines();
+        List<String[]> reinforcementDesignResultDtoData = reinforcementDesignResultDto.getData();
+        List<String[]> designForCompInSaggingResultDtoData = designForCompInSaggingResultDto.getData();
+        List<String[]> designForCompInHoggingResultDtoData = designForCompInHoggingResultDto.getData();
+        List<String[]> designForTensInSaggingResultDtoData = designForTensInSaggingResultDto.getData();
+        List<String[]> designForTenseInHoggingResultDtoData = designForTenseInHoggingResultDto.getData();
+        List<String[]> designForShearResultDtoData = designForShearResultDto.getData();
+        
+        
         
 
         // Add rows to the model. Assume each 'row' String[] has at least 3 elements.
@@ -194,6 +226,24 @@ public class ReportFrame1 extends javax.swing.JFrame {
             data.add(row);
         }
         for (String[] row : reinforcementDtoData) {
+            data.add(row);
+        }
+        for (String[] row : reinforcementDesignResultDtoData) {
+            data.add(row);
+        }
+        for (String[] row : designForCompInSaggingResultDtoData) {
+            data.add(row);
+        }
+        for (String[] row : designForCompInHoggingResultDtoData) {
+            data.add(row);
+        }
+        for (String[] row : designForTensInSaggingResultDtoData) {
+            data.add(row);
+        }
+        for (String[] row : designForTenseInHoggingResultDtoData) {
+            data.add(row);
+        }
+        for (String[] row : designForShearResultDtoData) {
             data.add(row);
         }
         

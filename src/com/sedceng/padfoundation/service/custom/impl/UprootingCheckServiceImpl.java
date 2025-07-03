@@ -31,11 +31,12 @@ public class UprootingCheckServiceImpl implements UprootingCheckService{
         double pyramidSoilWeightAboveFooting = weightOfPyramidsoilFrustum;
         
         double maximumTensileForcePerBase = serviceabilityLoadsDto.getTensileForce();
-        result.addReportLine("Maximum Tensile force", ":", maximumTensileForcePerBase + "kN");
+        result.addReportLine("Maximum Tensile force", "=", maximumTensileForcePerBase + "kN");
+        result.addReportLine("Weight of the Foundation", "=", String.format("%.2f", foundationWeight) + "kN");
         double upthrustForce = soilCalculator.calculateUpthrustForce();
         
-        result.addReportLine("Pyramid soil weight above footing", ":", String.format("%.2f", weightOfPyramidsoilFrustum) + "kN");
-        result.addReportLine("Rectangular soil weight above footing", ":",String.format("%.2f", rectangularSoilWeight)  + "kN");
+        result.addReportLine("Pyramid soil weight above footing", "=", String.format("%.2f", weightOfPyramidsoilFrustum) + "kN");
+        result.addReportLine("Rectangular soil weight above footing", "=",String.format("%.2f", rectangularSoilWeight)  + "kN");
         System.out.println("w = " + foundationWeight);
         System.out.println("sw pyramid = " + pyramidSoilWeightAboveFooting);
         System.out.println("sw rectangular = " + rectangularSoilWeight);
@@ -50,14 +51,14 @@ public class UprootingCheckServiceImpl implements UprootingCheckService{
         if (soilDto.getWaterTableDepth() > geometryDto.getFoundationDepth()){
             fos_Pyramid = (foundationWeight + pyramidSoilWeightAboveFooting)/maximumTensileForcePerBase;
             fos_Rectangular = (foundationWeight + rectangularSoilWeight)/maximumTensileForcePerBase;
-            result.addReportLine(String.format("Fos Pyramid = (%.2f+%.2f)/%.2f;", foundationWeight, pyramidSoilWeightAboveFooting, maximumTensileForcePerBase),":", String.format("%.2f", fos_Pyramid));
-            result.addReportLine(String.format("Fos Rectangular = (%.2f+%.2f)/%.2f;", foundationWeight, rectangularSoilWeight, maximumTensileForcePerBase), ":", String.format("%.2f", fos_Rectangular));
+            result.addReportLine(String.format("Fos Pyramid = (%.2f+%.2f)/%.2f;", foundationWeight, pyramidSoilWeightAboveFooting, maximumTensileForcePerBase),"=", String.format("%.2f", fos_Pyramid));
+            result.addReportLine(String.format("Fos Rectangular = (%.2f+%.2f)/%.2f;", foundationWeight, rectangularSoilWeight, maximumTensileForcePerBase), "=", String.format("%.2f", fos_Rectangular));
 
         }else{
             fos_Pyramid = (foundationWeight + pyramidSoilWeightAboveFooting - upthrustForce)/maximumTensileForcePerBase;
             fos_Rectangular = (foundationWeight + rectangularSoilWeight - upthrustForce)/maximumTensileForcePerBase;
-            result.addReportLine(String.format("Fos Pyramid (>1.75) = (%.2f+%.2f-%.2f)/%.2f;", foundationWeight, pyramidSoilWeightAboveFooting, upthrustForce, maximumTensileForcePerBase), ":", String.format("%.2f", fos_Pyramid));
-            result.addReportLine(String.format("Fos Rectangular(>1.00) = (%.2f+%.2f-%.2f)/%.2f;", foundationWeight, rectangularSoilWeight, upthrustForce, maximumTensileForcePerBase), ":", String.format("%.2f", fos_Rectangular));
+            result.addReportLine(String.format("Fos Pyramid (>1.75) = (%.2f+%.2f-%.2f)/%.2f;", foundationWeight, pyramidSoilWeightAboveFooting, upthrustForce, maximumTensileForcePerBase), "=", String.format("%.2f", fos_Pyramid));
+            result.addReportLine(String.format("Fos Rectangular(>1.00) = (%.2f+%.2f-%.2f)/%.2f;", foundationWeight, rectangularSoilWeight, upthrustForce, maximumTensileForcePerBase), "=", String.format("%.2f", fos_Rectangular));
         }
         System.out.println("fos Pyramid (>1.75) = " + fos_Pyramid);
         System.out.println("fos Rectangular(>1.00) = " + fos_Rectangular);

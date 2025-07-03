@@ -123,7 +123,7 @@ public class OverturningCheckServiceImpl implements OverturningCheckService{
         double resistantMoment = (w + sw)*(lf/2) + lateralMoment;
         
         double fos = (resistantMoment/overturningMoment);
-        result.addReportLine(String.format("Fos (>1.75) = %.2f/%.2f;", resistantMoment, overturningMoment), ":", String.format("%.2f", fos));
+        result.addReportLine(String.format("Fos (>1.75) = %.2f/%.2f;", resistantMoment, overturningMoment), "=", String.format("%.2f", fos));
         System.out.println("fos Overturning = " + (resistantMoment/overturningMoment));
        
         boolean isSatisfied = resistantMoment/overturningMoment > 1.75;

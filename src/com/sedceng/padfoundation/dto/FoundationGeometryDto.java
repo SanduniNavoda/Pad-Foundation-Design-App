@@ -41,18 +41,18 @@ public class FoundationGeometryDto {
         List<String[]> data = new ArrayList<>();
         data.add(new String[]{" "});
         data.add(new String[]{"**Initial Foundation Size**"});
-        data.add(new String[]{"Assumed Width of Footing", ":", sideLengthOfFooting + "m"});
-        data.add(new String[]{"Assumed Breadth of Footing", ":", sideLengthOfFooting + "m"});
-        data.add(new String[]{"Height of Footing", ":", heightOfFooting + "m"});
-        data.add(new String[]{"Foundation Depth", ":", foundationDepth + "m"});
-        data.add(new String[]{"Height of Lean Concrete", ":", 0.05 + "m"});
+        data.add(new String[]{"Assumed Width of Footing", "=", sideLengthOfFooting + " m"});
+        data.add(new String[]{"Assumed Breadth of Footing", "=", sideLengthOfFooting + " m"});
+        data.add(new String[]{"Height of Footing", "=", heightOfFooting + " m"});
+        data.add(new String[]{"Foundation Depth", "=", foundationDepth + " m"});
+        data.add(new String[]{"Height of Lean Concrete", "=", 0.05 + " m"});
         data.add(new String[]{" "});
         data.add(new String[]{"Initial Column Size"});
-        data.add(new String[]{"Assumed Width of Column", ":", sideLenghtOfColumn + "m"});
-        data.add(new String[]{"Assumed Breadth of Column", ":", sideLenghtOfColumn + "m"});
-        data.add(new String[]{"Height of column above ground", ":", columnHeightAboveGround + "m"});
-        data.add(new String[]{"Height of column below ground", ":", columnHeightBelowGround + "m"});
-        data.add(new String[]{(String.format("Weight Of Foundation = (%.2f x %.2f x %.2f+%.2f x %.2f x (%.2f+%.2f)) x %.2f;", sideLengthOfFooting, sideLengthOfFooting, heightOfFooting, sideLenghtOfColumn, sideLenghtOfColumn, columnHeightAboveGround, columnHeightBelowGround, unitWeightOfConcrete)), ":",  String.format("%.2f kN", weightOfFoundation)});
+        data.add(new String[]{"Assumed Width of Column", "=", sideLenghtOfColumn + " m"});
+        data.add(new String[]{"Assumed Breadth of Column", "=", sideLenghtOfColumn + " m"});
+        data.add(new String[]{"Height of column above ground", "=", columnHeightAboveGround + " m"});
+        data.add(new String[]{"Height of column below ground", "=", columnHeightBelowGround + " m"});
+        data.add(new String[]{(String.format("Weight Of Foundation = (%.2f x %.2f x %.2f+%.2f x %.2f x (%.2f+%.2f)) x %.2f;", sideLengthOfFooting, sideLengthOfFooting, heightOfFooting, sideLenghtOfColumn, sideLenghtOfColumn, columnHeightAboveGround, columnHeightBelowGround, unitWeightOfConcrete)), "=",  String.format("%.2f kN", weightOfFoundation)});
         data.add(new String[]{""});
         // Add more rows as needed
         return data;

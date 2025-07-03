@@ -23,6 +23,7 @@ public class DesignForBendingServiceImpl implements DesignForBendingService {
     public double CriticalBendingMomentAboutTheFaceOfTheColumn(SoilPropertiesNewDto soilDto,
             FoundationGeometryDto geometry, SoilPressureCalculatorUtil soilCalculator, UltimateLoadsDto loadsDto,
             double axialForce, ResultDto result) {
+        result.addReportLine(" ");
         double d = soilDto.getWaterTableDepth();
         double h = geometry.getFoundationDepth();
         double wf = geometry.getSideLengthOfFooting();
@@ -109,13 +110,13 @@ public class DesignForBendingServiceImpl implements DesignForBendingService {
 
         if (k > kDash) {
             z = d * (0.5 + Math.sqrt(0.25 - (kDash) / 0.9));
-            result.addReportLine(String.format("Leaver arm (z) = %.2f x (0.5 + sqrt(0.25-(%.2f)/0.9));", d, kDash));
+            result.addReportLine(String.format("Leaver arm (z) = %.2f x (0.5 + sqrt(0.25-(%.2f)/0.9));", d, kDash), "=", String.format("%.2f m", z));
         } else {
             z = d * (0.5 + Math.sqrt(0.25 - (k / 0.9)));
-            result.addReportLine(String.format("Leaver arm (z) = %.2f x (0.5 + sqrt(0.25-(%.2f/0.9)));", d, k));
+            result.addReportLine(String.format("Leaver arm (z) = %.2f x (0.5 + sqrt(0.25-(%.2f/0.9)));", d, k), "=", String.format("%.2f m", z));
             if (z > (0.95 * d)) {
                 z = 0.95 * d;
-                result.addReportLine(String.format("Leaver arm (z) = 0.95 x %.2f;", d));
+                result.addReportLine(String.format("Leaver arm (z) = 0.95 x %.2f;", d), "=", String.format("%.2f m", z));
             }
         }
 
@@ -230,10 +231,7 @@ public class DesignForBendingServiceImpl implements DesignForBendingService {
 
             // Reduce spacing by 25mm and try again
             spacing -= 25;
-            int size = result.getData().size();
-            if (size >= 1) {
-                result.getData().remove(size - 1); // Removes the most recently added item
-            }
+            
         }
 
         // If we reach here, even minimum spacing (100mm) is not sufficient
@@ -263,7 +261,7 @@ public class DesignForBendingServiceImpl implements DesignForBendingService {
 
         // Use the larger of required reinforcement or minimum reinforcement
         double finalAsRequired = Math.max(asRequired, minimumAs);
-        result.addReportLine(String.format("As Required = min of (%.2f , %.2f)", asRequired, minimumAs), "=",
+        result.addReportLine(String.format("As Required = max of (%.2f , %.2f)", asRequired, minimumAs), "=",
                 String.format("%.2f mm²", finalAsRequired));
         // Round spacing down to nearest 25 mm
         int spacing = (int) (maximumSpacingOfReinforcement(d, result) / 25) * 25;
@@ -284,9 +282,9 @@ public class DesignForBendingServiceImpl implements DesignForBendingService {
 
             spacing -= 25;// reduce spacing and try again
             int size = result.getData().size();
-            if (size >= 2) {
+            if (size >= 1) {
                 result.getData().remove(size - 1); // Removes the most recently added item
-                result.getData().remove(size - 2); // Removes the one added before that
+                 // Removes the one added before that
             }
 
         }
