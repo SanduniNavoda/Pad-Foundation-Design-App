@@ -63,29 +63,29 @@ public class OverturningCheckServiceImpl implements OverturningCheckService{
         double leaverArmFf = 0;
         double leaverArmFf1 = 0;
         double leaverArmFf2 = 0;
-        if(d > hc_bg){
-            //Water table below column face
-            result.addReportLine("Force on Column Face, ");
-            leaverArmFc = soilCalculator.calculateLeaverArm(0, sigmaHc, hc_bg)+(hf);
-            if(d < h){
-                //Footing face spans water table
-                result.addReportLine("Force On Footing Face, ");
-                leaverArmFf1 = soilCalculator.calculateLeaverArm(sigmaHc, sigmaDashD, (d-hc_bg)) + (h - d);
-                leaverArmFf2 = soilCalculator.calculateLeaverArm(sigmaDashD, sigmaHf, h-d);
-            }else{
-                result.addReportLine("Force On Footing Face, ");
-                //Entire footing face above water table
-                leaverArmFf = soilCalculator.calculateLeaverArm(sigmaHc, sigmaHf, hf);
-            }
-        }else{
-            //water table cuts column face
-            result.addReportLine("Force on Column Face, ");
-            leaverArmFc1 = soilCalculator.calculateLeaverArm(0, sigmaDashD, d) + (h - d);
-            leaverArmFc2 = soilCalculator.calculateLeaverArm(sigmaDashD, sigmaHc, hc_bg - d) + (hf);
-            
-            result.addReportLine("Force On Footing Face, ");
-            leaverArmFf = soilCalculator.calculateLeaverArm(sigmaHc, sigmaHf, hf);
-        }
+//        if(d > hc_bg){
+//            //Water table below column face
+//            result.addReportLine("Force on Column Face, ");
+//            leaverArmFc = soilCalculator.calculateLeaverArm(0, sigmaHc, hc_bg)+(hf);
+//            if(d < h){
+//                //Footing face spans water table
+//                result.addReportLine("Force On Footing Face, ");
+//                leaverArmFf1 = soilCalculator.calculateLeaverArm(sigmaHc, sigmaDashD, (d-hc_bg)) + (h - d);
+//                leaverArmFf2 = soilCalculator.calculateLeaverArm(sigmaDashD, sigmaHf, h-d);
+//            }else{
+//                result.addReportLine("Force On Footing Face, ");
+//                //Entire footing face above water table
+//                leaverArmFf = soilCalculator.calculateLeaverArm(sigmaHc, sigmaHf, hf);
+//            }
+//        }else{
+//            //water table cuts column face
+//            result.addReportLine("Force on Column Face, ");
+//            leaverArmFc1 = soilCalculator.calculateLeaverArm(0, sigmaDashD, d) + (h - d);
+//            leaverArmFc2 = soilCalculator.calculateLeaverArm(sigmaDashD, sigmaHc, hc_bg - d) + (hf);
+//            
+//            result.addReportLine("Force On Footing Face, ");
+//            leaverArmFf = soilCalculator.calculateLeaverArm(sigmaHc, sigmaHf, hf);
+//        }
         
         double fc;
         double fc1;
@@ -96,25 +96,69 @@ public class OverturningCheckServiceImpl implements OverturningCheckService{
         double lateralMoment;
         if(d > hc_bg){
             //Water table below column face
-            fc = soilCalculator.calculatePassivePressure(0, sigmaHc, hc_bg)*lc;
-            
+            result.addReportLine("On Column Face, ");
+            //fc = soilCalculator.calculatePassivePressure(0, sigmaHc, hc_bg)*lc;
+            double pressureC = soilCalculator.calculatePassivePressure(0, sigmaHc, hc_bg);
+            fc = pressureC *lc;
+            result.addReportLine(String.format("           = %.2f x %.2f", pressureC, lc),"=", String.format("%.2f kN", fc));
+            leaverArmFc = soilCalculator.calculateLeaverArm(0, sigmaHc, hc_bg)+(hf);
             if(d < h){
                 //Footing face spans water table
-                ff1 = soilCalculator.calculatePassivePressure(sigmaHc, sigmaDashD, d - hc_bg)*lf;
-                ff2 = soilCalculator.calculatePassivePressure(sigmaDashD, sigmaHf, h - d)*lf;
+                result.addReportLine("On Footing Face (Above water table), ");
+                //ff1 = soilCalculator.calculatePassivePressure(sigmaHc, sigmaDashD, d - hc_bg)*lf;
+                double pressureF1 = soilCalculator.calculatePassivePressure(sigmaHc, sigmaDashD, d - hc_bg);
+                ff1 = pressureF1*lf;
+                result.addReportLine(String.format("           = %.2f x %.2f", pressureF1, lf),"=", String.format("%.2f kN", ff1));
+                leaverArmFf1 = soilCalculator.calculateLeaverArm(sigmaHc, sigmaDashD, (d-hc_bg)) + (h - d);
+                
+                result.addReportLine("On Footing Face (Below water table), ");
+                //ff2 = soilCalculator.calculatePassivePressure(sigmaDashD, sigmaHf, h - d)*lf;
+                double pressureF2 = soilCalculator.calculatePassivePressure(sigmaDashD, sigmaHf, h - d);
+                ff2 = pressureF2*lf;
+                result.addReportLine(String.format("           = %.2f x %.2f", pressureF2, lf),"=", String.format("%.2f kN", ff2));
+                leaverArmFf2 = soilCalculator.calculateLeaverArm(sigmaDashD, sigmaHf, h-d);
+                
                 lateralMoment = fc*leaverArmFc + ff1*leaverArmFf1 + ff2*leaverArmFf2;
+                result.addReportLine(String.format("Lateral Moment = %.2f x %.2f+%.2f x %.2f+%.2f x %.2f;", fc, leaverArmFc, ff1, leaverArmFf1, ff2, leaverArmFf2));
+                
                 
             }else{
                 //Entire footing face above water table
-                ff = soilCalculator.calculatePassivePressure(sigmaHc, sigmaHf, hf)*lf;
+                result.addReportLine("On Footing Face, ");
+                //ff = soilCalculator.calculatePassivePressure(sigmaHc, sigmaHf, hf)*lf;
+                double pressureF = soilCalculator.calculatePassivePressure(sigmaHc, sigmaHf, hf);
+                ff = pressureF *lf;
+                result.addReportLine(String.format("           = %.2f x %.2f", pressureF, lf),"=", String.format("%.2f kN", ff));
+                leaverArmFf = soilCalculator.calculateLeaverArm(sigmaHc, sigmaHf, hf);
+                
                 lateralMoment = fc*leaverArmFc + ff*leaverArmFf;
+                result.addReportLine(String.format("Lateral Moment = %.2f x %.2f+%.2f x %.2f;", fc, leaverArmFc, ff, leaverArmFf));
             }
         }else{
             //water table cuts column face
-            fc1 = soilCalculator.calculatePassivePressure(0, sigmaDashD, d)*lc;
-            fc2 = soilCalculator.calculatePassivePressure(sigmaDashD, sigmaHc, hc_bg - d)*lc;
-            ff = soilCalculator.calculatePassivePressure(sigmaHc, sigmaHf, hf)*lf;
+            result.addReportLine("On Column Face (Above water table), ");
+            //fc1 = soilCalculator.calculatePassivePressure(0, sigmaDashD, d)*lc;
+            double pressureC1 = soilCalculator.calculatePassivePressure(0, sigmaDashD, d);
+            fc1 = pressureC1*lc;
+            result.addReportLine(String.format("           = %.2f x %.2f", pressureC1, lc),"=", String.format("%.2f kN", fc1));
+            leaverArmFc1 = soilCalculator.calculateLeaverArm(0, sigmaDashD, d) + (h - d);
+            
+            result.addReportLine("On Column Face (Below water table), ");
+            //fc2 = soilCalculator.calculatePassivePressure(sigmaDashD, sigmaHc, hc_bg - d)*lc;
+            double pressureC2 = soilCalculator.calculatePassivePressure(sigmaDashD, sigmaHc, hc_bg - d);
+            fc2 = pressureC2*lc;
+            result.addReportLine(String.format("           = %.2f x %.2f", pressureC2, lc),"=", String.format("%.2f kN", fc2));
+            leaverArmFc2 = soilCalculator.calculateLeaverArm(sigmaDashD, sigmaHc, hc_bg - d) + (hf);
+            
+            result.addReportLine("On Footing Face , ");
+            //ff = soilCalculator.calculatePassivePressure(sigmaHc, sigmaHf, hf)*lf;
+            double pressureF = soilCalculator.calculatePassivePressure(sigmaHc, sigmaHf, hf);
+            ff = pressureF*lf;
+            result.addReportLine(String.format("           = %.2f x %.2f", pressureF, lf),"=", String.format("%.2f kN", ff));
+            leaverArmFf = soilCalculator.calculateLeaverArm(sigmaHc, sigmaHf, hf);
+            
             lateralMoment = fc1*leaverArmFc1 + fc2*leaverArmFc2 + ff*leaverArmFf;
+            result.addReportLine(String.format("Lateral Moment = %.2f x %.2f+%.2f x %.2f+%.2f x %.2f;", fc1, leaverArmFc1, fc2, leaverArmFc2, ff, leaverArmFf));
         }
         
         

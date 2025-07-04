@@ -166,7 +166,7 @@ public class SoilPressureCalculatorUtil {
     
     public double calculateLeaverArm(double shorterSide, double longerSide, double h){
         double leaverArm = (h/3)*((longerSide + 2*shorterSide)/(longerSide + shorterSide));
-        result.addReportLine(String.format("Leaver Arm = (%.2f/3) x ((%.2f+2 x %.2f)/(%.2f+%.2f));", h, longerSide, shorterSide, longerSide, shorterSide), "=", String.format("%.2f m", leaverArm));
+        result.addReportLine(String.format("           Leaver Arm = (%.2f/3) x ((%.2f+2 x %.2f)/(%.2f+%.2f));", h, longerSide, shorterSide, longerSide, shorterSide), "=", String.format("%.2f m", leaverArm));
         return leaverArm;
     }
     
