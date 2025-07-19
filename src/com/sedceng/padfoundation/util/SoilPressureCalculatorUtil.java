@@ -101,7 +101,7 @@ public class SoilPressureCalculatorUtil {
         double v = calculatePyramidVolume(soilHeightAboveFooting,a1,a2, sideLengthOfColumn);
         
         double soilWeight;
-        if(waterTableDepth >= foundationDepth){
+        if(waterTableDepth >= soilHeightAboveFooting){
             soilWeight = v*gamma;
             result.addReportLine(String.format("Soil Weight = %.2f x %.2f;", v, gamma), "=", String.format("%.2f kN", soilWeight));
         }else{
@@ -121,6 +121,7 @@ public class SoilPressureCalculatorUtil {
         double waterTableDepth = soil.getWaterTableDepth();
         double sideLengthOfFooting = geometry.getSideLengthOfFooting();
         double foundationDepth = geometry.getFoundationDepth();
+        double foundationThickness = geometry.getHeightOfFooting();
         if(waterTableDepth > foundationDepth){
             result.addReportLine("Upthrust Force ", "=" , 0 + " kN");
             return 0;
@@ -129,8 +130,8 @@ public class SoilPressureCalculatorUtil {
 
         double waterHeight = geometry.getFoundationDepth()-soil.getWaterTableDepth();
         double unitWeightOfWater = soil.getWaterUnitWeight();
-        double upthrustForce = sideLengthOfFooting * sideLengthOfFooting * unitWeightOfWater * waterHeight;
-        result.addReportLine(String.format("Upthrust Force = %.2f x %.2f x %.2f x %.2f;", sideLengthOfFooting, sideLengthOfFooting, unitWeightOfWater, waterHeight), "=" , upthrustForce + " kN");
+        double upthrustForce = sideLengthOfFooting * sideLengthOfFooting * unitWeightOfWater * foundationThickness;
+        result.addReportLine(String.format("Upthrust Force = %.2f x %.2f x %.2f x %.2f;", sideLengthOfFooting, sideLengthOfFooting, unitWeightOfWater, foundationThickness), "=" , String.format("%.2f", upthrustForce));
         return upthrustForce;
     }
     

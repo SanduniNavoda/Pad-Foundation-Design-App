@@ -365,7 +365,7 @@ public class SoilReportView extends javax.swing.JFrame {
         txtDesignedBy = new javax.swing.JTextField();
         txtCheckedBy = new javax.swing.JTextField();
         txtTowerHeight = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
+        noOfTowerLegs = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -381,20 +381,30 @@ public class SoilReportView extends javax.swing.JFrame {
 
         waterTableLocation.setText("Water Table is Above the Footing ? :");
 
-        tfBearignCapacity.setText("250");
+        tfBearignCapacity.setText("100");
+        tfBearignCapacity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfBearignCapacityActionPerformed(evt);
+            }
+        });
 
-        tfUnitWeightOfSoil.setText("17.7");
+        tfUnitWeightOfSoil.setText("16");
 
-        tfInternalFrictionAngle.setText("32");
+        tfInternalFrictionAngle.setText("30");
+        tfInternalFrictionAngle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfInternalFrictionAngleActionPerformed(evt);
+            }
+        });
 
-        tfFrictionAngleFoundationAndSoil.setText("24");
+        tfFrictionAngleFoundationAndSoil.setText("22.5");
         tfFrictionAngleFoundationAndSoil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfFrictionAngleFoundationAndSoilActionPerformed(evt);
             }
         });
 
-        tfCohesion.setText("8");
+        tfCohesion.setText("0");
 
         buttonGroup1.add(rbYes);
         rbYes.setText("Yes");
@@ -415,9 +425,19 @@ public class SoilReportView extends javax.swing.JFrame {
 
         SaturatedUnitWeightOfSoil.setText("Saturated Unit Weight of Soil (kN/m3)  : ");
 
-        tfWaterTableDepth.setText("10");
+        tfWaterTableDepth.setText("1.2");
+        tfWaterTableDepth.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfWaterTableDepthActionPerformed(evt);
+            }
+        });
 
-        tfSaturatedUnitWeight.setText("19");
+        tfSaturatedUnitWeight.setText("17.10");
+        tfSaturatedUnitWeight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfSaturatedUnitWeightActionPerformed(evt);
+            }
+        });
 
         jLabel33.setText("kN/m2");
 
@@ -553,7 +573,7 @@ public class SoilReportView extends javax.swing.JFrame {
             }
         });
 
-        sideLenghtOfFooting.setText("3.8");
+        sideLenghtOfFooting.setText("3.75");
         sideLenghtOfFooting.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sideLenghtOfFootingActionPerformed(evt);
@@ -782,20 +802,30 @@ public class SoilReportView extends javax.swing.JFrame {
 
         jLabel13.setText("Horizontal Longitudinal Force (Vl)");
 
-        txtSlsCompressiveForce.setText("865");
+        txtSlsCompressiveForce.setText("319.92");
 
-        txtSlsTensileForce.setText("775");
+        txtSlsTensileForce.setText("359.00");
+        txtSlsTensileForce.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSlsTensileForceActionPerformed(evt);
+            }
+        });
 
-        txtSlsHorizontalTransverseForce.setText("63");
+        txtSlsHorizontalTransverseForce.setText("25.49");
         txtSlsHorizontalTransverseForce.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSlsHorizontalTransverseForceActionPerformed(evt);
             }
         });
 
-        txtSlsHorizontalLongitudinalForce.setText("63");
+        txtSlsHorizontalLongitudinalForce.setText("25.67");
+        txtSlsHorizontalLongitudinalForce.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSlsHorizontalLongitudinalForceActionPerformed(evt);
+            }
+        });
 
-        txtUlsCompressiveForce.setText("1502");
+        txtUlsCompressiveForce.setText("523.19");
 
         jLabel18.setText("Compression Force (Fc)");
 
@@ -805,16 +835,26 @@ public class SoilReportView extends javax.swing.JFrame {
 
         jLabel21.setText("Horizontal Longitudinal Force (Vl)");
 
-        txtUlsTensileForce.setText("1405");
+        txtUlsTensileForce.setText("566.86");
+        txtUlsTensileForce.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUlsTensileForceActionPerformed(evt);
+            }
+        });
 
-        txtUlsHorizontalTransverseForce.setText("110");
+        txtUlsHorizontalTransverseForce.setText("40.33");
         txtUlsHorizontalTransverseForce.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtUlsHorizontalTransverseForceActionPerformed(evt);
             }
         });
 
-        txtUlsHorizntalLongitudinalForce.setText("110");
+        txtUlsHorizntalLongitudinalForce.setText("40.62");
+        txtUlsHorizntalLongitudinalForce.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUlsHorizntalLongitudinalForceActionPerformed(evt);
+            }
+        });
 
         jLabel25.setText("kN");
 
@@ -1003,7 +1043,12 @@ public class SoilReportView extends javax.swing.JFrame {
 
         txtCover.setText("50");
 
-        txtBarDia.setText("16");
+        txtBarDia.setText("12");
+        txtBarDia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBarDiaActionPerformed(evt);
+            }
+        });
 
         jLabel43.setText("mm");
 
@@ -1013,7 +1058,7 @@ public class SoilReportView extends javax.swing.JFrame {
 
         jLabel46.setText("Bar Diameter (Shear Links)");
 
-        txtShearLinksDia.setText("10");
+        txtShearLinksDia.setText("8");
 
         jLabel47.setText("mm");
 
@@ -1282,18 +1327,18 @@ public class SoilReportView extends javax.swing.JFrame {
             }
         });
 
-        txtSite.setText("30m Telecom Tower at Jayasumana Road");
+        txtSite.setText("40m 4 Legged Self Support Tower at Iranathivu (Location 01)");
         txtSite.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSiteActionPerformed(evt);
             }
         });
 
-        txtClient.setText("Dialog Axiata PLC");
+        txtClient.setText("Forward Slope INC.");
 
-        txtVender.setText("Tantri Trailers");
+        txtVender.setText("Tantri Trailers (Pvt) Ltd.");
 
-        txtLocation.setText("Jayasumana Road");
+        txtLocation.setText("Naval Detachment Arippu");
         txtLocation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtLocationActionPerformed(evt);
@@ -1304,9 +1349,9 @@ public class SoilReportView extends javax.swing.JFrame {
 
         txtCheckedBy.setText("BK");
 
-        txtTowerHeight.setText("30 ");
+        txtTowerHeight.setText("40");
 
-        jTextField8.setText("3");
+        noOfTowerLegs.setText("4");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -1328,7 +1373,7 @@ public class SoilReportView extends javax.swing.JFrame {
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtTowerHeight, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
-                            .addComponent(jTextField8))
+                            .addComponent(noOfTowerLegs))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 466, Short.MAX_VALUE)
                         .addComponent(btnGetReport, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(397, 397, 397))
@@ -1379,7 +1424,7 @@ public class SoilReportView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel66)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(noOfTowerLegs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(258, Short.MAX_VALUE))
         );
 
@@ -1446,6 +1491,42 @@ public class SoilReportView extends javax.swing.JFrame {
     private void txtLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLocationActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLocationActionPerformed
+
+    private void tfInternalFrictionAngleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfInternalFrictionAngleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfInternalFrictionAngleActionPerformed
+
+    private void tfWaterTableDepthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfWaterTableDepthActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfWaterTableDepthActionPerformed
+
+    private void txtSlsTensileForceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSlsTensileForceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSlsTensileForceActionPerformed
+
+    private void tfSaturatedUnitWeightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfSaturatedUnitWeightActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfSaturatedUnitWeightActionPerformed
+
+    private void txtUlsTensileForceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUlsTensileForceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUlsTensileForceActionPerformed
+
+    private void tfBearignCapacityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfBearignCapacityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfBearignCapacityActionPerformed
+
+    private void txtSlsHorizontalLongitudinalForceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSlsHorizontalLongitudinalForceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSlsHorizontalLongitudinalForceActionPerformed
+
+    private void txtBarDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBarDiaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBarDiaActionPerformed
+
+    private void txtUlsHorizntalLongitudinalForceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUlsHorizntalLongitudinalForceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUlsHorizntalLongitudinalForceActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1583,7 +1664,6 @@ public class SoilReportView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JLabel lblAsProvComForHogging;
     private javax.swing.JLabel lblAsProvComForSagging;
     private javax.swing.JLabel lblAsProvTensForHogging;
@@ -1602,6 +1682,7 @@ public class SoilReportView extends javax.swing.JFrame {
     private javax.swing.JLabel lblProvTensRfConfigForHogging;
     private javax.swing.JLabel lblProvTensRfConfigForSagging;
     private javax.swing.JLabel lblShearRefConfig;
+    private javax.swing.JTextField noOfTowerLegs;
     private javax.swing.JRadioButton rbNo;
     private javax.swing.JRadioButton rbYes;
     private javax.swing.JTextField sideLenghtOfColumn;
@@ -1649,7 +1730,7 @@ public class SoilReportView extends javax.swing.JFrame {
         projectDetailDto.setDesignedBy(txtDesignedBy.getText());
         projectDetailDto.setCheckedBy(txtCheckedBy.getText());
         projectDetailDto.setTowerHeight(txtTowerHeight.getText());
-        projectDetailDto.setNoOfLegs(txtNoOfLegs.getText());
+        projectDetailDto.setNoOfLegs(noOfTowerLegs.getText());
 
         this.projectDetailDto = projectDetailDto;
     }

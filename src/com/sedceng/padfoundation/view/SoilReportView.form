@@ -207,22 +207,28 @@
             </Component>
             <Component class="javax.swing.JTextField" name="tfBearignCapacity">
               <Properties>
-                <Property name="text" type="java.lang.String" value="250"/>
+                <Property name="text" type="java.lang.String" value="100"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfBearignCapacityActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="tfUnitWeightOfSoil">
               <Properties>
-                <Property name="text" type="java.lang.String" value="17.7"/>
+                <Property name="text" type="java.lang.String" value="16"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="tfInternalFrictionAngle">
               <Properties>
-                <Property name="text" type="java.lang.String" value="32"/>
+                <Property name="text" type="java.lang.String" value="30"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfInternalFrictionAngleActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="tfFrictionAngleFoundationAndSoil">
               <Properties>
-                <Property name="text" type="java.lang.String" value="24"/>
+                <Property name="text" type="java.lang.String" value="22.5"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfFrictionAngleFoundationAndSoilActionPerformed"/>
@@ -230,7 +236,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="tfCohesion">
               <Properties>
-                <Property name="text" type="java.lang.String" value="8"/>
+                <Property name="text" type="java.lang.String" value="0"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="rbYes">
@@ -274,13 +280,19 @@
             </Component>
             <Component class="javax.swing.JTextField" name="tfWaterTableDepth">
               <Properties>
-                <Property name="text" type="java.lang.String" value="10"/>
+                <Property name="text" type="java.lang.String" value="1.2"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfWaterTableDepthActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="tfSaturatedUnitWeight">
               <Properties>
-                <Property name="text" type="java.lang.String" value="19"/>
+                <Property name="text" type="java.lang.String" value="17.10"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfSaturatedUnitWeightActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel33">
               <Properties>
@@ -489,7 +501,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="sideLenghtOfFooting">
               <Properties>
-                <Property name="text" type="java.lang.String" value="3.8"/>
+                <Property name="text" type="java.lang.String" value="3.75"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sideLenghtOfFootingActionPerformed"/>
@@ -869,17 +881,20 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtSlsCompressiveForce">
               <Properties>
-                <Property name="text" type="java.lang.String" value="865"/>
+                <Property name="text" type="java.lang.String" value="319.92"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtSlsTensileForce">
               <Properties>
-                <Property name="text" type="java.lang.String" value="775"/>
+                <Property name="text" type="java.lang.String" value="359.00"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSlsTensileForceActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txtSlsHorizontalTransverseForce">
               <Properties>
-                <Property name="text" type="java.lang.String" value="63"/>
+                <Property name="text" type="java.lang.String" value="25.49"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSlsHorizontalTransverseForceActionPerformed"/>
@@ -887,12 +902,15 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtSlsHorizontalLongitudinalForce">
               <Properties>
-                <Property name="text" type="java.lang.String" value="63"/>
+                <Property name="text" type="java.lang.String" value="25.67"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSlsHorizontalLongitudinalForceActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txtUlsCompressiveForce">
               <Properties>
-                <Property name="text" type="java.lang.String" value="1502"/>
+                <Property name="text" type="java.lang.String" value="523.19"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel18">
@@ -917,12 +935,15 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtUlsTensileForce">
               <Properties>
-                <Property name="text" type="java.lang.String" value="1405"/>
+                <Property name="text" type="java.lang.String" value="566.86"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtUlsTensileForceActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txtUlsHorizontalTransverseForce">
               <Properties>
-                <Property name="text" type="java.lang.String" value="110"/>
+                <Property name="text" type="java.lang.String" value="40.33"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtUlsHorizontalTransverseForceActionPerformed"/>
@@ -930,8 +951,11 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtUlsHorizntalLongitudinalForce">
               <Properties>
-                <Property name="text" type="java.lang.String" value="110"/>
+                <Property name="text" type="java.lang.String" value="40.62"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtUlsHorizntalLongitudinalForceActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel25">
               <Properties>
@@ -1315,8 +1339,11 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtBarDia">
               <Properties>
-                <Property name="text" type="java.lang.String" value="16"/>
+                <Property name="text" type="java.lang.String" value="12"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtBarDiaActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel43">
               <Properties>
@@ -1340,7 +1367,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtShearLinksDia">
               <Properties>
-                <Property name="text" type="java.lang.String" value="10"/>
+                <Property name="text" type="java.lang.String" value="8"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel47">
@@ -1562,7 +1589,7 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="txtTowerHeight" pref="167" max="32767" attributes="0"/>
-                                  <Component id="jTextField8" max="32767" attributes="0"/>
+                                  <Component id="noOfTowerLegs" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace pref="466" max="32767" attributes="0"/>
                               <Component id="btnGetReport" min="-2" pref="109" max="-2" attributes="0"/>
@@ -1627,7 +1654,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel66" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jTextField8" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="noOfTowerLegs" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -1687,7 +1714,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtSite">
               <Properties>
-                <Property name="text" type="java.lang.String" value="30m Telecom Tower at Jayasumana Road"/>
+                <Property name="text" type="java.lang.String" value="40m 4 Legged Self Support Tower at Iranathivu (Location 01)"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSiteActionPerformed"/>
@@ -1695,17 +1722,17 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtClient">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Dialog Axiata PLC"/>
+                <Property name="text" type="java.lang.String" value="Forward Slope INC."/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtVender">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Tantri Trailers"/>
+                <Property name="text" type="java.lang.String" value="Tantri Trailers (Pvt) Ltd."/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtLocation">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Jayasumana Road"/>
+                <Property name="text" type="java.lang.String" value="Naval Detachment Arippu"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtLocationActionPerformed"/>
@@ -1723,12 +1750,12 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtTowerHeight">
               <Properties>
-                <Property name="text" type="java.lang.String" value="30 "/>
+                <Property name="text" type="java.lang.String" value="40"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField8">
+            <Component class="javax.swing.JTextField" name="noOfTowerLegs">
               <Properties>
-                <Property name="text" type="java.lang.String" value="3"/>
+                <Property name="text" type="java.lang.String" value="4"/>
               </Properties>
             </Component>
           </SubComponents>

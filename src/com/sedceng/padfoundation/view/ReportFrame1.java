@@ -243,9 +243,9 @@ public class ReportFrame1 extends javax.swing.JFrame {
         for (String[] row : designForTenseInHoggingResultDtoData) {
             data.add(row);
         }
-        for (String[] row : designForShearResultDtoData) {
-            data.add(row);
-        }
+//        for (String[] row : designForShearResultDtoData) {
+//            data.add(row);
+//        }
         
 
         for (String[] row : data) {
@@ -427,7 +427,7 @@ public class ReportFrame1 extends javax.swing.JFrame {
                 document.add(infoTable);
 
 // Optionally, add a center-aligned paragraph
-                Paragraph sectionTitle = new Paragraph("Design Calculation for 30 m 2 Legged Tower Foundation",
+                Paragraph sectionTitle = new Paragraph("Design Calculation for 40 m 4 Legged Tower Foundation",
                         FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12));
                 sectionTitle.setAlignment(Paragraph.ALIGN_CENTER);
                 sectionTitle.setSpacingAfter(10f);

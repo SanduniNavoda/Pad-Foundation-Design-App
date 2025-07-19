@@ -145,7 +145,7 @@ public class SlidingCheckServiceImpl implements SlidingCheckService{
         result.setIsSatisfied(isFosSatisfied);
         
 //        result.addReportLine(String.format("Fos = (%.2f/%.2f);", bearingCapacity, maximumPressureUnderBase), ":", String.format("%.2f kN/m²", fos));
-        result.addReportLine(String.format("Fos = (%.2f+%.2f+%.2f)/%.2f;", fr, fc, ff, v),  "=", String.format("%.2f kN/m²", fos));
+        result.addReportLine(String.format("Fos (>1.50) = (%.2f+%.2f+%.2f)/%.2f;", fr, fc, ff, v),  "=", String.format("%.2f kN/m²", fos));
         result.addReportLine(isFosSatisfied? "Sliding Check Pass" : "Sliding Check Fail", "", "" );
         result.addReportLine(" ");
         
