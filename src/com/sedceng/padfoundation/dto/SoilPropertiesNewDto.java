@@ -49,7 +49,7 @@ public class SoilPropertiesNewDto {
         data.add(new String[]{"Effective soil Cohesion/ Adhesion (c’) ", "=", cohesion + " kN/m²"});
         data.add(new String[]{"Bulk unit weight of soil", "=", bulkUnitWeight + " kN/m3"});
         data.add(new String[]{"Saturated unit weight of soil", "=", saturatedUnitWeight + " kN/m3"});
-        data.add(new String[]{"Depth of water table from ground level", "=", waterTableDepth + " kN/m3"});
+        data.add(new String[]{"Depth of water table from ground level", "=", waterTableDepth + " m"});
         // Add more rows as needed
         return data;
     }

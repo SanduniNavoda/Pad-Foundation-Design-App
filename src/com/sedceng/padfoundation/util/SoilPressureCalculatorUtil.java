@@ -131,7 +131,7 @@ public class SoilPressureCalculatorUtil {
         double waterHeight = geometry.getFoundationDepth()-soil.getWaterTableDepth();
         double unitWeightOfWater = soil.getWaterUnitWeight();
         double upthrustForce = sideLengthOfFooting * sideLengthOfFooting * unitWeightOfWater * foundationThickness;
-        result.addReportLine(String.format("Upthrust Force = %.2f x %.2f x %.2f x %.2f;", sideLengthOfFooting, sideLengthOfFooting, unitWeightOfWater, foundationThickness), "=" , String.format("%.2f", upthrustForce));
+        result.addReportLine(String.format("Upthrust Force = %.2f x %.2f x %.2f x %.2f;", sideLengthOfFooting, sideLengthOfFooting, unitWeightOfWater, foundationThickness), "=" , String.format("%.2f kN", upthrustForce));
         return upthrustForce;
     }
     

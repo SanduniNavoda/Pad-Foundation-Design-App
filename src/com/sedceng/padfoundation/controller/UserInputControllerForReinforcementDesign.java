@@ -115,7 +115,7 @@ public class UserInputControllerForReinforcementDesign {
         //double asRequired = tensileRfRequirementForSagging(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCal);
         //double asProvided = designForBendingService.getAsProvided(asRequired, rfDto, geometryDto, rfCal);
         resultDto.addReportLine(" ");
-        resultDto.addReportLine("**Dsign for Shear**");
+        resultDto.addReportLine("**Design for Shear**");
         double asvForOneWayShear = designForOneWayShearService.ShearReinforcementRequirementPerMm(soilDto, geometryDto, soilCalculator, loadsDto, rfCal, asProvTensSag, shearRfUtil, d, resultDto);
         double asvForPunchingShear = designForPunchingShearService.ShearReinforcementRequirementPerMm(soilDto, geometryDto, soilCalculator, loadsDto, rfCal, asProvTensSag, shearRfUtil, d, resultDto);
         
@@ -126,8 +126,8 @@ public class UserInputControllerForReinforcementDesign {
         }
     }
     
-    public String ShearReinforcementDesign(ShearReinforcementCalculatorUtil shearRfUtil, double shearReinforcementRequirement, int numLege, double barDiameter, ResultDto resultDto){
-        return shearRfUtil.getShearReinforcementConfig(shearReinforcementRequirement, numLege, barDiameter, resultDto);
+    public String ShearReinforcementDesign(ShearReinforcementCalculatorUtil shearRfUtil, double shearReinforcementRequirement, int numLege, double barDiameter, double effectiveDepth, ResultDto resultDto){
+        return shearRfUtil.getShearReinforcementConfig(shearReinforcementRequirement, numLege, barDiameter, effectiveDepth, resultDto);
     }                        
     
   

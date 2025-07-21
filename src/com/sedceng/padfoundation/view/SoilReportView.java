@@ -381,30 +381,30 @@ public class SoilReportView extends javax.swing.JFrame {
 
         waterTableLocation.setText("Water Table is Above the Footing ? :");
 
-        tfBearignCapacity.setText("100");
+        tfBearignCapacity.setText("275.00");
         tfBearignCapacity.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfBearignCapacityActionPerformed(evt);
             }
         });
 
-        tfUnitWeightOfSoil.setText("16");
+        tfUnitWeightOfSoil.setText("16.00");
 
-        tfInternalFrictionAngle.setText("30");
+        tfInternalFrictionAngle.setText("32");
         tfInternalFrictionAngle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfInternalFrictionAngleActionPerformed(evt);
             }
         });
 
-        tfFrictionAngleFoundationAndSoil.setText("22.5");
+        tfFrictionAngleFoundationAndSoil.setText("24");
         tfFrictionAngleFoundationAndSoil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfFrictionAngleFoundationAndSoilActionPerformed(evt);
             }
         });
 
-        tfCohesion.setText("0");
+        tfCohesion.setText("10");
 
         buttonGroup1.add(rbYes);
         rbYes.setText("Yes");
@@ -425,14 +425,14 @@ public class SoilReportView extends javax.swing.JFrame {
 
         SaturatedUnitWeightOfSoil.setText("Saturated Unit Weight of Soil (kN/m3)  : ");
 
-        tfWaterTableDepth.setText("1.2");
+        tfWaterTableDepth.setText("10");
         tfWaterTableDepth.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfWaterTableDepthActionPerformed(evt);
             }
         });
 
-        tfSaturatedUnitWeight.setText("17.10");
+        tfSaturatedUnitWeight.setText("17.80");
         tfSaturatedUnitWeight.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfSaturatedUnitWeightActionPerformed(evt);
@@ -566,27 +566,27 @@ public class SoilReportView extends javax.swing.JFrame {
 
         jLabel7.setText("Unit Weight of Concrete");
 
-        foundationDepth.setText("3");
+        foundationDepth.setText("3.0");
         foundationDepth.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 foundationDepthActionPerformed(evt);
             }
         });
 
-        sideLenghtOfFooting.setText("3.75");
+        sideLenghtOfFooting.setText("3.0");
         sideLenghtOfFooting.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sideLenghtOfFootingActionPerformed(evt);
             }
         });
 
-        heightOfFooting.setText("0.6");
+        heightOfFooting.setText("0.5");
 
         sideLenghtOfColumn.setText("0.6");
 
         columnHeightAboveGround.setText("0.3");
 
-        columnHeightBelowGround.setText("2.4");
+        columnHeightBelowGround.setText("2.5");
         columnHeightBelowGround.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 columnHeightBelowGroundActionPerformed(evt);
@@ -1327,7 +1327,7 @@ public class SoilReportView extends javax.swing.JFrame {
             }
         });
 
-        txtSite.setText("40m 4 Legged Self Support Tower at Iranathivu (Location 01)");
+        txtSite.setText("40m 4 Legged Self Support Tower at Weligambay");
         txtSite.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSiteActionPerformed(evt);
@@ -1338,7 +1338,7 @@ public class SoilReportView extends javax.swing.JFrame {
 
         txtVender.setText("Tantri Trailers (Pvt) Ltd.");
 
-        txtLocation.setText("Naval Detachment Arippu");
+        txtLocation.setText("Weligambay");
         txtLocation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtLocationActionPerformed(evt);
@@ -1963,7 +1963,7 @@ public class SoilReportView extends javax.swing.JFrame {
             double asv = reinforcementInputController.ShearReinforcementRequirement(geometryDto, soilDto, rfDto, loadsDto, soilCalculator, rfCalculator, shearRfCalculator, asProvidedForTensileInSagging, d, asReqForShearResultDto);
             double shearLinkDia = rfDto.getShearLinksDiameter();
             int noOfLegs = rfDto.getNoOfLegs();
-            String asvDesign = reinforcementInputController.ShearReinforcementDesign(shearRfCalculator, asv, noOfLegs, shearLinkDia, asReqForShearResultDto);
+            String asvDesign = reinforcementInputController.ShearReinforcementDesign(shearRfCalculator, asv, noOfLegs, shearLinkDia, d, asReqForShearResultDto);
             this.designForShearResultDto = asReqForShearResultDto;
 
             lblAsReqComForSagging.setText(String.format("%.2f", asRequiredForCompressionInSagging));

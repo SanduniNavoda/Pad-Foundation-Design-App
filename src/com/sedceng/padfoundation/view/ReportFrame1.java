@@ -243,9 +243,9 @@ public class ReportFrame1 extends javax.swing.JFrame {
         for (String[] row : designForTenseInHoggingResultDtoData) {
             data.add(row);
         }
-//        for (String[] row : designForShearResultDtoData) {
-//            data.add(row);
-//        }
+        for (String[] row : designForShearResultDtoData) {
+            data.add(row);
+        }
         
 
         for (String[] row : data) {
